@@ -13,18 +13,17 @@ struct PostView: View {
     var body: some View {
         
         VStack {
-            Text(post.username ?? "")
+            Text("@" + (post.username ?? ""))
                 .frame(maxWidth: .infinity, alignment: .leading)
-            Text(post.title)
-            Image("KSG Cover")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 100, height: 100)
-                .cornerRadius(3)
+                
+            
+            AlbumView(album: Album(title: post.title, cover: "KSG Cover"))
+                //.padding(.bottom, 50)
             
         }
         .padding(20)
-        .frame(maxWidth: .infinity)
+        //.scaledToFill()
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.black)
         .foregroundColor(.white)
         

@@ -16,16 +16,36 @@ struct ContentView: View {
     var body: some View {
         
         //var posts = [Post(title: "This is a test", userID: "This userID test", username: "Woli")]
-        NavigationView {
+        ZStack {
             ScrollView {
                 VStack{
                     ForEach(viewModel.posts) { post in
                         PostView(post: post)
                     }
-                }.padding()
+                }
+                .padding()
             }
+            HStack {
+                Image(systemName: "person.2.fill")
+                    .foregroundColor(.white)
+                    .font(.system(size:20))
+                Spacer()
+                Text("Real Music")
+                    .foregroundColor(.white)
+                    .font(.system(size:25))
+                    .fontWeight(.bold)
+                Spacer()
+                Circle()
+                    .foregroundColor(.white)
+                    .frame(width: 30)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            .padding(.leading, 20)
+            .padding(.trailing, 20)
             
+                
         }
+    .background(.black)
     }
     
     struct ContentView_Previews: PreviewProvider {

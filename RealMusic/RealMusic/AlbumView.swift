@@ -13,23 +13,38 @@ struct AlbumView: View {
     let album: Album
     
     var body: some View {
-        HStack {
+        VStack {
             Image(String(album.cover))
                 .resizable()
-                .scaledToFit()
-                .frame(width: 150, height: 150)
+                .scaledToFill()
+                //.frame(maxWidth: .infinity, maxHeight: .infinity)
                 .cornerRadius(10)
-                //.padding(20)
+                .padding(20)
             
             Text(album.title)
-                .frame(maxHeight: 150, alignment: .top)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                 .padding(20)
+                .foregroundColor(.white)
+                .font(.system(size: 25))
             Spacer()
+            
+            ZStack {
+                Rectangle()
+                    .frame(width: 40, height: 40)
+                    .foregroundColor(.black)
+                Image(systemName: "play.circle.fill")
+                    .font(.system(size:70))
+                    .foregroundColor(.green)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
+            .padding(20)
            
         }
-        .background(.blue)
+        .background(Color("Dark Grey"))
+        //.frame(minHeight: 100)
         .cornerRadius(10)
-        .padding(20)
+        
+        
     }
     
     struct AlbumView_Previews: PreviewProvider {
