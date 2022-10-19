@@ -38,47 +38,51 @@ class SpotifyAPI: ObservableObject {
         request.httpMethod = "GET"
 
         let requestHeader:  [String : String] = [
-            "Authorization" : "Bearer BQB9T8ZH_JfbaLFz28aLsu8oBvLAtYgDnKH7Hm0j1h-gK3hr_EHBYo45TDPXKO48j3H_lAPzsf9g34V9gLwB5e83vxdDbL0x4oVl942deRLSMQA4FAMVt37AtbW-KVZGUfw8fUP_LEJLyYch8mnprtS5nZCGh3tx7P7vA9TAeCriUhC_tuGtfphr4PdATAQMyQA",
+            "Authorization" : "Bearer BQCskbVY4OuQ2Bu-sNIB_zUQ6eLE_DvkpIJkAvaUlhwdLCFERYBI1B8yBbTGP-1LU1c4ZYSBs5FrW3cszC2_1QNoqH37PnWafUPjwul6VrXm_pSlMxKM5vJ5fYFcJn6_9n-cfeffOW2nXl4PuJzfgSmH2Zu39AQtz4WSudZNURzrbmN6Xs3j3yZyqcTQhzdP9Uo",
             "Content-Type" : "application/json"
         ]
         
         request.allHTTPHeaderFields = requestHeader
 
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            print("Fetch 2")
-            print(response)
-            print(data)
-            print(error)
-            if let error = error {
-                print("Error with fetching films: \(error)")
-                return
-            }
 
-            guard let httpResponse = response as? HTTPURLResponse,
-                        (200...299).contains(httpResponse.statusCode) else {
-                    print("Error with the response, unexpected status code: \(response)")
-                    return
-                  }
+            
+        URLSession.shared.dataTask(with: request) {data, response, error in
+             if let error = error {
+               print("Error with fetching films: \(error)")
+               return
+             }
+             
+             guard let httpResponse = response as? HTTPURLResponse,
+                   (200...299).contains(httpResponse.statusCode) else {
+                 print("Error with the response, unexpected status code: \(response)")
+                 return
+             }
+                 
             print("")
             print("")
            // print(JSONDecoder().decode(String, from: data))
             
             
-            //print(String(decoding: data, as: UTF8.self))
             
             //print(try? data["artists"])
             
-            guard let data = try? Data(contentsOf: url) else {
-                        fatalError("Failed to load  from bundle.")
-                    }
-           
-            guard let APIReturn = try? JSONDecoder().decode(Response.self, from: data) else {
-                fatalError("Failed to decode  from bundle.")
+
+//            print(String(decoding: data, as: UTF8.self))
+            if let data = data,
+               let results = try? JSONDecoder().decode(Response.self, from: data) {
+                    print("done")
+                    print(results)
+            } else {
+                fatalError()
             }
             
-//          completionHandler(APIReturn.results ?? [])
-//            print(APIReturn)
-          
+//            let items = results.tracks.items
+//            print(items)
+
+            
+    //          completionHandler(APIReturn.results ?? [])
+    //            print(APIReturn)
+              
         }
         .resume()
         
@@ -95,5 +99,10 @@ struct Track: Codable {
 }
 
 struct Item: Codable {
-   let name: String
+    let name: String
+    let artists: [Artist]
+}
+
+struct Artist: Codable {
+    let name: String
 }
