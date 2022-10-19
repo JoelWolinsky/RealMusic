@@ -12,6 +12,12 @@ import FirebaseFirestore
 struct ContentView: View {
     
     @ObservedObject var viewModel = FeedViewModel()
+        
+    let userUid = "cY51kdkZdHhq6r3lTAd2"
+    
+    @ObservedObject var createPostModel = CreatePostViewModel(uid: "cY51kdkZdHhq6r3lTAd2")
+    
+    @ObservedObject var getRequest = SpotifyAPI()
     
     var body: some View {
         
@@ -25,12 +31,23 @@ struct ContentView: View {
                 }
                 .padding()
             }
+            
+            VStack {
+                Rectangle()
+                    .fill(LinearGradient(colors: [.black, .black.opacity(0.0)],
+                                       startPoint: .top,
+                                       endPoint: .center))
+                    .frame(height: 150)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            .offset(y:-60)
+            
             HStack {
                 Image(systemName: "person.2.fill")
                     .foregroundColor(.white)
                     .font(.system(size:20))
                 Spacer()
-                Text("Real Music")
+                Text("RealMusic")
                     .foregroundColor(.white)
                     .font(.system(size:25))
                     .fontWeight(.bold)
@@ -46,7 +63,14 @@ struct ContentView: View {
                 
         }
     .background(.black)
+    .onAppear(perform: getRequest.fetchData)
+    
+//    .overlay(LinearGradient(colors: [.orange, .black.opacity(0)],
+//                                     startPoint: .top,
+//                            endPoint: .center))
+//    .disabled(true)
     }
+    
     
     struct ContentView_Previews: PreviewProvider {
         static var previews: some View {

@@ -1,7 +1,7 @@
 
 import FirebaseFirestoreSwift
 
-struct Post: Identifiable, Decodable {
+struct Post: Identifiable, Decodable, Encodable {
     
     @DocumentID var id: String?
     var title: String

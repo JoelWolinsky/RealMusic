@@ -24,7 +24,7 @@ struct PostView: View {
         .padding(20)
         //.scaledToFill()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(.black)
+        //.background(.black)
         .foregroundColor(.white)
         
 
