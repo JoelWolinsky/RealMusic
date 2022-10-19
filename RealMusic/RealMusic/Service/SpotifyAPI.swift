@@ -11,34 +11,28 @@ import SwiftUI
 class SpotifyAPI: ObservableObject {
     //@Published var response = Response
     
-    func fetchData() {
+    func search(input: String) {
         print("fetching data")
-        let url = URL(string: "https://api.spotify.com/v1/search?q=track%3ALet%20It%20Go&type=track%2Cartist&market=ES&limit=2&offset=5")!
         
-//        guard let url = urlBuilder?.url else { return }
-//
-//        print(url)
-//
-//
-//        var request = URLRequest(url: url)
-//            request.httpMethod = "GET"
-//            request.setValue("Authorization", forHTTPHeaderField: "Bearer BQAFFvK_66_0IQhFPJ6Re5O6KgyCFhzGoKHJ_KKKr-sYW6CXzP4h3F8IbtRjaP2W-gnbB1dDZmRS3ToNolgMku5mAGCst7LV1PAFJyhdtj-08nHFDBpmN-Dqo3c-UCQXi0ukLMsW7tHDGXQaQIdtB204pLSOzn9E-OjUIxab0pQi0VdcVk8szNvvA65D55WAGa8")
-//            request.setValue("Content-Type", forHTTPHeaderField: "application/json")
-//
-//
-//            URLSession.shared.dataTask(with: request) { (data, response, error) in
-//                print(response)
-//                print(data)
-//                print(error)
-//                //print(String(data: data, encoding: .utf8)) //Try this too!
-//            }.resume()
+        var name = "3A"
+        for word in input.components(separatedBy: " ") {
+            if name == "3A" {
+                name = name + word
+            } else {
+                name = name + "%20" + word
+            }
+            print("name: \(name)")
+        }
         
+        //name = "https://api.spotify.com/v1/search?q=track%" + name + "&type=track%2Cartist&market=ES&limit=1&offset=0"
+        //print(name)
+        let url = URL(string: "https://api.spotify.com/v1/search?q=track%" + name + "&type=track%2Cartist&market=ES&limit=1&offset=0")!
         
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
 
         let requestHeader:  [String : String] = [
-            "Authorization" : "Bearer BQCskbVY4OuQ2Bu-sNIB_zUQ6eLE_DvkpIJkAvaUlhwdLCFERYBI1B8yBbTGP-1LU1c4ZYSBs5FrW3cszC2_1QNoqH37PnWafUPjwul6VrXm_pSlMxKM5vJ5fYFcJn6_9n-cfeffOW2nXl4PuJzfgSmH2Zu39AQtz4WSudZNURzrbmN6Xs3j3yZyqcTQhzdP9Uo",
+            "Authorization" : "Bearer BQA6n8R1wOiOeXfbq2CptwjD15gyAAmXaUeuvZLTPTO5VPu9CurPUVsvfakZS3VqeB8kjRrnUr_m65DOAB9N_pCqF3C3_gwtc2J1sLK3ECiIwNFcWjxFpckyF_OPzRuLsJLyL1xfJ-dwvpQCSthQCXGzsqeDQFAaXNZh2uCR44YtlPMPdMVl0S4U6dqvRVoYA80",
             "Content-Type" : "application/json"
         ]
         
@@ -85,8 +79,6 @@ class SpotifyAPI: ObservableObject {
               
         }
         .resume()
-        
-
     }
 }
 
@@ -101,8 +93,20 @@ struct Track: Codable {
 struct Item: Codable {
     let name: String
     let artists: [Artist]
+    let id: String
+    let album: Album2
 }
 
 struct Artist: Codable {
     let name: String
+}
+
+struct Album2: Codable {
+    let name: String
+    let images: [AlbumImage]
+}
+
+struct AlbumImage: Codable {
+    let height: Int
+    let url: String
 }

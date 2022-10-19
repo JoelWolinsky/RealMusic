@@ -10,5 +10,5 @@ import Foundation
 struct Album {
     var title: String
     var cover: String
-    
+
 }

@@ -19,6 +19,8 @@ struct ContentView: View {
     
     @ObservedObject var getRequest = SpotifyAPI()
     
+
+    
     var body: some View {
         
         //var posts = [Post(title: "This is a test", userID: "This userID test", username: "Woli")]
@@ -63,7 +65,7 @@ struct ContentView: View {
                 
         }
     .background(.black)
-    .onAppear(perform: getRequest.fetchData)
+    .onAppear(perform: {getRequest.search(input: "Chazak!")})
     
 //    .overlay(LinearGradient(colors: [.orange, .black.opacity(0)],
 //                                     startPoint: .top,
