@@ -22,7 +22,7 @@ struct PostView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 
             
-            AlbumView(album: Album(title: post.title ?? "placeholder", cover: post.cover ?? "KSG Cover"))
+            AlbumView(album: Album(title: post.title ?? "placeholder",artist: post.artist ?? "placeholder" ,cover: post.cover ?? "KSG Cover"))
                 //.padding(.bottom, 50)
             
         }
@@ -35,7 +35,8 @@ struct PostView: View {
             switch result {
                 case .success(let data) :
                 print("success \(data)")
-                post.title = data
+                post.title = data[0]
+                post.artist = data[1]
                 case .failure(let error) :
                     print()
                 }

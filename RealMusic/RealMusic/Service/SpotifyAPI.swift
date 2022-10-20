@@ -11,9 +11,9 @@ import SwiftUI
 class SpotifyAPI: ObservableObject {
     //@Published var response = Response
     
-    var token = "BQALkRS0l8hWzRRk445tuzu1-j4znkmIZsC_FCdAysYV0iCdP2r66Pohwqs8ytvJgxt7eS27cYz_AK69WMmZHwqrwcONBDx1DD9EBeYrdkTT-aiEzTFMFGN5Ohlrip4hkjJcIhKs8HaUosZ3oKdNgQtG7bZKRi7XWg7ElZR4msMm1DruUasge4LrbisRJ6M-pTI"
+    var token = "BQC6FJhmDfAWCErY1QWbt6VXwFM0wzOxZTzdMd_4kjkshLW0eWDEF3mm7psInz4WVksD02kzhHyDAqyvBCHJWmGEhyqXiKOgviM71OsEOO6xoiy_0ICuo10GBU3-LqyqaXtE3u3twsIqcaizac-FKAZ0P2o49JzvzZI98V86IVTEhkYS6saaBY1A1QsPPRu47Uc"
     
-    func search(input: String, completion: @escaping (Result<Post, Error>) -> Void) {
+    func search(input: String, completion: @escaping (Result<[SpotifySong], Error>) -> Void) {
         var name = "3A"
         for word in input.components(separatedBy: " ") {
             if name == "3A" {
@@ -24,7 +24,7 @@ class SpotifyAPI: ObservableObject {
             print("name: \(name)")
         }
         
-        let url = URL(string: "https://api.spotify.com/v1/search?q=track%" + name + "&type=track%2Cartist&market=ES&limit=1&offset=0")!
+        let url = URL(string: "https://api.spotify.com/v1/search?q=track%" + name + "&type=track%2Cartist&market=ES&limit=2&offset=0")!
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         let requestHeader:  [String : String] = [
@@ -44,22 +44,27 @@ class SpotifyAPI: ObservableObject {
                  print("Error with the response, unexpected status code: \(response)")
                  return
              }
-            var post: Post
+            var posts: [SpotifySong] = []
             if let data = data,
                let results = try? JSONDecoder().decode(Response.self, from: data) {
                     print("done")
                     print(results)
-                post = Post(songID: results.tracks.items[0].id , uid: "xyz", cover: results.tracks.items[0].album.images[0].url)
+                for song in results.tracks.items {
+                    print("adding song to search list")
+                    posts.append(SpotifySong(songID: song.id , uid: "xyz", cover: song.album.images[0].url))
+                }
                 //return post
             } else {
                 fatalError()
             }
-            completion(.success(post))        }
+            completion(.success(posts))
+            
+        }
         .resume()
     }
     
     
-    func getSong(ID: String, completion: @escaping (Result<String, Error>) -> Void){
+    func getSong(ID: String, completion: @escaping (Result<[String], Error>) -> Void){
         
         
         let url = URL(string: "https://api.spotify.com/v1/tracks/" + ID)!
@@ -87,7 +92,15 @@ class SpotifyAPI: ObservableObject {
                let results = try? JSONDecoder().decode(Item.self, from: data) {
                     print("done")
                     print(results)
-                completion(.success(results.name))
+                var artists = ""
+                for artist in results.artists {
+                    if artists == "" {
+                        artists += artist.name
+                    } else {
+                        artists += ", " + artist.name
+                    }
+                }
+                completion(.success([results.name, artists]))
                 //post = Post(songID: results.tracks.items[0].id , uid: "xyz", cover: results.tracks.items[0].album.images[0].url)
                 //return post
             } else {

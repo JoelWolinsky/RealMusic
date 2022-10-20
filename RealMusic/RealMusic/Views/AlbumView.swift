@@ -30,6 +30,13 @@ struct AlbumView: View {
                 .padding(20)
                 .foregroundColor(.white)
                 .font(.system(size: 25))
+            
+            Text(album.artist)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                .padding(20)
+                .padding(.top, -40)
+                .foregroundColor(Color("Grey"))
+                .font(.system(size: 20))
             Spacer()
             
             ZStack {
@@ -56,7 +63,7 @@ struct AlbumView: View {
     
     struct AlbumView_Previews: PreviewProvider {
         static var previews: some View {
-            AlbumView(album: Album(title: "Goodie Bag - Still Woozy", cover: "KSG Cover"))
+            AlbumView(album: Album(title: "Goodie Bag", artist: "Still Woozy" , cover: "KSG Cover"))
         }
     }
 }
