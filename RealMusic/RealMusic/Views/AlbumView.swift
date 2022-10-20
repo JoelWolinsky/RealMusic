@@ -12,14 +12,18 @@ struct AlbumView: View {
     
     let album: Album
     
+    
     var body: some View {
         VStack {
-            Image(String(album.cover))
-                .resizable()
-                .scaledToFill()
-                //.frame(maxWidth: .infinity, maxHeight: .infinity)
-                .cornerRadius(10)
-                .padding(20)
+            AsyncImage(url: URL(string: album.cover)) { image in
+                image
+                    .resizable()
+                    .scaledToFill()
+                    .cornerRadius(10)
+                    .padding(20)
+            } placeholder: {
+                Color.orange
+            }
             
             Text(album.title)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
@@ -45,7 +49,10 @@ struct AlbumView: View {
         .cornerRadius(10)
         
         
+        
     }
+        
+        
     
     struct AlbumView_Previews: PreviewProvider {
         static var previews: some View {

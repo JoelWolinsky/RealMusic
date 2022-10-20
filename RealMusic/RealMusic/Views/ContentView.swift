@@ -65,7 +65,17 @@ struct ContentView: View {
                 
         }
     .background(.black)
-    .onAppear(perform: {getRequest.search(input: "Chazak!")})
+    .onAppear(perform: {getRequest.search(input: "Ivy") { (result) in
+        switch result {
+            case .success(let data) :
+            print("success \(data)")
+            createPostModel.createPost(post: data)
+                
+            case .failure(let error) :
+                print()
+            }
+        }
+    })
     
 //    .overlay(LinearGradient(colors: [.orange, .black.opacity(0)],
 //                                     startPoint: .top,

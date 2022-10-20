@@ -17,9 +17,9 @@ class CreatePostViewModel: ObservableObject {
         //createPost()
     }
     
-    func createPost() {
+    func createPost(post: Post) {
         let db = Firestore.firestore()
-        let post = Post(title: "Test Send Post", uid: "test uid")
+        //let post = Post(title: "Test Send Post", uid: "test uid")
 
         do {
             try db.collection("Posts").document().setData(from: post)

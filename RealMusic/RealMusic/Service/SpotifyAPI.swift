@@ -11,9 +11,9 @@ import SwiftUI
 class SpotifyAPI: ObservableObject {
     //@Published var response = Response
     
-    func search(input: String) {
-        print("fetching data")
-        
+    var token = "BQALkRS0l8hWzRRk445tuzu1-j4znkmIZsC_FCdAysYV0iCdP2r66Pohwqs8ytvJgxt7eS27cYz_AK69WMmZHwqrwcONBDx1DD9EBeYrdkTT-aiEzTFMFGN5Ohlrip4hkjJcIhKs8HaUosZ3oKdNgQtG7bZKRi7XWg7ElZR4msMm1DruUasge4LrbisRJ6M-pTI"
+    
+    func search(input: String, completion: @escaping (Result<Post, Error>) -> Void) {
         var name = "3A"
         for word in input.components(separatedBy: " ") {
             if name == "3A" {
@@ -24,23 +24,16 @@ class SpotifyAPI: ObservableObject {
             print("name: \(name)")
         }
         
-        //name = "https://api.spotify.com/v1/search?q=track%" + name + "&type=track%2Cartist&market=ES&limit=1&offset=0"
-        //print(name)
         let url = URL(string: "https://api.spotify.com/v1/search?q=track%" + name + "&type=track%2Cartist&market=ES&limit=1&offset=0")!
-        
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-
         let requestHeader:  [String : String] = [
-            "Authorization" : "Bearer BQA6n8R1wOiOeXfbq2CptwjD15gyAAmXaUeuvZLTPTO5VPu9CurPUVsvfakZS3VqeB8kjRrnUr_m65DOAB9N_pCqF3C3_gwtc2J1sLK3ECiIwNFcWjxFpckyF_OPzRuLsJLyL1xfJ-dwvpQCSthQCXGzsqeDQFAaXNZh2uCR44YtlPMPdMVl0S4U6dqvRVoYA80",
+            "Authorization" : "Bearer \(token)",
             "Content-Type" : "application/json"
         ]
-        
         request.allHTTPHeaderFields = requestHeader
 
-
-            
-        URLSession.shared.dataTask(with: request) {data, response, error in
+        let post = URLSession.shared.dataTask(with: request) {data, response, error in
              if let error = error {
                print("Error with fetching films: \(error)")
                return
@@ -51,36 +44,64 @@ class SpotifyAPI: ObservableObject {
                  print("Error with the response, unexpected status code: \(response)")
                  return
              }
-                 
-            print("")
-            print("")
-           // print(JSONDecoder().decode(String, from: data))
-            
-            
-            
-            //print(try? data["artists"])
-            
-
-//            print(String(decoding: data, as: UTF8.self))
+            var post: Post
             if let data = data,
                let results = try? JSONDecoder().decode(Response.self, from: data) {
                     print("done")
                     print(results)
+                post = Post(songID: results.tracks.items[0].id , uid: "xyz", cover: results.tracks.items[0].album.images[0].url)
+                //return post
             } else {
                 fatalError()
             }
-            
-//            let items = results.tracks.items
-//            print(items)
+            completion(.success(post))        }
+        .resume()
+    }
+    
+    
+    func getSong(ID: String, completion: @escaping (Result<String, Error>) -> Void){
+        
+        
+        let url = URL(string: "https://api.spotify.com/v1/tracks/" + ID)!
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        let requestHeader:  [String : String] = [
+            "Authorization" : "Bearer \(token)",
+            "Content-Type" : "application/json"
+        ]
+        request.allHTTPHeaderFields = requestHeader
 
+        let post = URLSession.shared.dataTask(with: request) {data, response, error in
+             if let error = error {
+               print("Error with fetching films: \(error)")
+               return
+             }
+             
+             guard let httpResponse = response as? HTTPURLResponse,
+                   (200...299).contains(httpResponse.statusCode) else {
+                 print("Error with the response, unexpected status code: \(response)")
+                 return
+             }
+            var post: Post
+            if let data = data,
+               let results = try? JSONDecoder().decode(Item.self, from: data) {
+                    print("done")
+                    print(results)
+                completion(.success(results.name))
+                //post = Post(songID: results.tracks.items[0].id , uid: "xyz", cover: results.tracks.items[0].album.images[0].url)
+                //return post
+            } else {
+                fatalError()
+            }
+            //completion(.failure())
             
-    //          completionHandler(APIReturn.results ?? [])
-    //            print(APIReturn)
-              
         }
         .resume()
     }
+    
 }
+
+
 
 struct Response: Codable {
     let tracks: Track
