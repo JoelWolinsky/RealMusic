@@ -69,10 +69,10 @@ struct ContentView: View {
                 .padding(.leading, 20)
                 .padding(.trailing, 20)
                 
-                SearchView()
+                
             }
             .background(.black)
-            .onAppear(perform: {getRequest.search(input: "Ivy") { (result) in
+            .onAppear(perform: {print(Date());getRequest.search(input: "Ivy") { (result) in
                 switch result {
                     case .success(let data) :
                     print("success \(data)")

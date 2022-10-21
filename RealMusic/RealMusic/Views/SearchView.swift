@@ -10,20 +10,24 @@ import SwiftUI
 
 struct SearchView: View {
     
-    @State var name: String = "Tim"
+    @State var name: String = "Sunny"
     
     @ObservedObject var spotifyAPI = SpotifyAPI()
     
-    
+    @ObservedObject var createPostModel = CreatePostViewModel(uid: "cY51kdkZdHhq6r3lTAd2")
+
     @State var searchResults: [SpotifySong] = []
     
+    
+    
     var body: some View {
-        VStack {
-            Text("Hello \(name)")
-            TextField("Type your name", text: $name)
-                .background(.blue)
-                .onSubmit {
-                    print(name)
+        
+        let binding = Binding<String>(get: {
+                    self.name
+                }, set: {
+                    self.name = $0
+                    // do whatever you want here
+                    print("String change \(name)")
                     spotifyAPI.search(input: name) { (result) in
                         switch result {
                             case .success(let data) :
@@ -36,14 +40,27 @@ struct SearchView: View {
                                 print()
                             }
                         }
-                }
-            ForEach(searchResults) { song in
-                Text("searchview \(song.songID)")
-                SearchResultView(song: song)
-                //Text(song.title ?? "placeholder")
 
+                })
+        return
+        VStack {
+
+            TextField("Search...", text: binding)
+                .background(.orange)
+            
+            ScrollView {
+                ForEach(searchResults) { song in
+                    //Text("searchview \(song.songID)")
+                    SearchResultView(song: song, createPostModel: createPostModel)
+                        
+
+                    //Text(song.title ?? "placeholder")
+
+                }
             }
+            
         }
+        .background(.black)
         
     }
     

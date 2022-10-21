@@ -10,6 +10,7 @@ struct Post: Identifiable, Decodable, Encodable {
     var uid: String
     var username : String?
     var cover : String?
-    
+    var datePosted = Date()
     
 }
+

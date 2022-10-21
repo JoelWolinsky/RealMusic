@@ -11,8 +11,9 @@ import SwiftUI
 class SpotifyAPI: ObservableObject {
     //@Published var response = Response
     
-    var token = "BQC6FJhmDfAWCErY1QWbt6VXwFM0wzOxZTzdMd_4kjkshLW0eWDEF3mm7psInz4WVksD02kzhHyDAqyvBCHJWmGEhyqXiKOgviM71OsEOO6xoiy_0ICuo10GBU3-LqyqaXtE3u3twsIqcaizac-FKAZ0P2o49JzvzZI98V86IVTEhkYS6saaBY1A1QsPPRu47Uc"
+    var token = "BQBt070WbK_eI2P0BmcsxPBu4d83DbtsKYUquPq2lofq1-l2kYkSjMbJgEky8LYnQB5mkBLcE066-27FsoEX9H3iR9bi9OZCaY1A2dZLOCdPKgHCVz0yyaue7z-Wssub0VxtV7lemZh0iVkNc1eKmcrp4ojDhN7619yDGY9beVh8UAOu6OCIuUkxLPXzgfzpQY8"
     
+    // fix this so it adds more data to the spotifysong item
     func search(input: String, completion: @escaping (Result<[SpotifySong], Error>) -> Void) {
         var name = "3A"
         for word in input.components(separatedBy: " ") {
@@ -24,7 +25,7 @@ class SpotifyAPI: ObservableObject {
             print("name: \(name)")
         }
         
-        let url = URL(string: "https://api.spotify.com/v1/search?q=track%" + name + "&type=track%2Cartist&market=ES&limit=2&offset=0")!
+        let url = URL(string: "https://api.spotify.com/v1/search?q=track%" + name + "&type=track%2Cartist&market=ES&limit=5&offset=0")!
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         let requestHeader:  [String : String] = [
