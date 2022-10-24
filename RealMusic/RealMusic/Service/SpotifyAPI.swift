@@ -11,7 +11,7 @@ import SwiftUI
 class SpotifyAPI: ObservableObject {
     //@Published var response = Response
     
-    var token = "BQARQrlWOndOjq1LCOWozSBMUCN8Z61ojM0gWIlnzqjTRquFVgwxImiUb464usAQnee2zniqZTHQ-PHXvwDHHtAVR5q9jTBPSaFapjR4dqOCsHLOqVlnBELX-GyGmeao14rpp75tFXdXtQ5XBAiNmoAoSJiuC9bHpibBEVvTkahCCM6gADSz4XEWmDoo5j17g6o"
+    var token = "BQAkNNsal-WPNA5RdHsxGXBWO9s5H_roDjzPN4RHyABCogLp7QKqbrf-Ycri1QOcU1DvZGx1z8CtDYvZ4TeAf-bwwYbALpgWNonEdzAfuCG67nfQNLsD3me07JZIHmYBlWa7Qyag1rSm03uKZlYFfreT7QCn7PDcNkUZqA6syRdhBz4JUWuSdDK7b7znfveveTU"
     
     // fix this so it adds more data to the spotifysong item
     func search(input: String, completion: @escaping (Result<[SpotifySong], Error>) -> Void) {

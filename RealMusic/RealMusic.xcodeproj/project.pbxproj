@@ -17,13 +17,12 @@
 		C93D7EA128F3166100FEF3D6 /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93D7EA028F3166100FEF3D6 /* PostView.swift */; };
 		C947B9EC28EAECDD00B97EB1 /* RealMusicApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C947B9EB28EAECDD00B97EB1 /* RealMusicApp.swift */; };
 		C947B9EE28EAECDD00B97EB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C947B9ED28EAECDD00B97EB1 /* ContentView.swift */; };
-		C947B9F428EAECDE00B97EB1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C947B9F328EAECDE00B97EB1 /* Preview Assets.xcassets */; };
 		C947B9FE28EAECDE00B97EB1 /* RealMusicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C947B9FD28EAECDE00B97EB1 /* RealMusicTests.swift */; };
 		C947BA0828EAECDE00B97EB1 /* RealMusicUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C947BA0728EAECDE00B97EB1 /* RealMusicUITests.swift */; };
 		C947BA0A28EAECDE00B97EB1 /* RealMusicUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C947BA0928EAECDE00B97EB1 /* RealMusicUITestsLaunchTests.swift */; };
 		C947BA1928EAEECD00B97EB1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C947BA1828EAEECD00B97EB1 /* GoogleService-Info.plist */; };
 		C95EC4FB2906D53C00550F06 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C947B9EF28EAECDE00B97EB1 /* Assets.xcassets */; };
-		C95EC4FC2906D57400550F06 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C947B9EF28EAECDE00B97EB1 /* Assets.xcassets */; };
+		C95EC511290730B200550F06 /* Dark Grey.colorset in Frameworks */ = {isa = PBXBuildFile; fileRef = C95EC510290730B200550F06 /* Dark Grey.colorset */; };
 		C9848D6C28EC3A79003D4FFA /* PostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9848D6B28EC3A79003D4FFA /* PostViewModel.swift */; };
 		C9848D6E28EC4AE3003D4FFA /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9848D6D28EC4AE3003D4FFA /* Post.swift */; };
 		C9848D7028EEDA17003D4FFA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9848D6F28EEDA17003D4FFA /* User.swift */; };
@@ -78,6 +77,17 @@
 		C947BA0928EAECDE00B97EB1 /* RealMusicUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealMusicUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		C947BA1828EAEECD00B97EB1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C95EC4FA2906CD6000550F06 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		C95EC4FD29072D5700550F06 /* Assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Assets; path = RealMusic/Assets; sourceTree = "<group>"; };
+		C95EC50129072E0600550F06 /* Contents.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Contents.json; sourceTree = "<group>"; };
+		C95EC50229072E0600550F06 /* Kids See Ghosts Album Cover.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Kids See Ghosts Album Cover.jpeg"; sourceTree = "<group>"; };
+		C95EC50429072E0600550F06 /* Contents.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Contents.json; sourceTree = "<group>"; };
+		C95EC50629072E0600550F06 /* Contents.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Contents.json; sourceTree = "<group>"; };
+		C95EC50829072E0600550F06 /* Contents.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Contents.json; sourceTree = "<group>"; };
+		C95EC50929072E0600550F06 /* Contents.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Contents.json; sourceTree = "<group>"; };
+		C95EC50B29072E0600550F06 /* Contents.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Contents.json; sourceTree = "<group>"; };
+		C95EC50C29072E9700550F06 /* Assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Assets; sourceTree = "<group>"; };
+		C95EC50E2907302000550F06 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = RealMusic/Assets.xcassets; sourceTree = "<group>"; };
+		C95EC510290730B200550F06 /* Dark Grey.colorset */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Dark Grey.colorset"; path = "RealMusic/Assets.xcassets/Dark Grey.colorset"; sourceTree = "<group>"; };
 		C9848D6B28EC3A79003D4FFA /* PostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewModel.swift; sourceTree = "<group>"; };
 		C9848D6D28EC4AE3003D4FFA /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		C9848D6F28EEDA17003D4FFA /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -94,6 +104,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C95EC511290730B200550F06 /* Dark Grey.colorset in Frameworks */,
 				899536B029AA01B5932A3B38 /* Pods_RealMusic.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -120,6 +131,7 @@
 		24056C8BCEC5240B09748004 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C95EC510290730B200550F06 /* Dark Grey.colorset */,
 				9D9151DA4226559FFCFBB8B9 /* Pods_RealMusic.framework */,
 				68CAC1828A3B3E422C3AF610 /* Pods_RealMusic_RealMusicUITests.framework */,
 				15CA16557FF6A3E52527D360 /* Pods_RealMusicTests.framework */,
@@ -178,6 +190,10 @@
 		C947B9DF28EAECDD00B97EB1 = {
 			isa = PBXGroup;
 			children = (
+				C95EC50E2907302000550F06 /* Assets.xcassets */,
+				C95EC4FD29072D5700550F06 /* Assets */,
+				C95EC4FF29072E0600550F06 /* Assets */,
+				C95EC50C29072E9700550F06 /* Assets */,
 				C947B9EA28EAECDD00B97EB1 /* RealMusic */,
 				C947B9FC28EAECDE00B97EB1 /* RealMusicTests */,
 				C947BA0628EAECDE00B97EB1 /* RealMusicUITests */,
@@ -236,6 +252,61 @@
 				C947BA0928EAECDE00B97EB1 /* RealMusicUITestsLaunchTests.swift */,
 			);
 			path = RealMusicUITests;
+			sourceTree = "<group>";
+		};
+		C95EC4FF29072E0600550F06 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				C95EC50029072E0600550F06 /* KSG Cover.imageset */,
+				C95EC50329072E0600550F06 /* AppIcon.appiconset */,
+				C95EC50529072E0600550F06 /* AccentColor.colorset */,
+				C95EC50729072E0600550F06 /* Dark Grey.colorset */,
+				C95EC50929072E0600550F06 /* Contents.json */,
+				C95EC50A29072E0600550F06 /* Grey.colorset */,
+			);
+			name = Assets;
+			path = RealMusic/Assets;
+			sourceTree = "<group>";
+		};
+		C95EC50029072E0600550F06 /* KSG Cover.imageset */ = {
+			isa = PBXGroup;
+			children = (
+				C95EC50129072E0600550F06 /* Contents.json */,
+				C95EC50229072E0600550F06 /* Kids See Ghosts Album Cover.jpeg */,
+			);
+			path = "KSG Cover.imageset";
+			sourceTree = "<group>";
+		};
+		C95EC50329072E0600550F06 /* AppIcon.appiconset */ = {
+			isa = PBXGroup;
+			children = (
+				C95EC50429072E0600550F06 /* Contents.json */,
+			);
+			path = AppIcon.appiconset;
+			sourceTree = "<group>";
+		};
+		C95EC50529072E0600550F06 /* AccentColor.colorset */ = {
+			isa = PBXGroup;
+			children = (
+				C95EC50629072E0600550F06 /* Contents.json */,
+			);
+			path = AccentColor.colorset;
+			sourceTree = "<group>";
+		};
+		C95EC50729072E0600550F06 /* Dark Grey.colorset */ = {
+			isa = PBXGroup;
+			children = (
+				C95EC50829072E0600550F06 /* Contents.json */,
+			);
+			path = "Dark Grey.colorset";
+			sourceTree = "<group>";
+		};
+		C95EC50A29072E0600550F06 /* Grey.colorset */ = {
+			isa = PBXGroup;
+			children = (
+				C95EC50B29072E0600550F06 /* Contents.json */,
+			);
+			path = Grey.colorset;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -350,8 +421,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C95EC4FC2906D57400550F06 /* Assets.xcassets in Resources */,
-				C947B9F428EAECDE00B97EB1 /* Preview Assets.xcassets in Resources */,
 				C947BA1928EAEECD00B97EB1 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
