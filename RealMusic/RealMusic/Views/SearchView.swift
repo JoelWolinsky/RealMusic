@@ -46,7 +46,8 @@ struct SearchView: View {
         VStack {
 
             TextField("Search...", text: binding)
-                .background(.orange)
+                .background(.green)
+                .padding(20)
             
             ScrollView {
                 ForEach(searchResults) { song in

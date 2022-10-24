@@ -35,6 +35,11 @@ struct ContentView: View {
                     }
                     .padding()
                 }
+                .refreshable {
+                    print("Refreshing")
+                    viewModel.fetchPosts()
+
+                }
                 
                 VStack {
                     Rectangle()
@@ -48,18 +53,17 @@ struct ContentView: View {
                 
                 HStack {
                     
-                    NavigationLink(destination: SearchView() ) {
-                        Text("Search")
-                    }
-                    
                     Image(systemName: "person.2.fill")
                         .foregroundColor(.white)
                         .font(.system(size:20))
                     Spacer()
-                    Text("RealMusic")
-                        .foregroundColor(.white)
-                        .font(.system(size:25))
-                        .fontWeight(.bold)
+                    NavigationLink(destination: SearchView() ) {
+                        Text("RealMusic")
+                            .foregroundColor(.white)
+                            .font(.system(size:25))
+                            .fontWeight(.bold)
+                    }
+                        
                     Spacer()
                     Circle()
                         .foregroundColor(.white)

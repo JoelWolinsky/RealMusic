@@ -66,7 +66,8 @@ struct SearchResultView: View {
                 .foregroundColor(.black)
                 .onTapGesture {
                     print("tapped post")
-                    createPostModel.createPost(post: Post(songID: song.songID, uid: "dadsads", cover: song.cover))
+                    print("song url: \(song.preview_url)")
+                    createPostModel.createPost(post: Post(songID: song.songID, uid: "dadsads", cover: song.cover, preview: song.preview_url))
                 }
                 //.fontWeight(.bold)
 
@@ -85,7 +86,7 @@ struct SearchResultView: View {
     
     struct SearchResultsView_Previews: PreviewProvider {
         static var previews: some View {
-            SearchResultView(song: SpotifySong(songID: "5GHIsNIT9QH2u9XYuA2xp8", uid: "Joel Wolinsky"), createPostModel: CreatePostViewModel(uid: "cY51kdkZdHhq6r3lTAd2"))
+            SearchResultView(song: SpotifySong(songID: "5GHIsNIT9QH2u9XYuA2xp8", uid: "Joel Wolinsky", preview_url: ""), createPostModel: CreatePostViewModel(uid: "cY51kdkZdHhq6r3lTAd2"))
         }
     }
     

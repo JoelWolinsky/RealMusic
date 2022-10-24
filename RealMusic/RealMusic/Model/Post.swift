@@ -11,6 +11,7 @@ struct Post: Identifiable, Decodable, Encodable {
     var username : String?
     var cover : String?
     var datePosted = Date()
+    var preview: String?
     
 }
 

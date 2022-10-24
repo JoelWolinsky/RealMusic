@@ -9,8 +9,8 @@ import Foundation
 
 class FeedViewModel: ObservableObject {
     @Published var posts = [Post]()
-    let postView = PostViewModel()
-    let userView = UserViewModel()
+//    let postView = PostViewModel()
+//    let userView = UserViewModel()
     
     init() {
         fetchPosts()
@@ -18,12 +18,16 @@ class FeedViewModel: ObservableObject {
     }
     
     func fetchPosts() {
+        let postView = PostViewModel()
+        let userView = UserViewModel()
         postView.fetchData { posts in
             self.posts = posts
+            
+            self.posts = self.posts.sorted(by: { $0.datePosted > $1.datePosted })
             print(posts.count)
             for i in 0 ..< posts.count {
                 let uid = posts[i].uid
-                self.userView.fetchUser(withId: uid) { user in
+                userView.fetchUser(withId: uid) { user in
                     self.posts[i].username = user.username
                     print(user.username)
                 }

@@ -11,7 +11,7 @@ import SwiftUI
 class SpotifyAPI: ObservableObject {
     //@Published var response = Response
     
-    var token = "BQBt070WbK_eI2P0BmcsxPBu4d83DbtsKYUquPq2lofq1-l2kYkSjMbJgEky8LYnQB5mkBLcE066-27FsoEX9H3iR9bi9OZCaY1A2dZLOCdPKgHCVz0yyaue7z-Wssub0VxtV7lemZh0iVkNc1eKmcrp4ojDhN7619yDGY9beVh8UAOu6OCIuUkxLPXzgfzpQY8"
+    var token = "BQBNnZmEpOn5-5GR2nxLQxuxnDtV2GL5ClK3zAR_8wFiPenNdR3zZWWDScQa9Z6_KX1ezs8aLvSqQXrgnkrhwIRQhsUllT_sXkD3GV23JSB03KZBQIdf2m2r778ImlEiyHDa1gi0W5X9bjQlj_QOCFnePcLkV4tbkJEZbUEZzWrXe7eIrKaKOC3Dip2j9mPhvVY"
     
     // fix this so it adds more data to the spotifysong item
     func search(input: String, completion: @escaping (Result<[SpotifySong], Error>) -> Void) {
@@ -52,7 +52,7 @@ class SpotifyAPI: ObservableObject {
                     print(results)
                 for song in results.tracks.items {
                     print("adding song to search list")
-                    posts.append(SpotifySong(songID: song.id , uid: "xyz", cover: song.album.images[0].url))
+                    posts.append(SpotifySong(songID: song.id , uid: "xyz", cover: song.album.images[0].url, preview_url: song.preview_url))
                 }
                 //return post
             } else {
@@ -130,6 +130,7 @@ struct Item: Codable {
     let artists: [Artist]
     let id: String
     let album: Album2
+    let preview_url: String? //Not all songs can be played back through the spotify api
 }
 
 struct Artist: Codable {

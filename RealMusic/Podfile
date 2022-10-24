@@ -26,6 +26,7 @@ pod 'FirebaseAnalytics'
 pod 'FirebaseAuth'
 pod 'FirebaseFirestore'
 pod 'FirebaseFirestoreSwift'
+pod 'SwiftySound'
 
 post_install do |installer|
    installer.pods_project.targets.each do |target|

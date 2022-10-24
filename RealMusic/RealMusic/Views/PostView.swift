@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+
 struct PostView: View {
     @State var post: Post
     
@@ -18,11 +19,11 @@ struct PostView: View {
         
         
         VStack {
-            Text("@" + (post.username ?? ""))
+            Text("@" + (post.username ?? "")+(post.id ?? ""))
                 .frame(maxWidth: .infinity, alignment: .leading)
                 
             
-            AlbumView(album: Album(title: post.title ?? "placeholder",artist: post.artist ?? "placeholder" ,cover: post.cover ?? "KSG Cover"))
+            AlbumView(album: Album(title: post.title ?? "placeholder",artist: post.artist ?? "placeholder" ,cover: post.cover ?? "KSG Cover", preview: post.preview ?? ""))
                 //.padding(.bottom, 50)
             
         }
@@ -41,7 +42,7 @@ struct PostView: View {
                     print()
                 }
             }
-        })
+            })
         
 
 
