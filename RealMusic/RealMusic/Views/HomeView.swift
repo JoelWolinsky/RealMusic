@@ -9,7 +9,7 @@ import SwiftUI
 import FirebaseCore
 import FirebaseFirestore
 
-struct ContentView: View {
+struct HomeView: View {
     
     @ObservedObject var viewModel = FeedViewModel()
         
@@ -18,6 +18,8 @@ struct ContentView: View {
     @ObservedObject var createPostModel = CreatePostViewModel(uid: "cY51kdkZdHhq6r3lTAd2")
     
     @ObservedObject var getRequest = SpotifyAPI()
+    
+    @EnvironmentObject var signInModel: SignInViewModel
     
 
     
@@ -68,6 +70,9 @@ struct ContentView: View {
                     Circle()
                         .foregroundColor(.white)
                         .frame(width: 30)
+                        .onTapGesture {
+                            signInModel.signOut()
+                        }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                 .padding(.leading, 20)
@@ -98,9 +103,9 @@ struct ContentView: View {
     }
     
     
-    struct ContentView_Previews: PreviewProvider {
+    struct HomeView_Previews: PreviewProvider {
         static var previews: some View {
-            ContentView()
+            HomeView()
             
         }
     }
