@@ -42,7 +42,7 @@ struct SignInView: View {
                 Button(action: {
                     viewModel.signIn(email: email, password: password)
                 }, label: {
-                    Text("Sign in")
+                    Text("Sign In")
                         .frame(width: 100, height: 30)
                         .background(.green)
                         .cornerRadius(5)
@@ -81,20 +81,55 @@ struct SignUpView: View {
     @EnvironmentObject var viewModel: SignInViewModel
      
     var body: some View {
-        VStack {
-            Text("Sign Up")
+        NavigationView {
+            VStack {
+                Text("RealMusic")
+                    .foregroundColor(.white)
+                    .font(.system(size:40))
+                    .fontWeight(.bold)
+                    .padding(.bottom, 10)
+                
+                Text("Create an Account")
+                    .foregroundColor(.white)
+                
+                VStack {
+                    TextField("Email address", text: $email)
+                        .background(.white)
+                        .cornerRadius(3)
+                    SecureField("Password", text: $password)
+                        .background(.white)
+                        .cornerRadius(3)
+                }
+                .frame(maxWidth: 300)
+                .padding(10)
+               
+                
+                Button(action: {
+                    viewModel.signUp(email: email, password: password)
+                }, label: {
+                    Text("Sign Up")
+                        .frame(width: 100, height: 30)
+                        .background(.green)
+                        .cornerRadius(5)
+                        .foregroundColor(.black)
+                        .padding(10)
+                    
+                })
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(.black)
             
-            TextField("Email address", text: $email)
-            SecureField("Email address", text: $password)
-            
-            Button(action: {
-                viewModel.signUp(email: email, password: password)
-            }, label: {
-                Text("Sign Up")
-            })
         }
-        
+
+       
         
         
     }
+    
+    struct SignInView_Previews: PreviewProvider {
+        static var previews: some View {
+            SignInView()
+        }
+    }
 }
+

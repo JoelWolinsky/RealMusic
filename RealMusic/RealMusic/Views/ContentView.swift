@@ -10,13 +10,24 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var viewModel: SignInViewModel
+    @State private var showWebView = false
     
     var body: some View {
         
         VStack {
             if viewModel.signedIn {
-                HomeView()
-                    .environmentObject(viewModel)
+                
+                Button {
+                    showWebView.toggle()
+                } label: {
+                    Text("AppCoda")
+                }
+                .background(.orange)
+                .sheet(isPresented: $showWebView) {
+                    WebView()
+                }
+//                HomeView()
+//                    .environmentObject(viewModel)
                     
             } else {
                 SignInView()
@@ -32,61 +43,61 @@ struct ContentView: View {
 }
 
 //struct SignInView: View {
-//    
+//
 //    @State var email = ""
 //    @State var password = ""
-//    
+//
 //    @EnvironmentObject var viewModel: SignInViewModel
-//     
+//
 //    var body: some View {
 //        NavigationView {
 //            VStack {
 //                Text("Sign In")
-//                
+//
 //                TextField("Email address", text: $email)
 //                SecureField("Email address", text: $password)
-//                
+//
 //                Button(action: {
 //                    viewModel.signIn(email: email, password: password)
 //                }, label: {
 //                    Text("Sign in")
 //                })
-//            
-//                    
+//
+//
 //                NavigationLink (destination: SignUpView()) {
 //                    Text("Create Account")
 //                }
 //            }
-//            
+//
 //        }
-//       
-//        
-//        
+//
+//
+//
 //    }
 //}
 //
 //struct SignUpView: View {
-//    
+//
 //    @State var email = ""
 //    @State var password = ""
-//    
+//
 //    @EnvironmentObject var viewModel: SignInViewModel
-//     
+//
 //    var body: some View {
 //        VStack {
 //            Text("Sign Up")
-//            
+//
 //            TextField("Email address", text: $email)
 //            SecureField("Email address", text: $password)
-//            
+//
 //            Button(action: {
 //                viewModel.signUp(email: email, password: password)
 //            }, label: {
 //                Text("Sign Up")
 //            })
 //        }
-//        
-//        
-//        
+//
+//
+//
 //    }
 //}

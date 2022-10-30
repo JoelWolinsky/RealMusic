@@ -38,6 +38,7 @@
 		C9D458FB28F8154300547D30 /* AlbumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D458FA28F8154300547D30 /* AlbumView.swift */; };
 		C9D458FD28F8165600547D30 /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D458FC28F8165600547D30 /* Album.swift */; };
 		C9DBD629290E885600ACD644 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DBD628290E885600ACD644 /* SignInView.swift */; };
+		C9DBD62B290F2B5900ACD644 /* APIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DBD62A290F2B5900ACD644 /* APIConstants.swift */; };
 		CC45AB22BE2A94605C06DF79 /* Pods_RealMusic_RealMusicUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68CAC1828A3B3E422C3AF610 /* Pods_RealMusic_RealMusicUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -98,6 +99,7 @@
 		C9D458FA28F8154300547D30 /* AlbumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumView.swift; sourceTree = "<group>"; };
 		C9D458FC28F8165600547D30 /* Album.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
 		C9DBD628290E885600ACD644 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
+		C9DBD62A290F2B5900ACD644 /* APIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConstants.swift; sourceTree = "<group>"; };
 		CF5B2EA57AD4A192B88BC414 /* Pods-RealMusic-RealMusicUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealMusic-RealMusicUITests.debug.xcconfig"; path = "Target Support Files/Pods-RealMusic-RealMusicUITests/Pods-RealMusic-RealMusicUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		E7D4F128FE4B62828D7FC250 /* Pods-RealMusic-RealMusicUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealMusic-RealMusicUITests.release.xcconfig"; path = "Target Support Files/Pods-RealMusic-RealMusicUITests/Pods-RealMusic-RealMusicUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -190,6 +192,7 @@
 				C9848D7128F2DE95003D4FFA /* FeedViewModel.swift */,
 				C907BF7A28F9AAC3002197F1 /* CreatePostViewModel.swift */,
 				C907BF7C28FFE8A5002197F1 /* SpotifyAPI.swift */,
+				C9DBD62A290F2B5900ACD644 /* APIConstants.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -517,6 +520,7 @@
 				C907BF85290195CF002197F1 /* SearchView.swift in Sources */,
 				C907BF7B28F9AAC3002197F1 /* CreatePostViewModel.swift in Sources */,
 				C9848D7428F2E2DF003D4FFA /* UserViewModel.swift in Sources */,
+				C9DBD62B290F2B5900ACD644 /* APIConstants.swift in Sources */,
 				C9848D6E28EC4AE3003D4FFA /* Post.swift in Sources */,
 				C95EC51C290A91E600550F06 /* ContentView.swift in Sources */,
 				C9D458FD28F8165600547D30 /* Album.swift in Sources */,

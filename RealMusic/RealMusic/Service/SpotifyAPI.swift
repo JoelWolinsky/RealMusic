@@ -11,8 +11,24 @@ import SwiftUI
 class SpotifyAPI: ObservableObject {
     //@Published var response = Response
     
-    var token = "BQDAT7RO6I9YqBIFlc08vDaTgix6NMHlJLjNqOWyNjxiXoahsoz3qxTiwWWPB4LpnzWPUuOqxHjt4d17qrFV04KLKAujDZmAJ3O3Pp7SEah_klTWMprjkimEHFRLufTFFukpbGrP3uEpqDg72Xuk7lsY_lJAHLPsUebOiM4uEB06f_9R9WN3LR2Otc_tYTquTx0"
+    static let shared = SpotifyAPI()
     
+    var token = "BQA3kRn2nj3zu5O7vZ3G5V4Xac51zil23Dw5ZJ-6tJxDCkHcSvzsovhvnvvoi1LD2dUsxhXWEJieHbi4NHkNVvAAqEIImloDIttc9AuKBmklEvmwHqcqRTmCZJiKRBOvVANRh5aKi11e9hUCmXRg-LBVZFsLAHpcOwDw9QimoloXdo0tNN3YYxYGnn1nN3MC9W0"
+    
+    
+    func getAccessTokenURL() -> URLRequest? {
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = APIConstants.authHost
+        components.path = "/authorize"
+        
+        components.queryItems = APIConstants.authParams.map({URLQueryItem(name: $0,value: $1)})
+        
+        guard let url = components.url else { return nil }
+        
+        print("URL ACCESS TOKEN", url)
+        return URLRequest(url: url)
+    }
     // fix this so it adds more data to the spotifysong item
     func search(input: String, completion: @escaping (Result<[SpotifySong], Error>) -> Void) {
         var name = "3A"
