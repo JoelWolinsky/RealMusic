@@ -2,34 +2,11 @@
 //  SignInView.swift
 //  RealMusic
 //
-//  Created by Joel Wolinsky on 27/10/2022.
+//  Created by Joel Wolinsky on 30/10/2022.
 //
 
 import Foundation
 import SwiftUI
-
-struct ContentView: View {
-    @EnvironmentObject var viewModel: SignInViewModel
-    
-    var body: some View {
-        
-        VStack {
-            if viewModel.signedIn {
-                HomeView()
-                    .environmentObject(viewModel)
-                    
-            } else {
-                SignInView()
-            }
-            
-        }.onAppear( perform: {
-            viewModel.signedIn = viewModel.isSignedIn
-            }
-        )
-
-    }
-        
-}
 
 struct SignInView: View {
     
@@ -41,15 +18,37 @@ struct SignInView: View {
     var body: some View {
         NavigationView {
             VStack {
-                Text("Sign In")
+                Text("RealMusic")
+                    .foregroundColor(.white)
+                    .font(.system(size:40))
+                    .fontWeight(.bold)
+                    .padding(.bottom, 10)
                 
-                TextField("Email address", text: $email)
-                SecureField("Email address", text: $password)
+                Text("Sign In")
+                    .foregroundColor(.white)
+                
+                VStack {
+                    TextField("Email address", text: $email)
+                        .background(.white)
+                        .cornerRadius(3)
+                    SecureField("Password", text: $password)
+                        .background(.white)
+                        .cornerRadius(3)
+                }
+                .frame(maxWidth: 300)
+                .padding(10)
+               
                 
                 Button(action: {
                     viewModel.signIn(email: email, password: password)
                 }, label: {
                     Text("Sign in")
+                        .frame(width: 100, height: 30)
+                        .background(.green)
+                        .cornerRadius(5)
+                        .foregroundColor(.black)
+                        .padding(10)
+                    
                 })
             
                     
@@ -57,11 +56,20 @@ struct SignInView: View {
                     Text("Create Account")
                 }
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(.black)
             
         }
+
        
         
         
+    }
+    
+    struct SignInView_Previews: PreviewProvider {
+        static var previews: some View {
+            SignInView()
+        }
     }
 }
 
