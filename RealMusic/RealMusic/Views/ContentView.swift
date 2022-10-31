@@ -8,26 +8,30 @@
 import Foundation
 import SwiftUI
 
+extension View {
+    func toAnyView() -> AnyView {
+        AnyView(self)
+    }
+}
+
 struct ContentView: View {
     @EnvironmentObject var viewModel: SignInViewModel
-    @State private var showWebView = false
-    
+    @State private var showWebView = true
+    @State private var showHome = false
+
+   // @State var showLoading: Bool = true
     var body: some View {
         
         VStack {
             if viewModel.signedIn {
                 
-                Button {
-                    showWebView.toggle()
-                } label: {
-                    Text("AppCoda")
-                }
-                .background(.orange)
+                HomeView()
+                   // .environment(viewModel: viewModel)
                 .sheet(isPresented: $showWebView) {
+//                    Text("Hello woRLD")
+//                        .foregroundColor(.blue)
                     WebView()
                 }
-//                HomeView()
-//                    .environmentObject(viewModel)
                     
             } else {
                 SignInView()

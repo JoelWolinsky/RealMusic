@@ -13,7 +13,7 @@ class SpotifyAPI: ObservableObject {
     
     static let shared = SpotifyAPI()
     
-    var token = "BQA3kRn2nj3zu5O7vZ3G5V4Xac51zil23Dw5ZJ-6tJxDCkHcSvzsovhvnvvoi1LD2dUsxhXWEJieHbi4NHkNVvAAqEIImloDIttc9AuKBmklEvmwHqcqRTmCZJiKRBOvVANRh5aKi11e9hUCmXRg-LBVZFsLAHpcOwDw9QimoloXdo0tNN3YYxYGnn1nN3MC9W0"
+    var token = "BQBtvxAjZb7yB5WLo1Z8QM7y6KidZZogmEJGlcYmUu_DDx8EEn_PyCQr56ZtsxJcoO9LATeckMoNig7BkD-Pem25ebaDeOBVh0LwgeClEmAbA5USvsZZrZJMjdzrdsYo-9nudT06ZikMxZ0TiAi4trq_l8lkKxSYvza2GwazmvzYm4jTXJLh_wV4fPwW4lb3yJlbJhxzccTvsI6t"
     
     
     func getAccessTokenURL() -> URLRequest? {

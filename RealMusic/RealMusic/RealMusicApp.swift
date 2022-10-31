@@ -44,48 +44,8 @@ class SignInViewModel: ObservableObject {
 
         self.signedIn = false
     }
-    
-//    func getAccessTokenFromView() {
-//        guard let urlRequest = SpotifyAPI.shared.getAccessTokenURL() else { return }
-//        let webview = WKWebView()
-//
-//        webview.load(urlRequest)
-//        webview.navigationDelegate = self
-//        //view = webview
-//
-//
-//
-//    }
 }
 
-
-struct WebView: UIViewRepresentable {
-    
-    
-    func makeUIView(context: Context) -> WKWebView {
-            return WKWebView()
-        }
-    
-    
-    func updateUIView(_ webView: WKWebView, context: Context) {
-        guard let urlRequest = SpotifyAPI.shared.getAccessTokenURL() else { return }
-        let webview = WKWebView()
-        print("loading webview")
-        webview.load(urlRequest)
-        }
-    
-    
-//    func getAccessTokenFromView() {
-//        guard let urlRequest = SpotifyAPI.shared.getAccessTokenURL() else { return }
-//        let webview = WKWebView()
-//
-//        webview.load(urlRequest)
-//        //webview.navigationDelegate = self
-//        //view = webview
-//
-//
-//    }
-}
 
 
 @main
