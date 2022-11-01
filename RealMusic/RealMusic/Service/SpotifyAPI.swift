@@ -13,7 +13,9 @@ class SpotifyAPI: ObservableObject {
     
     static let shared = SpotifyAPI()
     
-    var token = "BQBtvxAjZb7yB5WLo1Z8QM7y6KidZZogmEJGlcYmUu_DDx8EEn_PyCQr56ZtsxJcoO9LATeckMoNig7BkD-Pem25ebaDeOBVh0LwgeClEmAbA5USvsZZrZJMjdzrdsYo-9nudT06ZikMxZ0TiAi4trq_l8lkKxSYvza2GwazmvzYm4jTXJLh_wV4fPwW4lb3yJlbJhxzccTvsI6t"
+    var token = //"BQAmKq9ZZZoO53yAHDtkna8e04xPHR87Dn47uNERYOfcYZIZbDj0aonR-DBRWxaxMl097OeWtOvsWrIe4tj-qdyzvx_815aLWG6Tb8qQjI5mOyEsuegGSioh4_SZ0jrMZwSQd3qz5Asy8kw3FO3vbrrmZBEDZUkdii5tin_U4-R80Un4cFsZhsmGN4e5Rb82q5fz0i5jPYH2DQud"
+    UserDefaults.standard.value(forKey: "Authorization")!
+    
     
     
     func getAccessTokenURL() -> URLRequest? {
@@ -29,8 +31,10 @@ class SpotifyAPI: ObservableObject {
         print("URL ACCESS TOKEN", url)
         return URLRequest(url: url)
     }
+    
     // fix this so it adds more data to the spotifysong item
     func search(input: String, completion: @escaping (Result<[SpotifySong], Error>) -> Void) {
+        print("token \(token)")
         var name = "3A"
         for word in input.components(separatedBy: " ") {
             if name == "3A" {

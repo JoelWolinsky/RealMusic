@@ -26,6 +26,7 @@ struct WebView: UIViewRepresentable {
     
     
     func updateUIView(_ uiView: UIViewType, context: Context) {
+        print("update ui")
 //        guard let urlRequest = SpotifyAPI.shared.getAccessTokenURL() else { return }
 //        let webview = WKWebView()
 //
@@ -39,6 +40,8 @@ struct WebView: UIViewRepresentable {
         WebViewCoordinator(didStart: {
             //showLoading = true
         }, didFinish: {
+            print("error2")
+
             //showLoading = false
         })
     }
@@ -60,22 +63,34 @@ class WebViewCoordinator: NSObject, WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        didFinish()
         print("did finish")
-        let urlString = webView.url?.absoluteString //else { return }
-        //print(urlString)
+        guard let urlString = webView.url?.absoluteString else { return }
+        print(urlString)
         print("error")
         
-//        if urlString.contains("#access_token=") {
-//            print("contains token")
-//            let range = urlString.range(of: "#access_token=")
-//            guard let index = range?.upperBound else { return }
-//            print(urlString[index...])
-//
-//        } else {
-//            print("Doesn't contain token")
-//        }
+        var tokenString = ""
+        
+        if urlString.contains("#access_token=") {
+            print("contains token")
+            let range = urlString.range(of: "#access_token=")
+            guard let index = range?.upperBound else { return }
+            tokenString = String(urlString[index...])
+            
 
-        //didFinish()
+        }
+        
+        if !tokenString.isEmpty {
+            let range = tokenString.range(of: "&token_type=Bearer")
+            guard let index = range?.lowerBound else { return }
+            
+            tokenString = String(tokenString[..<index])
+            UserDefaults.standard.setValue(tokenString, forKey: "Authorization")
+        }
+        
+        print("token \(tokenString)")
+
+       
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {

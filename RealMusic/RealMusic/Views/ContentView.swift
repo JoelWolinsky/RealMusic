@@ -24,12 +24,13 @@ struct ContentView: View {
         
         VStack {
             if viewModel.signedIn {
-                
-                HomeView()
                    // .environment(viewModel: viewModel)
-                .sheet(isPresented: $showWebView) {
-//                    Text("Hello woRLD")
-//                        .foregroundColor(.blue)
+                if let token = UserDefaults.standard.value(forKey: "Authorization") {
+                    HomeView()
+                        .sheet(isPresented: $showWebView) {
+                            WebView()
+                        }
+                } else {
                     WebView()
                 }
                     
@@ -39,6 +40,7 @@ struct ContentView: View {
             
         }.onAppear( perform: {
             viewModel.signedIn = viewModel.isSignedIn
+            //UserDefaults.standard.setValue(nil, forKey: "Authorization")
             }
         )
 
