@@ -8,6 +8,7 @@
 import SwiftUI
 import FirebaseCore
 import FirebaseFirestore
+import FirebaseAuth
 
 // This is the main screen of the app which displays the users feed consisting of posts made by other users
 struct HomeView: View {
@@ -32,6 +33,7 @@ struct HomeView: View {
                 
                 ScrollView {
                     VStack{
+                        
                         ForEach(viewModel.posts) { post in
                             PostView(post: post)
                         }

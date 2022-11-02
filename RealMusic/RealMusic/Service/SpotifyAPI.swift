@@ -17,7 +17,7 @@ class SpotifyAPI: ObservableObject {
     var token = UserDefaults.standard.value(forKey: "Authorization") ?? ""
     
     
-    // Authourize the user to get a Spotify access token for them to use the API
+    // Gets they URL for authorizing the user to get a Spotify access token
     func getAccessTokenURL() -> URLRequest? {
         var components = URLComponents()
         components.scheme = "https"
@@ -30,6 +30,49 @@ class SpotifyAPI: ObservableObject {
         
         print("URL ACCESS TOKEN", url)
         return URLRequest(url: url)
+    }
+    
+    // Check the Spotify access token is still valid
+    func checkTokenExpiry(completion: @escaping (Bool) -> Void) {
+        
+        let url = URL(string: "https://api.spotify.com/v1/search?q=track%3Atest&type=track%2Cartist&market=GB&limit=1&offset=0")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        let requestHeader:  [String : String] = [
+            "Authorization" : "Bearer \(token)",
+            //"Authorization" : "Bearer fdsafsad",
+            "Content-Type" : "application/json"
+        ]
+        request.allHTTPHeaderFields = requestHeader
+        
+        
+        
+        let post = URLSession.shared.dataTask(with: request) {data, response, error in
+            print("url session")
+            print(UserDefaults.standard.value(forKey: "Authorization"))
+             if let error = error {
+               print("Error with fetching films: \(error)")
+               return
+             }
+             
+             guard let httpResponse = response as? HTTPURLResponse,
+                   (200...299).contains(httpResponse.statusCode) else {
+                 print("Error with the response, unexpected status code: \(response)")
+                 completion(false)
+                 return
+             }
+            print("url session no error")
+            print("response \(response)")
+            completion(true)
+                //completion(.success([results.name, artists]))
+                //post = Post(songID: results.tracks.items[0].id , uid: "xyz", cover: results.tracks.items[0].album.images[0].url)
+                //return post
+            
+            //completion(.failure())
+            
+        }
+        .resume()
+        
     }
     
     // Given a song name or part of a name, return song results matching that name

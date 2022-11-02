@@ -17,8 +17,10 @@ extension View {
 // This is the view handler
 struct ContentView: View {
     @EnvironmentObject var viewModel: SignInViewModel
-    @State private var showWebView = true
+    @State private var showWebView = false
     @State private var showHome = false
+    
+    @ObservedObject var SpotifyAPI2 = SpotifyAPI()
 
    // @State var showLoading: Bool = true
     var body: some View {
@@ -38,13 +40,26 @@ struct ContentView: View {
             
         }.onAppear( perform: {
             viewModel.signedIn = viewModel.isSignedIn
-            // check if token still valid here, make nil if so 
-            UserDefaults.standard.setValue(nil, forKey: "Authorization")
+            //viewModel.signedIn = false
+            // check if token still valid here, make nil if so
+            
+            SpotifyAPI.shared.checkTokenExpiry { (result) in
+                switch result {
+                    case true:
+                    print("token valid ")
+                    //createPostModel.createPost(post: data[0])
+                        
+                    case false:
+                    print("token expired")
+                    showWebView = true
+                    }
+                }
+            //UserDefaults.standard.setValue(nil, forKey: "Authorization")
             
             
-            if let token = UserDefaults.standard.value(forKey: "Authorization") {
-                showWebView = false
-            }
+//            if let token = UserDefaults.standard.value(forKey: "Authorization") {
+//                showWebView = false
+//            }
             //UserDefaults.standard.setValue(nil, forKey: "Authorization")
             }
         )

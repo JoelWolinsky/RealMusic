@@ -15,6 +15,7 @@ class SignInViewModel: ObservableObject {
     @Published var signedIn = false
 
     var isSignedIn: Bool {
+        print("CURRENT USER \(auth.currentUser)")
         return auth.currentUser != nil
     }
 
