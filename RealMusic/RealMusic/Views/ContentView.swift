@@ -25,21 +25,25 @@ struct ContentView: View {
         VStack {
             if viewModel.signedIn {
                    // .environment(viewModel: viewModel)
-                if let token = UserDefaults.standard.value(forKey: "Authorization") {
-                    HomeView()
-                        .sheet(isPresented: $showWebView) {
-                            WebView()
-                        }
-                } else {
-                    WebView()
-                }
-                    
+                
+                HomeView()
+                    .sheet(isPresented: $showWebView) {
+                        WebView()
+                    }
+  
             } else {
                 SignInView()
             }
             
         }.onAppear( perform: {
             viewModel.signedIn = viewModel.isSignedIn
+            // check if token still valid here, make nil if so 
+            UserDefaults.standard.setValue(nil, forKey: "Authorization")
+            
+            
+            if let token = UserDefaults.standard.value(forKey: "Authorization") {
+                showWebView = false
+            }
             //UserDefaults.standard.setValue(nil, forKey: "Authorization")
             }
         )

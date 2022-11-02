@@ -14,7 +14,7 @@ class SpotifyAPI: ObservableObject {
     static let shared = SpotifyAPI()
     
     var token = //"BQAmKq9ZZZoO53yAHDtkna8e04xPHR87Dn47uNERYOfcYZIZbDj0aonR-DBRWxaxMl097OeWtOvsWrIe4tj-qdyzvx_815aLWG6Tb8qQjI5mOyEsuegGSioh4_SZ0jrMZwSQd3qz5Asy8kw3FO3vbrrmZBEDZUkdii5tin_U4-R80Un4cFsZhsmGN4e5Rb82q5fz0i5jPYH2DQud"
-    UserDefaults.standard.value(forKey: "Authorization")!
+    UserDefaults.standard.value(forKey: "Authorization") ?? ""
     
     
     
