@@ -3,6 +3,7 @@ import FirebaseFirestore
 
 class UserViewModel: ObservableObject {
     
+    // Fetch data for a user given their id
     func fetchUser(withId id: String, completion: @escaping(User) -> Void ) {
         let db = Firestore.firestore()
         db.collection("Users")
@@ -14,6 +15,7 @@ class UserViewModel: ObservableObject {
             }
     }
     
+    // Fetch all the users
     func fetchUsers(completion: @escaping([User]) -> Void ) {
         var users = [User]()
         let db = Firestore.firestore()

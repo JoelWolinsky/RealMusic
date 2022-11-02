@@ -9,6 +9,8 @@ import Foundation
 import SwiftUI
 import WebKit
 
+
+// WebView is used to authorize the users using their Spotify account
 struct WebView: UIViewRepresentable {
     
     //let var showLoading: Bool

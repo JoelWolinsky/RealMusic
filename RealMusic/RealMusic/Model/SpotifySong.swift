@@ -7,7 +7,7 @@
 
 import Foundation
 
-
+// Structure of a song returned by the Spotify API
 struct SpotifySong: Identifiable, Decodable, Encodable {
     
     var id = UUID()

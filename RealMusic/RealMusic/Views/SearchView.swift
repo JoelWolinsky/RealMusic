@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+// A view for user to search through the Spotify library to find a song to post
 struct SearchView: View {
     
     @State var name: String = "Sunny"

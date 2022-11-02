@@ -35,6 +35,7 @@
 		C9848D7028EEDA17003D4FFA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9848D6F28EEDA17003D4FFA /* User.swift */; };
 		C9848D7228F2DE95003D4FFA /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9848D7128F2DE95003D4FFA /* FeedViewModel.swift */; };
 		C9848D7428F2E2DF003D4FFA /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9848D7328F2E2DF003D4FFA /* UserViewModel.swift */; };
+		C9A0A5FE29128A1700A6FD97 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A0A5FD29128A1700A6FD97 /* SignInViewModel.swift */; };
 		C9D458FB28F8154300547D30 /* AlbumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D458FA28F8154300547D30 /* AlbumView.swift */; };
 		C9D458FD28F8165600547D30 /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D458FC28F8165600547D30 /* Album.swift */; };
 		C9DBD629290E885600ACD644 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DBD628290E885600ACD644 /* SignInView.swift */; };
@@ -97,6 +98,7 @@
 		C9848D6F28EEDA17003D4FFA /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		C9848D7128F2DE95003D4FFA /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		C9848D7328F2E2DF003D4FFA /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
+		C9A0A5FD29128A1700A6FD97 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
 		C9D458FA28F8154300547D30 /* AlbumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumView.swift; sourceTree = "<group>"; };
 		C9D458FC28F8165600547D30 /* Album.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
 		C9DBD628290E885600ACD644 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 				C907BF8A2902131D002197F1 /* SpotifySong.swift */,
 				C9D458FC28F8165600547D30 /* Album.swift */,
 				C9848D6F28EEDA17003D4FFA /* User.swift */,
+				C9A0A5FD29128A1700A6FD97 /* SignInViewModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -513,6 +516,7 @@
 				C907BF8929020749002197F1 /* SearchResultView.swift in Sources */,
 				C947B9EE28EAECDD00B97EB1 /* HomeView.swift in Sources */,
 				C93D7EA128F3166100FEF3D6 /* PostView.swift in Sources */,
+				C9A0A5FE29128A1700A6FD97 /* SignInViewModel.swift in Sources */,
 				C907BF7D28FFE8A5002197F1 /* SpotifyAPI.swift in Sources */,
 				C9D458FB28F8154300547D30 /* AlbumView.swift in Sources */,
 				C9DBD629290E885600ACD644 /* SignInView.swift in Sources */,

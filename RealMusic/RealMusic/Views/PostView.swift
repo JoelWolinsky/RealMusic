@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-
+// A single post consisting of the song being posted and also the user posting it
 struct PostView: View {
     @State var post: Post
     

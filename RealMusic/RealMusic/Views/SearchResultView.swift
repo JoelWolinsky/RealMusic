@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+// A single song in the search results from the API
 struct SearchResultView: View {
     
     @State var song: SpotifySong

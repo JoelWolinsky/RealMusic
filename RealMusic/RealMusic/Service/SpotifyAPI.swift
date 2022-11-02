@@ -8,16 +8,16 @@
 import Foundation
 import SwiftUI
 
+// Handle all interactions with the Spotify API
 class SpotifyAPI: ObservableObject {
     //@Published var response = Response
     
     static let shared = SpotifyAPI()
     
-    var token = //"BQAmKq9ZZZoO53yAHDtkna8e04xPHR87Dn47uNERYOfcYZIZbDj0aonR-DBRWxaxMl097OeWtOvsWrIe4tj-qdyzvx_815aLWG6Tb8qQjI5mOyEsuegGSioh4_SZ0jrMZwSQd3qz5Asy8kw3FO3vbrrmZBEDZUkdii5tin_U4-R80Un4cFsZhsmGN4e5Rb82q5fz0i5jPYH2DQud"
-    UserDefaults.standard.value(forKey: "Authorization") ?? ""
+    var token = UserDefaults.standard.value(forKey: "Authorization") ?? ""
     
     
-    
+    // Authourize the user to get a Spotify access token for them to use the API
     func getAccessTokenURL() -> URLRequest? {
         var components = URLComponents()
         components.scheme = "https"
@@ -32,6 +32,7 @@ class SpotifyAPI: ObservableObject {
         return URLRequest(url: url)
     }
     
+    // Given a song name or part of a name, return song results matching that name
     // fix this so it adds more data to the spotifysong item
     func search(input: String, completion: @escaping (Result<[SpotifySong], Error>) -> Void) {
         print("token \(token)")
@@ -85,9 +86,8 @@ class SpotifyAPI: ObservableObject {
     }
     
     
+    // Given the id of a Spotify song, fins all the data on that song
     func getSong(ID: String, completion: @escaping (Result<[String], Error>) -> Void){
-        
-        
         let url = URL(string: "https://api.spotify.com/v1/tracks/" + ID)!
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
@@ -150,7 +150,7 @@ struct Item: Codable {
     let artists: [Artist]
     let id: String
     let album: Album2
-    let preview_url: String? //Not all songs can be played back through the spotify api
+    let preview_url: String? //Not all songs can be played back through the spotify api, this will need to be handled
 }
 
 struct Artist: Codable {

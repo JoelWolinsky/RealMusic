@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+// View for users to sign in the app
 struct SignInView: View {
     
     @State var email = ""
@@ -73,6 +74,7 @@ struct SignInView: View {
     }
 }
 
+// View for users to sign up 
 struct SignUpView: View {
     
     @State var email = ""

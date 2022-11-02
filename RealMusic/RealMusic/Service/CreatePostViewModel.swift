@@ -17,6 +17,7 @@ class CreatePostViewModel: ObservableObject {
         //createPost()
     }
     
+    // Add a new post to the db
     func createPost(post: Post) {
         let db = Firestore.firestore()
         //let post = Post(title: "Test Send Post", uid: "test uid")

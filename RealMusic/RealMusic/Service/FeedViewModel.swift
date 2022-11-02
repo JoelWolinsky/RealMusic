@@ -17,6 +17,7 @@ class FeedViewModel: ObservableObject {
         print("fetching")
     }
     
+    // Fetches every post and user who made the post
     func fetchPosts() {
         let postView = PostViewModel()
         let userView = UserViewModel()

@@ -10,7 +10,7 @@ import SwiftUI
 import AVFoundation
 var audioPlayer: AVAudioPlayer!
 
-
+// View of the song in a post and the info linked to that song, eg song name and artist
 struct AlbumView: View {
     
     let album: Album

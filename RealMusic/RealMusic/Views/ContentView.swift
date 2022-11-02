@@ -14,6 +14,7 @@ extension View {
     }
 }
 
+// This is the view handler
 struct ContentView: View {
     @EnvironmentObject var viewModel: SignInViewModel
     @State private var showWebView = true
@@ -21,7 +22,7 @@ struct ContentView: View {
 
    // @State var showLoading: Bool = true
     var body: some View {
-        
+        // Sign in the user and authorize them before taking them to the main feed
         VStack {
             if viewModel.signedIn {
                    // .environment(viewModel: viewModel)

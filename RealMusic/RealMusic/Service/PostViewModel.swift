@@ -3,6 +3,7 @@ import FirebaseFirestore
 
 class PostViewModel: ObservableObject {
     
+    // Fetch post data from Firebase 
     func fetchData(completion: @escaping([Post]) -> Void ) {
         var posts = [Post]()
         let db = Firestore.firestore()

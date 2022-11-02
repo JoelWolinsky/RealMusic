@@ -9,6 +9,7 @@ import SwiftUI
 import FirebaseCore
 import FirebaseFirestore
 
+// This is the main screen of the app which displays the users feed consisting of posts made by other users
 struct HomeView: View {
     
     @ObservedObject var viewModel = FeedViewModel()
