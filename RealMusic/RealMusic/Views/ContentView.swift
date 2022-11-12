@@ -62,27 +62,27 @@ struct ContentView: View {
             //test = "hello world"
             // check if token still valid here, make nil if so
             
-//            SpotifyAPI.shared.checkTokenExpiry { (result) in
-//                switch result {
-//                    case true:
-//                    print("token valid ")
-//                    showWebView = false
-//                    //createPostModel.createPost(post: data[0])
-//
-//                    case false:
-//                    print("token expired")
-//                    showWebView = true
-//                    }
-//                }
+            SpotifyAPI.shared.checkTokenExpiry { (result) in
+                switch result {
+                    case true:
+                    print("aaaa token valid ")
+                    showWebView.showView = false
+                    //createPostModel.createPost(post: data[0])
+
+                    case false:
+                    print("aaaa token expired")
+                    showWebView.showView = true
+                    }
+                }
             spotifyAPI.search(input: "") { (result) in
                 switch result {
                     case .success(let data) :
                     print("success 123\(data)")
                     print("SEARCH success")
-                    showWebView.showView = false
+                    //showWebView.showView = false
                     case .failure(let error) :
                     print("SEARCH fail")
-                    showWebView.showView = true
+                    //showWebView.showView = true
                     }
                 }
             //UserDefaults.standard.setValue(nil, forKey: "Authorization")

@@ -43,13 +43,13 @@ class SpotifyAPI: ObservableObject {
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         let requestHeader:  [String : String] = [
-            //"Authorization" : "Bearer \(token)",
-            "Authorization" : "Bearer fdsafsad",
+            "Authorization" : "Bearer \(token)",
+            //"Authorization" : "Bearer fdsafsad",
             "Content-Type" : "application/json"
         ]
         request.allHTTPHeaderFields = requestHeader
         
-        print("Bearer \(token)")
+        print("Bearer check \(token)")
         
         
         
