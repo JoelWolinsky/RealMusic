@@ -13,7 +13,7 @@ import FirebaseAuth
 // This is the main screen of the app which displays the users feed consisting of posts made by other users
 struct HomeView: View {
     
-    @ObservedObject var viewModel = FeedViewModel()
+    @StateObject var feedViewModel: FeedViewModel
         
     let userUid = "cY51kdkZdHhq6r3lTAd2"
     
@@ -34,7 +34,7 @@ struct HomeView: View {
                 ScrollView {
                     VStack{
                         
-                        ForEach(viewModel.posts) { post in
+                        ForEach(feedViewModel.posts) { post in
                             PostView(post: post)
                         }
                     }
@@ -42,7 +42,7 @@ struct HomeView: View {
                 }
                 .refreshable {
                     print("Refreshing")
-                    viewModel.fetchPosts()
+                    feedViewModel.fetchPosts()
 
                 }
                 
@@ -108,7 +108,7 @@ struct HomeView: View {
     
     struct HomeView_Previews: PreviewProvider {
         static var previews: some View {
-            HomeView()
+            HomeView(feedViewModel: FeedViewModel())
             
         }
     }

@@ -17,41 +17,72 @@ extension View {
 // This is the view handler
 struct ContentView: View {
     @EnvironmentObject var viewModel: SignInViewModel
-    @State private var showWebView = false
+    //@State private var showWebView = false
     @State private var showHome = false
     
-    @ObservedObject var SpotifyAPI2 = SpotifyAPI()
+    @ObservedObject var spotifyAPI = SpotifyAPI()
+    @ObservedObject var feedViewModel = FeedViewModel()
+    
+    @ObservedObject var showWebView = showView(showView: false)
+    
+    //@Binding var test: String
 
    // @State var showLoading: Bool = true
     var body: some View {
         // Sign in the user and authorize them before taking them to the main feed
         VStack {
+//            Text(test)
+//                .foregroundColor(.orange)
             if viewModel.signedIn {
                    // .environment(viewModel: viewModel)
                 
-                HomeView()
-                    .sheet(isPresented: $showWebView) {
-                        WebView()
+                HomeView(feedViewModel: feedViewModel)
+                    .sheet(isPresented: $showWebView.showView) {
+                        WebView(showWebView: showWebView)
+                            .onDisappear(perform: {
+                                print("disapear")
+                                feedViewModel.fetchPosts()
+                            })
+                            
+                        
                     }
   
             } else {
                 SignInView()
+                    .onAppear(perform: {
+                        //UserDefaults.standard.setValue(nil, forKey: "Authorization")
+                        showWebView.showView = true
+                    })
+                // ADD once signed it and redirected to google to close sheet
             }
             
         }.onAppear( perform: {
             viewModel.signedIn = viewModel.isSignedIn
-            //viewModel.signedIn = false
+            viewModel.signedIn = false
+            //test = "hello world"
             // check if token still valid here, make nil if so
             
-            SpotifyAPI.shared.checkTokenExpiry { (result) in
+//            SpotifyAPI.shared.checkTokenExpiry { (result) in
+//                switch result {
+//                    case true:
+//                    print("token valid ")
+//                    showWebView = false
+//                    //createPostModel.createPost(post: data[0])
+//
+//                    case false:
+//                    print("token expired")
+//                    showWebView = true
+//                    }
+//                }
+            spotifyAPI.search(input: "") { (result) in
                 switch result {
-                    case true:
-                    print("token valid ")
-                    //createPostModel.createPost(post: data[0])
-                        
-                    case false:
-                    print("token expired")
-                    showWebView = true
+                    case .success(let data) :
+                    print("success 123\(data)")
+                    print("SEARCH success")
+                    showWebView.showView = false
+                    case .failure(let error) :
+                    print("SEARCH fail")
+                    showWebView.showView = true
                     }
                 }
             //UserDefaults.standard.setValue(nil, forKey: "Authorization")

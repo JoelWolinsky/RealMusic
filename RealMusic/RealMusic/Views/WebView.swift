@@ -15,6 +15,8 @@ struct WebView: UIViewRepresentable {
     
     //let var showLoading: Bool
     
+    @StateObject var showWebView: showView
+    
     func makeUIView(context: Context) -> some UIView {
         let urlRequest = SpotifyAPI.shared.getAccessTokenURL() //else { return  }
         let webview = WKWebView()
@@ -29,13 +31,7 @@ struct WebView: UIViewRepresentable {
     
     func updateUIView(_ uiView: UIViewType, context: Context) {
         print("update ui")
-//        guard let urlRequest = SpotifyAPI.shared.getAccessTokenURL() else { return }
-//        let webview = WKWebView()
-//
-//        print("loading webview")
-//        print(urlRequest)
-//        webview.load(urlRequest)
-//        //return webview
+
         }
     
     func makeCoordinator() -> WebViewCoordinator {
@@ -43,6 +39,8 @@ struct WebView: UIViewRepresentable {
             //showLoading = true
         }, didFinish: {
             print("error2")
+            showWebView.showView = false
+            
 
             //showLoading = false
         })

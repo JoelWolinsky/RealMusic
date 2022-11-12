@@ -8,6 +8,10 @@
 import Foundation
 import SwiftUI
 
+
+enum APIError : Error {
+    case  expiredToken
+}
 // Handle all interactions with the Spotify API
 class SpotifyAPI: ObservableObject {
     //@Published var response = Response
@@ -39,19 +43,23 @@ class SpotifyAPI: ObservableObject {
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         let requestHeader:  [String : String] = [
-            "Authorization" : "Bearer \(token)",
-            //"Authorization" : "Bearer fdsafsad",
+            //"Authorization" : "Bearer \(token)",
+            "Authorization" : "Bearer fdsafsad",
             "Content-Type" : "application/json"
         ]
         request.allHTTPHeaderFields = requestHeader
         
+        print("Bearer \(token)")
         
         
-        let post = URLSession.shared.dataTask(with: request) {data, response, error in
+        
+        _ = URLSession.shared.dataTask(with: request) {data, response, error in
             print("url session")
+            print(data)
             print(UserDefaults.standard.value(forKey: "Authorization"))
              if let error = error {
                print("Error with fetching films: \(error)")
+               completion(false)
                return
              }
              
@@ -97,6 +105,7 @@ class SpotifyAPI: ObservableObject {
             "Content-Type" : "application/json"
         ]
         request.allHTTPHeaderFields = requestHeader
+        print("Bearer \(token)")
 
         let post = URLSession.shared.dataTask(with: request) {data, response, error in
              if let error = error {
@@ -107,6 +116,7 @@ class SpotifyAPI: ObservableObject {
              guard let httpResponse = response as? HTTPURLResponse,
                    (200...299).contains(httpResponse.statusCode) else {
                  print("Error with the response, unexpected status code: \(response)")
+                 completion(.failure(APIError.expiredToken))
                  return
              }
             var posts: [SpotifySong] = []
