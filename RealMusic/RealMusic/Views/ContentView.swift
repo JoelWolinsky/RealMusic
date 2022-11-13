@@ -39,11 +39,11 @@ struct ContentView: View {
                 HomeView(feedViewModel: feedViewModel)
                     .sheet(isPresented: $showWebView.showView) {
                         WebView(showWebView: showWebView)
-                            .onDisappear(perform: {
-                                print("disapear")
-                                feedViewModel.fetchPosts()
-                            })
-                            
+//                            .onDisappear(perform: {
+//                                print("disapear")
+//                                feedViewModel.fetchPosts()
+//                            })
+//
                         
                     }
   
@@ -58,14 +58,16 @@ struct ContentView: View {
             
         }.onAppear( perform: {
             viewModel.signedIn = viewModel.isSignedIn
-            viewModel.signedIn = false
+            //viewModel.signedIn = false
             //test = "hello world"
             // check if token still valid here, make nil if so
-            
+            //UserDefaults.standard.setValue("hello world", forKey: "Authorization")
+
             SpotifyAPI.shared.checkTokenExpiry { (result) in
                 switch result {
                     case true:
                     print("aaaa token valid ")
+                
                     showWebView.showView = false
                     //createPostModel.createPost(post: data[0])
 
@@ -85,7 +87,6 @@ struct ContentView: View {
                     //showWebView.showView = true
                     }
                 }
-            //UserDefaults.standard.setValue(nil, forKey: "Authorization")
             
             
 //            if let token = UserDefaults.standard.value(forKey: "Authorization") {

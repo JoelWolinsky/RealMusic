@@ -18,7 +18,7 @@ class SpotifyAPI: ObservableObject {
     
     static let shared = SpotifyAPI()
     
-    var token = UserDefaults.standard.value(forKey: "Authorization") ?? ""
+    @State var token = UserDefaults.standard.value(forKey: "Authorization") ?? ""
     
     
     // Gets they URL for authorizing the user to get a Spotify access token
@@ -54,9 +54,11 @@ class SpotifyAPI: ObservableObject {
         
         
         _ = URLSession.shared.dataTask(with: request) {data, response, error in
+            
             print("url session")
             print(data)
             print(UserDefaults.standard.value(forKey: "Authorization"))
+            print(request.allHTTPHeaderFields)
              if let error = error {
                print("Error with fetching films: \(error)")
                completion(false)
