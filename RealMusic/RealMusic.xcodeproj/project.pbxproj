@@ -187,7 +187,6 @@
 				C907BF8A2902131D002197F1 /* SpotifySong.swift */,
 				C9D458FC28F8165600547D30 /* Album.swift */,
 				C9848D6F28EEDA17003D4FFA /* User.swift */,
-				C9A0A5FD29128A1700A6FD97 /* SignInViewModel.swift */,
 				C9A0A5FF29140F2E00A6FD97 /* showView.swift */,
 			);
 			path = Model;
@@ -199,6 +198,7 @@
 				C9848D6B28EC3A79003D4FFA /* PostViewModel.swift */,
 				C9848D7328F2E2DF003D4FFA /* UserViewModel.swift */,
 				C9848D7128F2DE95003D4FFA /* FeedViewModel.swift */,
+				C9A0A5FD29128A1700A6FD97 /* SignInViewModel.swift */,
 				C907BF7A28F9AAC3002197F1 /* CreatePostViewModel.swift */,
 				C907BF7C28FFE8A5002197F1 /* SpotifyAPI.swift */,
 				C9DBD62A290F2B5900ACD644 /* APIConstants.swift */,

@@ -68,7 +68,11 @@ struct SearchResultView: View {
                 .onTapGesture {
                     print("tapped post")
                     print("song url: \(song.preview_url)")
-                    createPostModel.createPost(post: Post(songID: song.songID, uid: "dadsads", cover: song.cover, preview: song.preview_url))
+                    createPostModel.createPost(post: Post(songID: song.songID,
+                                                          uid: "dadsads",
+                                                          username: UserDefaults.standard.value(forKey: "Username") as! String,
+                                                          cover: song.cover,
+                                                          preview: song.preview_url))
                 }
                 //.fontWeight(.bold)
 

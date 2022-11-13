@@ -19,7 +19,7 @@ struct PostView: View {
         
         
         VStack {
-            Text("@" + (post.username ?? "")+(post.id ?? ""))
+            Text("@" + (post.username ?? ""))
                 .frame(maxWidth: .infinity, alignment: .leading)
                 
             

@@ -30,6 +30,20 @@ class UserViewModel: ObservableObject {
             }
     }
     
+    func createUser(uid: String, username: String) {
+        let db = Firestore.firestore()
+        
+        let user = User(id: uid, username: username)
+
+        do {
+            try db.collection("Users").document(uid).setData(from: user)
+            UserDefaults.standard.setValue(username, forKey: "Username")
+            print("user added")
+        } catch let error {
+            print("Error writing city to Firestore: \(error)")
+        }
+    }
+    
     
   
     

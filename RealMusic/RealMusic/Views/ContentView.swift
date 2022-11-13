@@ -48,7 +48,7 @@ struct ContentView: View {
                     }
   
             } else {
-                SignInView()
+                SignInView(viewModel: viewModel)
                     .onAppear(perform: {
                         //UserDefaults.standard.setValue(nil, forKey: "Authorization")
                         showWebView.showView = true
