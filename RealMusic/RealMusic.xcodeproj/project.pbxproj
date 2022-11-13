@@ -21,6 +21,7 @@
 		C947BA0828EAECDE00B97EB1 /* RealMusicUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C947BA0728EAECDE00B97EB1 /* RealMusicUITests.swift */; };
 		C947BA0A28EAECDE00B97EB1 /* RealMusicUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C947BA0928EAECDE00B97EB1 /* RealMusicUITestsLaunchTests.swift */; };
 		C947BA1928EAEECD00B97EB1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C947BA1828EAEECD00B97EB1 /* GoogleService-Info.plist */; };
+		C9597E5729216BAB0020395E /* AddFriends.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9597E5629216BAB0020395E /* AddFriends.swift */; };
 		C95EC4FB2906D53C00550F06 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C947B9EF28EAECDE00B97EB1 /* Assets.xcassets */; };
 		C95EC513290833B500550F06 /* Grey.colorset in Frameworks */ = {isa = PBXBuildFile; fileRef = C95EC512290833B500550F06 /* Grey.colorset */; };
 		C95EC516290834E800550F06 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C95EC515290834E800550F06 /* Assets.xcassets */; };
@@ -88,6 +89,7 @@
 		C947BA0728EAECDE00B97EB1 /* RealMusicUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealMusicUITests.swift; sourceTree = "<group>"; };
 		C947BA0928EAECDE00B97EB1 /* RealMusicUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealMusicUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		C947BA1828EAEECD00B97EB1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C9597E5629216BAB0020395E /* AddFriends.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriends.swift; sourceTree = "<group>"; };
 		C95EC4FA2906CD6000550F06 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		C95EC510290730B200550F06 /* Dark Grey.colorset */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Dark Grey.colorset"; path = "RealMusic/Assets.xcassets/Dark Grey.colorset"; sourceTree = "<group>"; };
 		C95EC512290833B500550F06 /* Grey.colorset */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Grey.colorset; path = RealMusic/Assets.xcassets/Grey.colorset; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				C9D458FA28F8154300547D30 /* AlbumView.swift */,
 				C9DBD628290E885600ACD644 /* SignInView.swift */,
 				C9DBD62C290FDAD200ACD644 /* WebView.swift */,
+				C9597E5629216BAB0020395E /* AddFriends.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -518,6 +521,7 @@
 				C9848D6C28EC3A79003D4FFA /* PostViewModel.swift in Sources */,
 				C907BF8929020749002197F1 /* SearchResultView.swift in Sources */,
 				C947B9EE28EAECDD00B97EB1 /* HomeView.swift in Sources */,
+				C9597E5729216BAB0020395E /* AddFriends.swift in Sources */,
 				C93D7EA128F3166100FEF3D6 /* PostView.swift in Sources */,
 				C9A0A60029140F2E00A6FD97 /* showView.swift in Sources */,
 				C9A0A5FE29128A1700A6FD97 /* SignInViewModel.swift in Sources */,

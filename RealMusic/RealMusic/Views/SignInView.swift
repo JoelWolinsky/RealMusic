@@ -147,6 +147,9 @@ struct CreatUserNameView: View {
     var password: String
     
     @ObservedObject var userViewModel = UserViewModel()
+    
+    @State var nameTaken = false
+    @State var errorMessage = ""
 
 
     var body: some View {
@@ -164,6 +167,9 @@ struct CreatUserNameView: View {
                 TextField("Username", text: $username)
                     .background(.white)
                     .cornerRadius(3)
+                
+                Text(String(errorMessage) ?? "")
+                    .foregroundColor(.red)
 
             }
             .frame(maxWidth: 300)
@@ -174,10 +180,33 @@ struct CreatUserNameView: View {
                     print(viewModel.auth.currentUser?.uid)
                     
                     let uid = viewModel.auth.currentUser?.uid ?? ""
+ 
+                    userViewModel.fetchUsers() { users in
+                        self.nameTaken = false
+                        //print(user.username)
+                        //UserDefaults.standard.setValue(user.username, forKey: "Username")
+                        print("print usernames")
+                        for user in users {
+                            print(user.username)
+                            if username == user.username {
+                                self.nameTaken = true
+                                self.errorMessage = "Username is taken"
+                                
+                            }
+                        }
+                        print("name taken \(nameTaken)")
+                        if nameTaken == false {
+                            userViewModel.createUser(uid: uid, username: username)
+                            viewModel.signedIn = true
+
+                        }
+                        //nameTaken = true
+                    }
                     
-                    userViewModel.createUser(uid: uid, username: username)
+                    //print("name taken \(nameTaken)")
+
                     
-                    viewModel.signedIn = true
+                    //viewModel.signedIn = true
                     
                     
                 }, label: {

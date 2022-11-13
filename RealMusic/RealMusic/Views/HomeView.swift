@@ -57,12 +57,13 @@ struct HomeView: View {
                 .offset(y:-60)
                 
                 HStack {
-                    
-                    Image(systemName: "person.2.fill")
-                        .foregroundColor(.white)
-                        .font(.system(size:20))
+                    NavigationLink(destination: AddFriends()) {
+                        Image(systemName: "person.2.fill")
+                            .foregroundColor(.white)
+                            .font(.system(size:20))
+                    }
                     Spacer()
-                    NavigationLink(destination: SearchView() ) {
+                    NavigationLink(destination: SearchView()) {
                         Text("RealMusic")
                             .foregroundColor(.white)
                             .font(.system(size:25))
