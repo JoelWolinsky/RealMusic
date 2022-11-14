@@ -28,13 +28,15 @@ class SignInViewModel: ObservableObject {
                 return
             }
             
+            
             // Fetch the users user name from db
             self.userViewModel.fetchUser(withId: self.auth.currentUser?.uid ?? "" ) { user in
                 print(user.username)
                 UserDefaults.standard.setValue(user.username, forKey: "Username")
-
+                
             }
             
+            UserDefaults.standard.setValue(self.auth.currentUser?.uid ?? "", forKey: "uid")
             self.signedIn = true
         }
     }
@@ -46,6 +48,8 @@ class SignInViewModel: ObservableObject {
                 return
             }
             var uid = self.auth.currentUser?.uid
+            UserDefaults.standard.setValue(uid ?? "", forKey: "uid")
+
 
             
 
