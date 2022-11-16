@@ -25,12 +25,15 @@ class FriendsViewModel: ObservableObject {
         let userViewModel = UserViewModel()
         
         let uid = UserDefaults.standard.value(forKey: "uid")
-        userViewModel.fetchFriends(withId: uid as! String ) { user in
-//            print(user.username)
-            print(user.count)
-            self.friends = user
-            
+        if uid != nil {
+            userViewModel.fetchFriends(withId: uid as! String ) { user in
+    //            print(user.username)
+                print(user.count)
+                self.friends = user
+                
+            }
         }
+        
     }
 }
 

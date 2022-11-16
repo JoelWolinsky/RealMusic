@@ -23,6 +23,9 @@ struct HomeView: View {
     
     @EnvironmentObject var signInModel: SignInViewModel
     
+    @State var currentlyPlaying = Album(title: "Goodie Bag", artist: "Still Woozy" , cover: "KSG Cover", preview: "")
+
+    
 
     
     var body: some View {
@@ -30,9 +33,31 @@ struct HomeView: View {
         //var posts = [Post(title: "This is a test", userID: "This userID test", username: "Woli")]
         NavigationView {
             ZStack {
-                
                 ScrollView {
                     VStack{
+                        VStack {
+                            CurrentlyPlayingView(album: currentlyPlaying)
+                        }
+                        .frame(width: 350, height: 80)
+                        .padding(.top, 50)
+                        Text("Get currently playing song")
+                            .foregroundColor(.orange)
+                            .onTapGesture {
+                                getRequest.getCurrentPlaying() { (result) in
+                                    switch result {
+                                        case .success(let data) :
+                                        print("success \(data)")
+                                        let item = data[0]
+                                        currentlyPlaying = Album(title: item.name, artist: item.artists[0].name, cover: item.album.images[0].url, preview: item.preview_url ?? "")
+        //                                post.title = data[0]
+        //                                post.artist = data[1]
+                                        case .failure(let error) :
+                                            print("fail recent")
+                                            print(error)
+                                        }
+                                    }
+                            }
+                            
                         
                         ForEach(feedViewModel.posts) { post in
                             PostView(post: post)
@@ -45,6 +70,7 @@ struct HomeView: View {
                     feedViewModel.fetchPosts()
 
                 }
+                
                 
                 VStack {
                     Rectangle()
@@ -76,11 +102,15 @@ struct HomeView: View {
                         .frame(width: 30)
                         .onTapGesture {
                             signInModel.signOut()
+                            UserDefaults.resetStandardUserDefaults()
+                            
                         }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                 .padding(.leading, 20)
                 .padding(.trailing, 20)
+                
+                
                 
                 
             }

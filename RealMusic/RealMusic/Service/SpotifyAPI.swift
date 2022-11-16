@@ -88,6 +88,8 @@ class SpotifyAPI: ObservableObject {
     // Given a song name or part of a name, return song results matching that name
     // fix this so it adds more data to the spotifysong item
     func search(input: String, completion: @escaping (Result<[SpotifySong], Error>) -> Void) {
+        
+        token = UserDefaults.standard.value(forKey: "Authorization") ?? ""
         print("token \(token)")
         var name = "3A"
         for word in input.components(separatedBy: " ") {
@@ -188,6 +190,48 @@ class SpotifyAPI: ObservableObject {
         .resume()
     }
     
+    // Get current playing song
+    func getCurrentPlaying(completion: @escaping (Result<[Item], Error>) -> Void){
+        print("get current playing song")
+        let url = URL(string: "https://api.spotify.com/v1/me/player/currently-playing")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        let requestHeader:  [String : String] = [
+            "Authorization" : "Bearer \(token)",
+            "Content-Type" : "application/json"
+        ]
+        request.allHTTPHeaderFields = requestHeader
+
+        let post = URLSession.shared.dataTask(with: request) {data, response, error in
+            
+             if let error = error {
+               print("Error with fetching films: \(error)")
+               return
+             }
+             
+             guard let httpResponse = response as? HTTPURLResponse,
+                   (200...299).contains(httpResponse.statusCode) else {
+                 print("Error with the response, unexpected status code: \(response)")
+                 return
+             }
+            var post: Post
+            if let data = data,
+               let results = try? JSONDecoder().decode(CurrentPlay.self, from: data) {
+                    print("done")
+                    print(results)
+                
+                completion(.success([results.item]))
+                //post = Post(songID: results.tracks.items[0].id , uid: "xyz", cover: results.tracks.items[0].album.images[0].url)
+                //return post
+            } else {
+                fatalError()
+            }
+            //completion(.failure())
+            
+        }
+        .resume()
+    }
+    
 }
 
 
@@ -198,6 +242,10 @@ struct Response: Codable {
 
 struct Track: Codable {
     let items: [Item]
+}
+
+struct CurrentPlay: Codable {
+    let item: Item
 }
 
 struct Item: Codable {

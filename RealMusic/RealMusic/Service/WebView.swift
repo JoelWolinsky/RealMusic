@@ -85,7 +85,9 @@ class WebViewCoordinator: NSObject, WKNavigationDelegate {
             guard let index = range?.lowerBound else { return }
             
             tokenString = String(tokenString[..<index])
-            UserDefaults.standard.set(tokenString, forKey: "Authorization")
+            UserDefaults.standard.setValue(tokenString, forKey: "Authorization")
+            print("set token")
+            
         }
         
         print("token \(tokenString)")

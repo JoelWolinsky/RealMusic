@@ -57,6 +57,7 @@ struct ContentView: View {
             }
             
         }.onAppear( perform: {
+            
             viewModel.signedIn = viewModel.isSignedIn
             //viewModel.signedIn = false
             //test = "hello world"
@@ -76,17 +77,17 @@ struct ContentView: View {
                     showWebView.showView = true
                     }
                 }
-            spotifyAPI.search(input: "") { (result) in
-                switch result {
-                    case .success(let data) :
-                    print("success 123\(data)")
-                    print("SEARCH success")
-                    //showWebView.showView = false
-                    case .failure(let error) :
-                    print("SEARCH fail")
-                    //showWebView.showView = true
-                    }
-                }
+//            spotifyAPI.search(input: "") { (result) in
+//                switch result {
+//                    case .success(let data) :
+//                    print("success 123\(data)")
+//                    print("SEARCH success")
+//                    //showWebView.showView = false
+//                    case .failure(let error) :
+//                    print("SEARCH fail")
+//                    //showWebView.showView = true
+//                    }
+//                }
             
             
 //            if let token = UserDefaults.standard.value(forKey: "Authorization") {

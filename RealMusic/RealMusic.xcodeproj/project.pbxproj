@@ -23,6 +23,10 @@
 		C947BA1928EAEECD00B97EB1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C947BA1828EAEECD00B97EB1 /* GoogleService-Info.plist */; };
 		C9597E5729216BAB0020395E /* AddFriends.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9597E5629216BAB0020395E /* AddFriends.swift */; };
 		C9597E5929225EEF0020395E /* FriendsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9597E5829225EEF0020395E /* FriendsViewModel.swift */; };
+		C9597E5A2923AC1C0020395E /* Assets.xcassets in Frameworks */ = {isa = PBXBuildFile; fileRef = C95EC515290834E800550F06 /* Assets.xcassets */; };
+		C9597E5B2923AC3D0020395E /* Assets.xcassets in Frameworks */ = {isa = PBXBuildFile; fileRef = C95EC515290834E800550F06 /* Assets.xcassets */; };
+		C9597E5D2923F8520020395E /* CurrentPlay.json in Resources */ = {isa = PBXBuildFile; fileRef = C9597E5C2923F8520020395E /* CurrentPlay.json */; };
+		C9597E64292514280020395E /* CurrentlyPlayingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9597E63292514280020395E /* CurrentlyPlayingView.swift */; };
 		C95EC4FB2906D53C00550F06 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C947B9EF28EAECDE00B97EB1 /* Assets.xcassets */; };
 		C95EC513290833B500550F06 /* Grey.colorset in Frameworks */ = {isa = PBXBuildFile; fileRef = C95EC512290833B500550F06 /* Grey.colorset */; };
 		C95EC516290834E800550F06 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C95EC515290834E800550F06 /* Assets.xcassets */; };
@@ -92,6 +96,8 @@
 		C947BA1828EAEECD00B97EB1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C9597E5629216BAB0020395E /* AddFriends.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriends.swift; sourceTree = "<group>"; };
 		C9597E5829225EEF0020395E /* FriendsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewModel.swift; sourceTree = "<group>"; };
+		C9597E5C2923F8520020395E /* CurrentPlay.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CurrentPlay.json; sourceTree = "<group>"; };
+		C9597E63292514280020395E /* CurrentlyPlayingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentlyPlayingView.swift; sourceTree = "<group>"; };
 		C95EC4FA2906CD6000550F06 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		C95EC510290730B200550F06 /* Dark Grey.colorset */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Dark Grey.colorset"; path = "RealMusic/Assets.xcassets/Dark Grey.colorset"; sourceTree = "<group>"; };
 		C95EC512290833B500550F06 /* Grey.colorset */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Grey.colorset; path = RealMusic/Assets.xcassets/Grey.colorset; sourceTree = "<group>"; };
@@ -129,6 +135,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9597E5A2923AC1C0020395E /* Assets.xcassets in Frameworks */,
 				BD884F9FDB0D839BC10CD680 /* Pods_RealMusicTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -137,6 +144,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9597E5B2923AC3D0020395E /* Assets.xcassets in Frameworks */,
 				CC45AB22BE2A94605C06DF79 /* Pods_RealMusic_RealMusicUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -178,8 +186,8 @@
 				C907BF84290195CF002197F1 /* SearchView.swift */,
 				C907BF8829020749002197F1 /* SearchResultView.swift */,
 				C9D458FA28F8154300547D30 /* AlbumView.swift */,
+				C9597E63292514280020395E /* CurrentlyPlayingView.swift */,
 				C9DBD628290E885600ACD644 /* SignInView.swift */,
-				C9DBD62C290FDAD200ACD644 /* WebView.swift */,
 				C9597E5629216BAB0020395E /* AddFriends.swift */,
 			);
 			path = Views;
@@ -200,6 +208,7 @@
 		C93D7E9F28F3163A00FEF3D6 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				C9DBD62C290FDAD200ACD644 /* WebView.swift */,
 				C9848D6B28EC3A79003D4FFA /* PostViewModel.swift */,
 				C9848D7328F2E2DF003D4FFA /* UserViewModel.swift */,
 				C9848D7128F2DE95003D4FFA /* FeedViewModel.swift */,
@@ -239,6 +248,7 @@
 			isa = PBXGroup;
 			children = (
 				C947B9EB28EAECDD00B97EB1 /* RealMusicApp.swift */,
+				C9597E5C2923F8520020395E /* CurrentPlay.json */,
 				C907BF7928F9A6DC002197F1 /* Views */,
 				C93D7E9F28F3163A00FEF3D6 /* Service */,
 				C93D7E9D28F3161500FEF3D6 /* Model */,
@@ -391,6 +401,7 @@
 			files = (
 				C95EC516290834E800550F06 /* Assets.xcassets in Resources */,
 				C947BA1928EAEECD00B97EB1 /* GoogleService-Info.plist in Resources */,
+				C9597E5D2923F8520020395E /* CurrentPlay.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -541,6 +552,7 @@
 				C9DBD62D290FDAD200ACD644 /* WebView.swift in Sources */,
 				C9848D7428F2E2DF003D4FFA /* UserViewModel.swift in Sources */,
 				C9DBD62B290F2B5900ACD644 /* APIConstants.swift in Sources */,
+				C9597E64292514280020395E /* CurrentlyPlayingView.swift in Sources */,
 				C9848D6E28EC4AE3003D4FFA /* Post.swift in Sources */,
 				C95EC51C290A91E600550F06 /* ContentView.swift in Sources */,
 				C9D458FD28F8165600547D30 /* Album.swift in Sources */,

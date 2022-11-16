@@ -18,7 +18,7 @@ class SignInViewModel: ObservableObject {
 
 
     var isSignedIn: Bool {
-        print("CURRENT USER \(auth.currentUser)")
+        print("CURRENT USER \(auth.currentUser?.uid)")
         return auth.currentUser != nil
     }
 
