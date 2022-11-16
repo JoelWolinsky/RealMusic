@@ -41,7 +41,7 @@ struct AlbumView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                 .padding(20)
                 .padding(.top, -40)
-                .foregroundColor(Color("Grey"))
+                .foregroundColor(Color("Grey 1"))
                 .font(.system(size: 20))
             Spacer()
             
@@ -95,7 +95,7 @@ struct AlbumView: View {
             }
            
         }
-        .background(Color("Dark Grey"))
+        .background(Color("Grey 3"))
         //.frame(minHeight: 100)
         .cornerRadius(10)
    

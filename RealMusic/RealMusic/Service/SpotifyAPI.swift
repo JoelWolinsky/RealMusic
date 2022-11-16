@@ -130,7 +130,7 @@ class SpotifyAPI: ObservableObject {
                     print(results)
                 for song in results.tracks.items {
                     print("adding song to search list")
-                    posts.append(SpotifySong(songID: song.id , uid: "xyz", cover: song.album.images[0].url, preview_url: song.preview_url))
+                    posts.append(SpotifySong(songID: song.id ,title: song.album.name,artist: song.artists[0].name, uid: "xyz", cover: song.album.images[0].url, preview_url: song.preview_url))
                 }
                 //return post
             } else {
@@ -191,7 +191,7 @@ class SpotifyAPI: ObservableObject {
     }
     
     // Get current playing song
-    func getCurrentPlaying(completion: @escaping (Result<[Item], Error>) -> Void){
+    func getCurrentPlaying(completion: @escaping (Result<[SpotifySong], Error>) -> Void){
         print("get current playing song")
         let url = URL(string: "https://api.spotify.com/v1/me/player/currently-playing")!
         var request = URLRequest(url: url)
@@ -217,14 +217,17 @@ class SpotifyAPI: ObservableObject {
             var post: Post
             if let data = data,
                let results = try? JSONDecoder().decode(CurrentPlay.self, from: data) {
-                    print("done")
-                    print(results)
-                
-                completion(.success([results.item]))
+                print("done")
+                print(results)
+            
+                let song = SpotifySong(songID: results.item.id ,title: results.item.name, artist: results.item.artists[0].name, uid: "xyz", cover: results.item.album.images[0].url, preview_url: results.item.preview_url)
+            
+                completion(.success([song]))
                 //post = Post(songID: results.tracks.items[0].id , uid: "xyz", cover: results.tracks.items[0].album.images[0].url)
                 //return post
             } else {
-                fatalError()
+                print("nothing playing")
+                completion(.success([]))
             }
             //completion(.failure())
             

@@ -53,7 +53,7 @@ struct SearchResultView: View {
                 
                 Text(song.artist ?? "artist")
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .foregroundColor(Color("Grey"))
+                    .foregroundColor(Color("Grey 1"))
                     .font(.system(size: 15))
 
             }
@@ -68,11 +68,12 @@ struct SearchResultView: View {
                 .onTapGesture {
                     print("tapped post")
                     print("song url: \(song.preview_url)")
-                    createPostModel.createPost(post: Post(songID: song.songID,
-                                                          uid: "dadsads",
-                                                          username: UserDefaults.standard.value(forKey: "Username") as! String,
-                                                          cover: song.cover,
-                                                          preview: song.preview_url))
+                    createPostModel.createPost(
+                        post: Post(songID: song.songID,
+                                      uid: "dadsads",
+                                      username: UserDefaults.standard.value(forKey: "Username") as! String,
+                                      cover: song.cover,
+                                      preview: song.preview_url))
                 }
                 //.fontWeight(.bold)
 
@@ -83,7 +84,7 @@ struct SearchResultView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: 50, alignment: .leading)
         .padding(10)
-        .background(Color("Dark Grey"))
+        .background(Color("Grey 3"))
         .cornerRadius(5)
  
         
@@ -91,7 +92,7 @@ struct SearchResultView: View {
     
     struct SearchResultsView_Previews: PreviewProvider {
         static var previews: some View {
-            SearchResultView(song: SpotifySong(songID: "5GHIsNIT9QH2u9XYuA2xp8", uid: "Joel Wolinsky", preview_url: ""), createPostModel: CreatePostViewModel(uid: "cY51kdkZdHhq6r3lTAd2"))
+            SearchResultView(song: SpotifySong(songID: "5GHIsNIT9QH2u9XYuA2xp8", title: "", artist: "",uid: "Joel Wolinsky", cover:"", preview_url: ""), createPostModel: CreatePostViewModel(uid: "cY51kdkZdHhq6r3lTAd2"))
         }
     }
     

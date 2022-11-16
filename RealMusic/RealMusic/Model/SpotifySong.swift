@@ -12,10 +12,10 @@ struct SpotifySong: Identifiable, Decodable, Encodable {
     
     var id = UUID()
     var songID: String
-    var title: String?
-    var artist: String?
+    var title: String
+    var artist: String
     var uid: String
-    var cover: String?
+    var cover: String
     var preview_url: String?
     
     

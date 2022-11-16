@@ -23,7 +23,7 @@ struct HomeView: View {
     
     @EnvironmentObject var signInModel: SignInViewModel
     
-    @State var currentlyPlaying = Album(title: "Goodie Bag", artist: "Still Woozy" , cover: "KSG Cover", preview: "")
+    @State var currentlyPlaying = SpotifySong(songID: "", title: "", artist: "", uid: "", cover: "")
 
     
 
@@ -36,27 +36,27 @@ struct HomeView: View {
                 ScrollView {
                     VStack{
                         VStack {
-                            CurrentlyPlayingView(album: currentlyPlaying)
+                            CurrentlyPlayingView(song: currentlyPlaying, createPostModel: createPostModel)
                         }
-                        .frame(width: 350, height: 80)
-                        .padding(.top, 50)
-                        Text("Get currently playing song")
-                            .foregroundColor(.orange)
-                            .onTapGesture {
-                                getRequest.getCurrentPlaying() { (result) in
-                                    switch result {
-                                        case .success(let data) :
-                                        print("success \(data)")
-                                        let item = data[0]
-                                        currentlyPlaying = Album(title: item.name, artist: item.artists[0].name, cover: item.album.images[0].url, preview: item.preview_url ?? "")
-        //                                post.title = data[0]
-        //                                post.artist = data[1]
-                                        case .failure(let error) :
-                                            print("fail recent")
-                                            print(error)
-                                        }
-                                    }
-                            }
+                        .frame(width: 350, height: 120)
+                        .padding(.top, 40)
+//                        Text("Get currently playing song")
+//                            .foregroundColor(.orange)
+//                            .onTapGesture {
+//                                getRequest.getCurrentPlaying() { (result) in
+//                                    switch result {
+//                                        case .success(let data) :
+//                                        print("success \(data)")
+//                                        let item = data[0]
+//                                        currentlyPlaying = Album(title: item.name, artist: item.artists[0].name, cover: item.album.images[0].url, preview: item.preview_url ?? "")
+//        //                                post.title = data[0]
+//        //                                post.artist = data[1]
+//                                        case .failure(let error) :
+//                                            print("fail recent")
+//                                            print(error)
+//                                        }
+//                                    }
+//                            }
                             
                         
                         ForEach(feedViewModel.posts) { post in
@@ -68,6 +68,21 @@ struct HomeView: View {
                 .refreshable {
                     print("Refreshing")
                     feedViewModel.fetchPosts()
+                    
+                    getRequest.getCurrentPlaying() { (result) in
+                        switch result {
+                            case .success(let data) :
+                            print("success \(data)")
+                            let song = data[0]
+                            currentlyPlaying = SpotifySong(id: song.id, songID: song.songID, title: song.title, artist: song.artist, uid: song.uid, cover: song.cover, preview_url: song.preview_url)
+                            
+    //                                post.title = data[0]
+    //                                post.artist = data[1]
+                            case .failure(let error) :
+                                print("fail recent")
+                                print(error)
+                            }
+                        }
 
                 }
                 
@@ -115,16 +130,33 @@ struct HomeView: View {
                 
             }
             .background(.black)
-            .onAppear(perform: {print(Date());getRequest.search(input: "Ivy") { (result) in
-                switch result {
-                    case .success(let data) :
-                    print("success \(data)")
-                    //createPostModel.createPost(post: data[0])
-                        
-                    case .failure(let error) :
-                        print()
-                    }
+            .onAppear(perform: {print(Date());
+                getRequest.search(input: "Ivy") { (result) in
+                    switch result {
+                        case .success(let data) :
+                        print("success \(data)")
+                        //createPostModel.createPost(post: data[0])
+                            
+                        case .failure(let error) :
+                            print()
+                        }
                 }
+                
+                getRequest.getCurrentPlaying() { (result) in
+                    switch result {
+                        case .success(let data) :
+                        print("success \(data)")
+                        let song = data[0]
+                        currentlyPlaying = SpotifySong(id: song.id, songID: song.songID, title: song.title, artist: song.artist, uid: song.uid, cover: song.cover, preview_url: song.preview_url)
+                        
+//                                post.title = data[0]
+//                                post.artist = data[1]
+                        case .failure(let error) :
+                            print("fail recent")
+                            print(error)
+                        }
+                    }
+                
             })
         }
         

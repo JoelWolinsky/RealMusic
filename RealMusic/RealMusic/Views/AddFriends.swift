@@ -73,7 +73,7 @@ struct AddFriends: View {
                 }
             }
             .padding(20)
-            .background(Color("Dark Grey"))
+            .background(Color("Grey 3"))
             .padding(20)
             
             Spacer()

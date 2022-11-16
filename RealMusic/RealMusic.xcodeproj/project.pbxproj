@@ -23,16 +23,10 @@
 		C947BA1928EAEECD00B97EB1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C947BA1828EAEECD00B97EB1 /* GoogleService-Info.plist */; };
 		C9597E5729216BAB0020395E /* AddFriends.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9597E5629216BAB0020395E /* AddFriends.swift */; };
 		C9597E5929225EEF0020395E /* FriendsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9597E5829225EEF0020395E /* FriendsViewModel.swift */; };
-		C9597E5A2923AC1C0020395E /* Assets.xcassets in Frameworks */ = {isa = PBXBuildFile; fileRef = C95EC515290834E800550F06 /* Assets.xcassets */; };
-		C9597E5B2923AC3D0020395E /* Assets.xcassets in Frameworks */ = {isa = PBXBuildFile; fileRef = C95EC515290834E800550F06 /* Assets.xcassets */; };
 		C9597E5D2923F8520020395E /* CurrentPlay.json in Resources */ = {isa = PBXBuildFile; fileRef = C9597E5C2923F8520020395E /* CurrentPlay.json */; };
 		C9597E64292514280020395E /* CurrentlyPlayingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9597E63292514280020395E /* CurrentlyPlayingView.swift */; };
-		C95EC4FB2906D53C00550F06 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C947B9EF28EAECDE00B97EB1 /* Assets.xcassets */; };
+		C9597E6629254D5F0020395E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9597E6529254D5F0020395E /* Assets.xcassets */; };
 		C95EC513290833B500550F06 /* Grey.colorset in Frameworks */ = {isa = PBXBuildFile; fileRef = C95EC512290833B500550F06 /* Grey.colorset */; };
-		C95EC516290834E800550F06 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C95EC515290834E800550F06 /* Assets.xcassets */; };
-		C95EC517290834E800550F06 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C95EC515290834E800550F06 /* Assets.xcassets */; };
-		C95EC518290834E800550F06 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C95EC515290834E800550F06 /* Assets.xcassets */; };
-		C95EC51A2908355300550F06 /* Dark Grey.colorset in Frameworks */ = {isa = PBXBuildFile; fileRef = C95EC5192908355300550F06 /* Dark Grey.colorset */; };
 		C95EC51C290A91E600550F06 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95EC51B290A91E600550F06 /* ContentView.swift */; };
 		C95EC51D290A91E600550F06 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95EC51B290A91E600550F06 /* ContentView.swift */; };
 		C95EC51E290A91E600550F06 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95EC51B290A91E600550F06 /* ContentView.swift */; };
@@ -85,7 +79,6 @@
 		C947B9E828EAECDD00B97EB1 /* RealMusic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RealMusic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C947B9EB28EAECDD00B97EB1 /* RealMusicApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealMusicApp.swift; sourceTree = "<group>"; };
 		C947B9ED28EAECDD00B97EB1 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
-		C947B9EF28EAECDE00B97EB1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C947B9F128EAECDE00B97EB1 /* RealMusic.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RealMusic.entitlements; sourceTree = "<group>"; };
 		C947B9F328EAECDE00B97EB1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C947B9F928EAECDE00B97EB1 /* RealMusicTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RealMusicTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -98,11 +91,10 @@
 		C9597E5829225EEF0020395E /* FriendsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewModel.swift; sourceTree = "<group>"; };
 		C9597E5C2923F8520020395E /* CurrentPlay.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CurrentPlay.json; sourceTree = "<group>"; };
 		C9597E63292514280020395E /* CurrentlyPlayingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentlyPlayingView.swift; sourceTree = "<group>"; };
+		C9597E6529254D5F0020395E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C95EC4FA2906CD6000550F06 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		C95EC510290730B200550F06 /* Dark Grey.colorset */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Dark Grey.colorset"; path = "RealMusic/Assets.xcassets/Dark Grey.colorset"; sourceTree = "<group>"; };
 		C95EC512290833B500550F06 /* Grey.colorset */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Grey.colorset; path = RealMusic/Assets.xcassets/Grey.colorset; sourceTree = "<group>"; };
-		C95EC515290834E800550F06 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		C95EC5192908355300550F06 /* Dark Grey.colorset */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Dark Grey.colorset"; path = "RealMusic/Assets.xcassets/Dark Grey.colorset"; sourceTree = "<group>"; };
 		C95EC51B290A91E600550F06 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C9848D6B28EC3A79003D4FFA /* PostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewModel.swift; sourceTree = "<group>"; };
 		C9848D6D28EC4AE3003D4FFA /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
@@ -127,7 +119,6 @@
 			files = (
 				C95EC513290833B500550F06 /* Grey.colorset in Frameworks */,
 				899536B029AA01B5932A3B38 /* Pods_RealMusic.framework in Frameworks */,
-				C95EC51A2908355300550F06 /* Dark Grey.colorset in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,7 +126,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9597E5A2923AC1C0020395E /* Assets.xcassets in Frameworks */,
 				BD884F9FDB0D839BC10CD680 /* Pods_RealMusicTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -144,7 +134,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9597E5B2923AC3D0020395E /* Assets.xcassets in Frameworks */,
 				CC45AB22BE2A94605C06DF79 /* Pods_RealMusic_RealMusicUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -224,7 +213,6 @@
 		C947B9DF28EAECDD00B97EB1 = {
 			isa = PBXGroup;
 			children = (
-				C95EC5192908355300550F06 /* Dark Grey.colorset */,
 				C947B9EA28EAECDD00B97EB1 /* RealMusic */,
 				C947B9FC28EAECDE00B97EB1 /* RealMusicTests */,
 				C947BA0628EAECDE00B97EB1 /* RealMusicUITests */,
@@ -249,11 +237,10 @@
 			children = (
 				C947B9EB28EAECDD00B97EB1 /* RealMusicApp.swift */,
 				C9597E5C2923F8520020395E /* CurrentPlay.json */,
+				C9597E6529254D5F0020395E /* Assets.xcassets */,
 				C907BF7928F9A6DC002197F1 /* Views */,
 				C93D7E9F28F3163A00FEF3D6 /* Service */,
 				C93D7E9D28F3161500FEF3D6 /* Model */,
-				C947B9EF28EAECDE00B97EB1 /* Assets.xcassets */,
-				C95EC515290834E800550F06 /* Assets.xcassets */,
 				C947B9F128EAECDE00B97EB1 /* RealMusic.entitlements */,
 				C947BA1828EAEECD00B97EB1 /* GoogleService-Info.plist */,
 				C947B9F228EAECDE00B97EB1 /* Preview Content */,
@@ -399,8 +386,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C95EC516290834E800550F06 /* Assets.xcassets in Resources */,
 				C947BA1928EAEECD00B97EB1 /* GoogleService-Info.plist in Resources */,
+				C9597E6629254D5F0020395E /* Assets.xcassets in Resources */,
 				C9597E5D2923F8520020395E /* CurrentPlay.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -409,8 +396,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C95EC517290834E800550F06 /* Assets.xcassets in Resources */,
-				C95EC4FB2906D53C00550F06 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -418,7 +403,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C95EC518290834E800550F06 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
