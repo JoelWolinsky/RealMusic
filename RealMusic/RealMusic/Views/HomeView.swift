@@ -26,10 +26,10 @@ struct HomeView: View {
     @State var currentlyPlaying = SpotifySong(songID: "", title: "", artist: "", uid: "", cover: "")
     
     @State var friendsToggle = false
+    @State var searchToggle = false
 
     
 
-    
     var body: some View {
         
         ZStack {
@@ -42,7 +42,7 @@ struct HomeView: View {
                             VStack {
                                 CurrentlyPlayingView(song: currentlyPlaying, createPostModel: createPostModel)
                             }
-                            .frame(width: 350, height: 120)
+                            .frame(width: 350, height: 100)
                             .padding(.top, 40)
                             //                        Text("Get currently playing song")
                             //                            .foregroundColor(.orange)
@@ -79,9 +79,6 @@ struct HomeView: View {
                                 print("success \(data)")
                                 let song = data[0]
                                 currentlyPlaying = SpotifySong(id: song.id, songID: song.songID, title: song.title, artist: song.artist, uid: song.uid, cover: song.cover, preview_url: song.preview_url)
-                                
-                                //                                post.title = data[0]
-                                //                                post.artist = data[1]
                             case .failure(let error) :
                                 print("fail recent")
                                 print(error)
@@ -102,7 +99,7 @@ struct HomeView: View {
                     .offset(y:-60)
                     
                     HStack {
-                                         
+                        
                         Button {
                             withAnimation {
                                 friendsToggle.toggle()
@@ -116,7 +113,19 @@ struct HomeView: View {
                         
                         
                         Spacer()
-                        NavigationLink(destination: SearchView()) {
+                        //                        NavigationLink(destination: SearchView()) {
+                        //                            Text("RealMusic")
+                        //                                .foregroundColor(.white)
+                        //                                .font(.system(size:25))
+                        //                                .fontWeight(.bold)
+                        //                        }
+                        
+                        Button {
+                            withAnimation {
+                                searchToggle.toggle()
+                                print("friendsToggle.showView \(friendsToggle)")
+                            }
+                        } label: {
                             Text("RealMusic")
                                 .foregroundColor(.white)
                                 .font(.system(size:25))
@@ -171,14 +180,19 @@ struct HomeView: View {
             }
             
             if friendsToggle {
-                AddFriends(friendsToggle: $friendsToggle)
+                AddFriendsView(friendsToggle: $friendsToggle)
                     .zIndex(1)
-                    .transition(.backslide)
+                    .transition(.slideLeft)
+            }
+            
+            if searchToggle {
+                SearchView(searchToggle: $searchToggle)
+                    .zIndex(1)
+                    .transition(.slideRight)
+                
             }
             
         }
-        
-        
     }
     
     

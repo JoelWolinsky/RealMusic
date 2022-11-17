@@ -11,7 +11,7 @@ import SwiftUI
 // A view for user to search through the Spotify library to find a song to post
 struct SearchView: View {
     
-    @State var name: String = "Sunny"
+    @State var searchText: String = "Sunny"
     
     @ObservedObject var spotifyAPI = SpotifyAPI()
     
@@ -19,17 +19,19 @@ struct SearchView: View {
 
     @State var searchResults: [SpotifySong] = []
     
+    @Binding var searchToggle: Bool
+    
     
     
     var body: some View {
         
         let binding = Binding<String>(get: {
-                    self.name
+                    self.searchText
                 }, set: {
-                    self.name = $0
+                    self.searchText = $0
                     // do whatever you want here
-                    print("String change \(name)")
-                    spotifyAPI.search(input: name) { (result) in
+                    print("String change \(searchText)")
+                    spotifyAPI.search(input: searchText) { (result) in
                         switch result {
                             case .success(let data) :
                             print("success 123\(data)")
@@ -44,25 +46,44 @@ struct SearchView: View {
 
                 })
         return
-        VStack {
-
-            TextField("Search...", text: binding)
-                .background(.green)
-                .padding(20)
-            
-            ScrollView {
-                ForEach(searchResults) { song in
-                    //Text("searchview \(song.songID)")
-                    SearchResultView(song: song, createPostModel: createPostModel)
-                        
-
-                    //Text(song.title ?? "placeholder")
-
+        HStack {
+            VStack {
+                Button {
+                    withAnimation {
+                        searchToggle.toggle()
+                    }
+                } label: {
+                    Text("Back")
+                        .foregroundColor(.white)
+                        .font(.system(size:20))
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(20)
+                HStack {
+                    Image(systemName: "magnifyingglass")
+                    TextField("Search ..", text: $searchText)
+                }
+                    .padding(10)
+                    .frame(height: 40)
+                    .background(.green)
+                    .cornerRadius(13)
+                    .padding(30)
+                    .padding(.top, -40)
+                
+                ScrollView {
+                    ForEach(searchResults) { song in
+                        //Text("searchview \(song.songID)")
+                        SearchResultView(song: song, createPostModel: createPostModel)
+                        
+                        
+                        //Text(song.title ?? "placeholder")
+                        
+                    }
+                }
+                
             }
-            
+            .background(.black)
         }
-        .background(.black)
         
     }
     
@@ -71,8 +92,9 @@ struct SearchView: View {
     
     
     struct SearchView_Previews: PreviewProvider {
+        @State static var toggle = false
         static var previews: some View {
-            SearchView()
+            SearchView(searchToggle: $toggle)
         }
     }
 }

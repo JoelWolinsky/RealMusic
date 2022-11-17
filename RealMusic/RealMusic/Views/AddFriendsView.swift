@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct AddFriends: View {
+struct AddFriendsView: View {
     
     @ObservedObject var userViewModel = UserViewModel()
     
@@ -45,19 +45,35 @@ struct AddFriends: View {
                 Text("UID: " + (UserDefaults.standard.value(forKey: "uid") as? String ?? ""))
             }
             .frame(maxWidth: .infinity, alignment: .leading)
+            .foregroundColor(.white)
+            .padding(.bottom, 30)
             
             
             
             Spacer()
             
             Text("Add friends")
-            TextField("Username", text: $username)
-                .background(.white)
-                .cornerRadius(3)
+                .foregroundColor(.white)
+            
+            HStack {
+                Image(systemName: "magnifyingglass")
+                TextField("Search for a user ..", text: $username)
+            }
+            .padding(10)
+            .frame(height: 40)
+            .background(.green)
+            .cornerRadius(13)
+            .padding(.leading, 30)
+            .padding(.trailing, 30)
+            
             Text(errorMessage)
             Text("Add Friend")
                 .padding(5)
+                .frame(width: 120)
                 .background(.green)
+                .cornerRadius(20)
+                .fontWeight(.bold)
+                .padding(.bottom, 20)
                 .onTapGesture {
                     userViewModel.fetchUsers() { users in
                         self.nameFound = false
@@ -82,34 +98,43 @@ struct AddFriends: View {
                 Text("Your Friends")
                     .foregroundColor(.white)
                     .padding(5)
-                
-                ForEach(friendsViewModel.friends) { friend in
-                    Text(friend.username)
-                        .padding(5)
-                        .background(.green)
-                        .foregroundColor(.white)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                ScrollView {
+                    ForEach(friendsViewModel.friends) { friend in
+                        HStack {
+                            Circle()
+                                .foregroundColor(.white)
+                                .frame(width: 60)
+                            Text(friend.username)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(5)
+                                //.background(.green)
+                                .foregroundColor(Color("Grey"))
+                        }
+                        
+                    }
                 }
             }
-            .padding(20)
-            .background(Color("Grey 3"))
-            .padding(20)
+            .frame(maxWidth: .infinity)
             
             Spacer()
         }
         .padding(20)
+        .background(.black)
         .onAppear(perform: {
+            print("AddFriends View")
             friendsViewModel.fetchFriends()
         })
-        .background(.white)
-        .onAppear(perform: {print("AddFriends View")})
+        
         
 
     }
     
-//    struct AddFriends_Previews: PreviewProvider {
-//        static var previews: some View {
-//            AddFriends(feedViewModel: <#T##FeedViewModel#>)
-//
-//        }
-//    }
+    struct AddFriends_Previews: PreviewProvider {
+        @State static var toggle = false
+        static var previews: some View {
+            AddFriendsView(userViewModel: UserViewModel(),friendsViewModel: FriendsViewModel(),  friendsToggle: $toggle)
+
+        }
+    }
 }

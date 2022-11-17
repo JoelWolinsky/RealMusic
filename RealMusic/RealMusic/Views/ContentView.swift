@@ -62,7 +62,9 @@ struct ContentView: View {
             //viewModel.signedIn = false
             //test = "hello world"
             // check if token still valid here, make nil if so
-            //UserDefaults.standard.setValue("hello world", forKey: "Authorization")
+            if UserDefaults.standard.value(forKey: "username") == nil {
+                UserDefaults.standard.setValue("no username found",forKey: "username")
+            }
 
             SpotifyAPI.shared.checkTokenExpiry { (result) in
                 switch result {
