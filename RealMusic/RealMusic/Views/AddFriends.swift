@@ -19,9 +19,27 @@ struct AddFriends: View {
     
     @ObservedObject var friendsViewModel = FriendsViewModel()
     
+    //@StateObject var feedViewModel: FeedViewModel
+    
+    @Binding var friendsToggle: Bool
+
+    
     
     var body: some View {
+
         VStack {
+            
+            Button {
+                withAnimation {
+                    friendsToggle.toggle()
+                }
+            } label: {
+                Text("Back")
+                    .foregroundColor(.green)
+                    .font(.system(size:20))
+            }
+            .frame(maxWidth: .infinity, alignment: .trailing)
+            
             VStack {
                 Text("Username: " + (UserDefaults.standard.value(forKey: "Username") as? String ?? ""))
                 Text("UID: " + (UserDefaults.standard.value(forKey: "uid") as? String ?? ""))
@@ -64,7 +82,7 @@ struct AddFriends: View {
                 Text("Your Friends")
                     .foregroundColor(.white)
                     .padding(5)
-
+                
                 ForEach(friendsViewModel.friends) { friend in
                     Text(friend.username)
                         .padding(5)
@@ -82,12 +100,16 @@ struct AddFriends: View {
         .onAppear(perform: {
             friendsViewModel.fetchFriends()
         })
+        .background(.white)
+        .onAppear(perform: {print("AddFriends View")})
+        
+
     }
     
-    struct AddFriends_Previews: PreviewProvider {
-        static var previews: some View {
-            AddFriends()
-            
-        }
-    }
+//    struct AddFriends_Previews: PreviewProvider {
+//        static var previews: some View {
+//            AddFriends(feedViewModel: <#T##FeedViewModel#>)
+//
+//        }
+//    }
 }

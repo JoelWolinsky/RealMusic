@@ -26,6 +26,7 @@
 		C9597E5D2923F8520020395E /* CurrentPlay.json in Resources */ = {isa = PBXBuildFile; fileRef = C9597E5C2923F8520020395E /* CurrentPlay.json */; };
 		C9597E64292514280020395E /* CurrentlyPlayingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9597E63292514280020395E /* CurrentlyPlayingView.swift */; };
 		C9597E6629254D5F0020395E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9597E6529254D5F0020395E /* Assets.xcassets */; };
+		C9597E68292567000020395E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9597E67292567000020395E /* Extensions.swift */; };
 		C95EC513290833B500550F06 /* Grey.colorset in Frameworks */ = {isa = PBXBuildFile; fileRef = C95EC512290833B500550F06 /* Grey.colorset */; };
 		C95EC51C290A91E600550F06 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95EC51B290A91E600550F06 /* ContentView.swift */; };
 		C95EC51D290A91E600550F06 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95EC51B290A91E600550F06 /* ContentView.swift */; };
@@ -92,6 +93,7 @@
 		C9597E5C2923F8520020395E /* CurrentPlay.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CurrentPlay.json; sourceTree = "<group>"; };
 		C9597E63292514280020395E /* CurrentlyPlayingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentlyPlayingView.swift; sourceTree = "<group>"; };
 		C9597E6529254D5F0020395E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C9597E67292567000020395E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		C95EC4FA2906CD6000550F06 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		C95EC510290730B200550F06 /* Dark Grey.colorset */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Dark Grey.colorset"; path = "RealMusic/Assets.xcassets/Dark Grey.colorset"; sourceTree = "<group>"; };
 		C95EC512290833B500550F06 /* Grey.colorset */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Grey.colorset; path = RealMusic/Assets.xcassets/Grey.colorset; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 				C907BF8A2902131D002197F1 /* SpotifySong.swift */,
 				C9D458FC28F8165600547D30 /* Album.swift */,
 				C9848D6F28EEDA17003D4FFA /* User.swift */,
+				C9597E67292567000020395E /* Extensions.swift */,
 				C9A0A5FF29140F2E00A6FD97 /* showView.swift */,
 			);
 			path = Model;
@@ -536,6 +539,7 @@
 				C9DBD62D290FDAD200ACD644 /* WebView.swift in Sources */,
 				C9848D7428F2E2DF003D4FFA /* UserViewModel.swift in Sources */,
 				C9DBD62B290F2B5900ACD644 /* APIConstants.swift in Sources */,
+				C9597E68292567000020395E /* Extensions.swift in Sources */,
 				C9597E64292514280020395E /* CurrentlyPlayingView.swift in Sources */,
 				C9848D6E28EC4AE3003D4FFA /* Post.swift in Sources */,
 				C95EC51C290A91E600550F06 /* ContentView.swift in Sources */,

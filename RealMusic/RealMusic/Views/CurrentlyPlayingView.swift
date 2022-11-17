@@ -16,6 +16,10 @@ struct CurrentlyPlayingView: View {
     let song: SpotifySong
     
     @StateObject var createPostModel: CreatePostViewModel
+    
+    @State var postButtonColour = Color(.black)
+    @State var postButtonText = "Post"
+    @State var currentSongBackground = Color("Grey 1")
 
     var body: some View {
         VStack {
@@ -55,15 +59,19 @@ struct CurrentlyPlayingView: View {
                 .padding(.top, 10)
             }
             
-            Text("Post")
+            Text(postButtonText)
                 .frame(width: 80, height: 30)
-                .background(.black)
+                .background(postButtonColour)
                 .cornerRadius(15)
                 .foregroundColor(.white)
                 .padding(.bottom, 15)
                 .padding(.top, -10)
                 .font(.system(size: 17))
                 .onTapGesture {
+                    postButtonColour = Color("Grey")
+                    //let transition = .transition(.slide)
+                    postButtonText = "Posted"
+                    //currentSongBackground = Color(.green)
                     createPostModel.createPost(
                         post: Post(songID: song.songID,
                                       uid: "dadsads",
@@ -72,8 +80,9 @@ struct CurrentlyPlayingView: View {
                                       preview: song.preview_url))
                 }
             
+            
         }
-        .background(Color("Grey 1"))
+        .background(currentSongBackground)
         //.scaledToFill()
         .cornerRadius(10)
    
