@@ -27,6 +27,10 @@ struct HomeView: View {
     
     @State var friendsToggle = false
     @State var searchToggle = false
+    
+    @State var profilePic = URL(string: "")
+    
+    @State var userViewModel = UserViewModel()
 
     
 
@@ -133,14 +137,22 @@ struct HomeView: View {
                         }
                         
                         Spacer()
-                        Circle()
-                            .foregroundColor(.white)
-                            .frame(width: 30)
-                            .onTapGesture {
-                                signInModel.signOut()
-                                UserDefaults.resetStandardUserDefaults()
-                                
-                            }
+                        
+                        AsyncImage(url: profilePic) { image in
+                            image
+                                  .resizable()
+                                  .aspectRatio(contentMode: .fill)
+                                  
+                        } placeholder: {
+                            Color.orange
+                        }
+                        .frame(width: 30, height: 30)
+                        .cornerRadius(15)
+                        .onTapGesture {
+                            signInModel.signOut()
+                            UserDefaults.resetStandardUserDefaults()
+                            
+                        }
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                     .padding(.leading, 20)
@@ -174,6 +186,11 @@ struct HomeView: View {
                             print("fail recent")
                             print(error)
                         }
+                    }
+                    
+                    userViewModel.fetchProfilePic(uid: "") { profile in
+                        print(profile)
+                        profilePic = profile
                     }
                     
                 })

@@ -45,10 +45,12 @@ class SignInViewModel: ObservableObject {
         print("Signing up")
         auth.createUser(withEmail: email, password: password) { result, error in
             guard result != nil, error == nil else {
+                print("returning")
                 return
             }
             var uid = self.auth.currentUser?.uid
             UserDefaults.standard.setValue(uid ?? "", forKey: "uid")
+            print("uid \(uid)")
 
 
             

@@ -44,6 +44,7 @@ struct SignInView: View {
                
                 
                 Button(action: {
+                   
                     viewModel.signIn(email: email, password: password)
                     
                     
@@ -150,7 +151,10 @@ struct CreatUserNameView: View {
     
     @State var nameTaken = false
     @State var errorMessage = ""
+    
+    @State private var isAddingPhoto = false
 
+    @State var profilePicture = Image("")
 
     var body: some View {
         VStack {
@@ -160,6 +164,13 @@ struct CreatUserNameView: View {
                 .fontWeight(.bold)
                 .padding(.bottom, 10)
             
+            Button {
+                    isAddingPhoto = true
+                } label: {
+                    Image(systemName: "plus")
+                        .foregroundColor(.blue)
+                }
+
             Text("Enter Your Username")
                 .foregroundColor(.white)
             
@@ -224,5 +235,8 @@ struct CreatUserNameView: View {
         .onAppear(perform: {
             // create user using inputs from previous view
             viewModel.signUp(email: email, password: password)})
+        .sheet(isPresented: $isAddingPhoto) {
+                    PhotoPicker()
+                }
     }
 }

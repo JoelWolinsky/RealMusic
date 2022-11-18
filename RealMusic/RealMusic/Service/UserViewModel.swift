@@ -1,6 +1,7 @@
 
 import FirebaseFirestore
 import SwiftUI
+import FirebaseStorage
 
 class UserViewModel: ObservableObject {
     
@@ -41,7 +42,7 @@ class UserViewModel: ObservableObject {
         let db = Firestore.firestore()
         
         let user = User(id: uid, username: username)
-        
+        print("user id \(uid)")
         do {
             try db.collection("Users").document(uid).setData(from: user)
             UserDefaults.standard.setValue(username, forKey: "Username")
@@ -90,6 +91,30 @@ class UserViewModel: ObservableObject {
             print("friend added")
         } catch let error {
             print("Error writing city to Firestore: \(error)")
+        }
+    }
+    
+    func fetchProfilePic (uid: String, completion: @escaping(URL) -> Void) {
+        
+        var uid: String
+        
+        let storage = Storage.storage()
+        let storageRef = storage.reference()
+        
+        // Create a reference to the file you want to download
+        let riversRef = storageRef.child("images/\(UserDefaults.standard.value(forKey: "uid")!).heic")
+        //let riversRef = storageRef.child("images/rivers.heic")
+
+
+        // Fetch the download URL
+        riversRef.downloadURL { url, error in
+          if let error = error {
+            // Handle any errors
+          } else {
+              print("profile pic \(url)")
+              completion(url!)
+            // Get the download URL for 'images/stars.jpg'
+          }
         }
     }
     
