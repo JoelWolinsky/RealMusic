@@ -38,10 +38,10 @@ class UserViewModel: ObservableObject {
     
     
     
-    func createUser(uid: String, username: String) {
+    func createUser(uid: String, username: String, profilePic: URL) {
         let db = Firestore.firestore()
         
-        let user = User(id: uid, username: username)
+        let user = User(id: uid, username: username, profilePic: profilePic)
         print("user id \(uid)")
         do {
             try db.collection("Users").document(uid).setData(from: user)
@@ -95,14 +95,12 @@ class UserViewModel: ObservableObject {
     }
     
     func fetchProfilePic (uid: String, completion: @escaping(URL) -> Void) {
-        
-        var uid: String
-        
+                
         let storage = Storage.storage()
         let storageRef = storage.reference()
         
         // Create a reference to the file you want to download
-        let riversRef = storageRef.child("images/\(UserDefaults.standard.value(forKey: "uid")!).heic")
+        let riversRef = storageRef.child("images/\(uid).heic")
         //let riversRef = storageRef.child("images/rivers.heic")
 
 

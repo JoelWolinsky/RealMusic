@@ -31,6 +31,9 @@ class FriendsViewModel: ObservableObject {
                 print(user.count)
                 self.friends = user
                 
+                
+                   
+                
             }
         }
         

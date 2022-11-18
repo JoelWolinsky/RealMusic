@@ -154,7 +154,7 @@ struct CreatUserNameView: View {
     
     @State private var isAddingPhoto = false
 
-    @State var profilePicture = Image("")
+    @State var profilePicture = URL(string: "")
 
     var body: some View {
         VStack {
@@ -205,10 +205,21 @@ struct CreatUserNameView: View {
                                 
                             }
                         }
+                        
+                        
                         print("name taken \(nameTaken)")
                         if nameTaken == false {
-                            userViewModel.createUser(uid: uid, username: username)
-                            viewModel.signedIn = true
+                            
+  
+                            userViewModel.fetchProfilePic(uid: uid) { profile in
+                                print("this is the profile url \( profile)")
+                                profilePicture = profile
+                                
+                                userViewModel.createUser(uid: uid, username: username, profilePic: profilePicture!)
+                                viewModel.signedIn = true
+                            }
+       
+                           
 
                         }
                         //nameTaken = true
@@ -236,7 +247,7 @@ struct CreatUserNameView: View {
             // create user using inputs from previous view
             viewModel.signUp(email: email, password: password)})
         .sheet(isPresented: $isAddingPhoto) {
-                    PhotoPicker()
+            PhotoPicker()
                 }
     }
 }

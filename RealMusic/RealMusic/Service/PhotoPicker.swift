@@ -19,6 +19,7 @@ struct PhotoPicker: View {
     @State private var selectedItem: PhotosPickerItem? = nil
     @State private var selectedImageData: Data? = nil
     
+    
     var body: some View {
         
         PhotosPicker(
@@ -40,13 +41,13 @@ struct PhotoPicker: View {
                         let storageRef = storage.reference()
                         // Create a reference to the file you want to upload
                         let riversRef = storageRef.child("images/\(UserDefaults.standard.value(forKey: "uid")!).heic")
-
+                        print(UserDefaults.standard.value(forKey: "uid"))
                         // Upload the file to the path "images/rivers.jpg"
                         let uploadTask = riversRef.putData(data!, metadata: nil) { (metadata, error) in
                           guard let metadata = metadata else {
                             // Uh-oh, an error occurred
                               print(error)
-                              fatalError()
+//                              fatalError()
                             return
                           }
                             
@@ -56,7 +57,7 @@ struct PhotoPicker: View {
                           riversRef.downloadURL { (url, error) in
                             guard let downloadURL = url else {
                               // Uh-oh, an error occurred!
-                                fatalError()
+                              //  fatalError()
                               return
                             }
                           }

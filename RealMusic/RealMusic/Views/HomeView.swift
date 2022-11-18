@@ -179,8 +179,10 @@ struct HomeView: View {
                         switch result {
                         case .success(let data) :
                             print("success \(data)")
-                            let song = data[0]
-                            currentlyPlaying = SpotifySong(id: song.id, songID: song.songID, title: song.title, artist: song.artist, uid: song.uid, cover: song.cover, preview_url: song.preview_url)
+                            if data != nil {
+                                let song = data[0]
+                                currentlyPlaying = SpotifySong(id: song.id, songID: song.songID, title: song.title, artist: song.artist, uid: song.uid, cover: song.cover, preview_url: song.preview_url)
+                            }
                             
                         case .failure(let error) :
                             print("fail recent")
@@ -188,7 +190,7 @@ struct HomeView: View {
                         }
                     }
                     
-                    userViewModel.fetchProfilePic(uid: "") { profile in
+                    userViewModel.fetchProfilePic(uid: (UserDefaults.standard.value(forKey: "uid") as! String)) { profile in
                         print(profile)
                         profilePic = profile
                     }

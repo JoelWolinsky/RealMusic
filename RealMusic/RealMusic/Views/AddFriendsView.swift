@@ -22,6 +22,8 @@ struct AddFriendsView: View {
     //@StateObject var feedViewModel: FeedViewModel
     
     @Binding var friendsToggle: Bool
+    @State var profilePic = URL(string: "")
+    
 
     
     
@@ -102,9 +104,24 @@ struct AddFriendsView: View {
                 ScrollView {
                     ForEach(friendsViewModel.friends) { friend in
                         HStack {
-                            Circle()
-                                .foregroundColor(.white)
-                                .frame(width: 60)
+                            
+                            AsyncImage(url: friend.profilePic ?? URL(string: "")) { image in
+                                image
+                                      .resizable()
+                                      .aspectRatio(contentMode: .fill)
+                                      
+                            } placeholder: {
+                                Color.orange
+                            }
+                            .frame(width: 60, height: 60)
+                            .cornerRadius(30)
+//                            .onAppear(perform: {
+//                                userViewModel.fetchProfilePic(uid: friend.id!) { profile in
+//                                    print(profile)
+//                                    friend = User(username: friend.username, profilePic: profile)
+//                                }
+//                            })
+                            
                             Text(friend.username)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .padding(5)
