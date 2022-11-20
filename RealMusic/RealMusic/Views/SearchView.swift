@@ -61,7 +61,7 @@ struct SearchView: View {
                 .padding(20)
                 HStack {
                     Image(systemName: "magnifyingglass")
-                    TextField("Search ..", text: $searchText)
+                    TextField("Search ..", text: binding)
                 }
                     .padding(10)
                     .frame(height: 40)

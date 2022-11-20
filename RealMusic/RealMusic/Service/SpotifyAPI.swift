@@ -144,7 +144,7 @@ class SpotifyAPI: ObservableObject {
     
     
     // Given the id of a Spotify song, fins all the data on that song
-    func getSong(ID: String, completion: @escaping (Result<[String], Error>) -> Void){
+    func getSong(ID: String, completion: @escaping (Result<[String], Error>) -> Void) {
         let url = URL(string: "https://api.spotify.com/v1/tracks/" + ID)!
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
@@ -191,7 +191,7 @@ class SpotifyAPI: ObservableObject {
     }
     
     // Get current playing song
-    func getCurrentPlaying(completion: @escaping (Result<[SpotifySong], Error>) -> Void){
+    func getCurrentPlaying(completion: @escaping (Result<[SpotifySong], Error>) -> Void) {
         print("get current playing song")
         let url = URL(string: "https://api.spotify.com/v1/me/player/currently-playing")!
         var request = URLRequest(url: url)
@@ -235,6 +235,7 @@ class SpotifyAPI: ObservableObject {
         .resume()
     }
     
+    
 }
 
 
@@ -261,6 +262,7 @@ struct Item: Codable {
 
 struct Artist: Codable {
     let name: String
+    let id: String
 }
 
 struct Album2: Codable {

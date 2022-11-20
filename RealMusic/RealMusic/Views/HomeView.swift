@@ -191,7 +191,7 @@ struct HomeView: View {
                         }
                     }
                     
-                    userViewModel.fetchProfilePic(uid: (UserDefaults.standard.value(forKey: "uid") as! String)) { profile in
+                    userViewModel.fetchProfilePic(uid: (UserDefaults.standard.value(forKey: "uid") ?? "placeholder") as! String ) { profile in
                         print(profile)
                         profilePic = profile
                     }

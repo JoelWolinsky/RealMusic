@@ -16,6 +16,8 @@ struct ProfileView: View {
     
     @Binding var showProfileView: Bool
     
+    @ObservedObject var analyticsModel = AnalyticsModel()
+    
     var body: some View {
         
         VStack {
@@ -42,17 +44,28 @@ struct ProfileView: View {
                 }
                 .frame(width: 100, height: 100)
                 .cornerRadius(50)
-                .onTapGesture {
-                    signInModel.signOut()
-                    UserDefaults.resetStandardUserDefaults()
-                    
-                }
          
                 Text(UserDefaults.standard.value(forKey: "username") as! String)
                     .foregroundColor(Color("Grey"))
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         
+            Button {
+                analyticsModel.fetchTopArtists() { (result) in
+                    switch result {
+                    case .success(let data):
+                        analyticsModel.uploadTopArtists(artists: data)
+                    case .failure(let error):
+                        print(error)
+                    }
+                }
+            } label: {
+                Text("Get Top Artists")
+                    .foregroundColor(.orange)
+            }
+            .frame(maxWidth: .infinity, alignment: .center)
+            
+            
             Spacer()
             Button {
                 signInModel.signOut()
