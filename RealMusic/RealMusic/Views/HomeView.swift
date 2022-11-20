@@ -28,9 +28,11 @@ struct HomeView: View {
     @State var friendsToggle = false
     @State var searchToggle = false
     
-    @State var profilePic = URL(string: "")
+    @State var profilePic = URL(string: "www.google.com")
     
     @State var userViewModel = UserViewModel()
+    
+    @State var showProfileView = false
 
     
 
@@ -144,20 +146,19 @@ struct HomeView: View {
                                   .aspectRatio(contentMode: .fill)
                                   
                         } placeholder: {
-                            Color.orange
+                            Image("ProfilePicPlaceholder")
                         }
                         .frame(width: 30, height: 30)
                         .cornerRadius(15)
                         .onTapGesture {
-                            signInModel.signOut()
-                            UserDefaults.resetStandardUserDefaults()
-                            
+                            withAnimation {
+                                showProfileView.toggle()
+                            }
                         }
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                     .padding(.leading, 20)
                     .padding(.trailing, 20)
-                    
                     
                     
                     
@@ -209,6 +210,13 @@ struct HomeView: View {
                     .zIndex(1)
                     .transition(.slideRight)
                 
+            }
+            
+            
+            if showProfileView {
+                ProfileView(signInModel: signInModel, profilePic: profilePic!, showProfileView: $showProfileView)
+                    .zIndex(1)
+                    .transition(.slideRight)
             }
             
         }

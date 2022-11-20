@@ -69,6 +69,7 @@ struct AddFriendsView: View {
             .padding(.trailing, 30)
             
             Text(errorMessage)
+                .foregroundColor(.red)
             Text("Add Friend")
                 .padding(5)
                 .frame(width: 120)
@@ -87,10 +88,12 @@ struct AddFriendsView: View {
                             print(user.username)
                             if username == user.username {
                                 self.nameFound = true
-                                self.errorMessage = "Username is taken"
                                 let foundUser = user
                                 userViewModel.addFriend(friend: foundUser)
                             }
+                        }
+                        if self.nameFound == false {
+                            self.errorMessage = "User not found"
                         }
                     }
                 }
