@@ -13,7 +13,7 @@ class AnalyticsModel: ObservableObject {
     
     @State var token = UserDefaults.standard.value(forKey: "Authorization") ?? ""
 
-    func fetchTopArtists(completion: @escaping (Result<TopArtists, Error>) -> Void)  {
+    func fetchTopArtistsFromAPI(completion: @escaping (Result<TopArtists, Error>) -> Void)  {
         let url = URL(string: "https://api.spotify.com/v1/me/top/artists?time_range=long_term&limit=5&offset=0")!
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
@@ -45,7 +45,7 @@ class AnalyticsModel: ObservableObject {
         .resume()
     }
     
-    func uploadTopArtists(artists: TopArtists) {
+    func uploadTopArtistsToDB(artists: TopArtists) {
 
         let db = Firestore.firestore()
         
@@ -65,13 +65,54 @@ class AnalyticsModel: ObservableObject {
         }
     }
     
+    func fetchTopArtistsFromDB(uid id: String, completion: @escaping([TopArtist]) -> Void ) {
+        var artists = [TopArtist]()
+        let db = Firestore.firestore()
+        
+        //let id = UserDefaults.standard.value(forKey: "uid") as! String
+        
+        db.collection("Users")
+            .document(id)
+            .collection("Spotify Analytics")
+            .document("Top Artists")
+            .collection("Top Artists")
+            .getDocuments() { (querySnapshot, err) in
+                guard let documents = querySnapshot?.documents else { return }
+                documents.forEach{ artist in
+                    guard let artist = try? artist.data(as: TopArtist.self) else { return }
+                    artists.append(artist)
+                }
+                completion(artists)
+            }
+    }
+    
+    func compareTopArtists(yourArtists: [TopArtist], friendsArtists: [TopArtist]) {
+        var yourArtistRank = 1
+        var friendsArtistRank = 1
+        
+        var comparisonValue = 0
+        
+        for yourArtist in yourArtists {
+            for friendsArtist in friendsArtists {
+                if yourArtist.id == friendsArtist.id {
+                    print("true \(friendsArtist.name)")
+                    comparisonValue += (9-abs(friendsArtistRank-yourArtistRank)) * 100 + 100*(5-yourArtistRank)
+                }
+            }
+        }
+        
+        print(comparisonValue)
+    }
+    
+    
+    
 }
 
 struct TopArtists: Codable {
     let items: [TopArtist]
 }
 
-struct TopArtist: Codable {
+struct TopArtist: Codable, Identifiable {
     let name: String
     let id: String
     let popularity: Int

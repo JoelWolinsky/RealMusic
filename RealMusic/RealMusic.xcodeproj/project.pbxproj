@@ -16,6 +16,7 @@
 		C907BF8B2902131D002197F1 /* SpotifySong.swift in Sources */ = {isa = PBXBuildFile; fileRef = C907BF8A2902131D002197F1 /* SpotifySong.swift */; };
 		C939D6D7292A4D0800C255F2 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939D6D6292A4D0800C255F2 /* ProfileView.swift */; };
 		C939D6D9292A8F2200C255F2 /* AnalyticsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939D6D8292A8F2200C255F2 /* AnalyticsModel.swift */; };
+		C939D6DB292AA8EF00C255F2 /* CompareAnalyticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939D6DA292AA8EF00C255F2 /* CompareAnalyticsView.swift */; };
 		C93D7EA128F3166100FEF3D6 /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93D7EA028F3166100FEF3D6 /* PostView.swift */; };
 		C947B9EC28EAECDD00B97EB1 /* RealMusicApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C947B9EB28EAECDD00B97EB1 /* RealMusicApp.swift */; };
 		C947B9EE28EAECDD00B97EB1 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C947B9ED28EAECDD00B97EB1 /* HomeView.swift */; };
@@ -81,6 +82,7 @@
 		C907BF8A2902131D002197F1 /* SpotifySong.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifySong.swift; sourceTree = "<group>"; };
 		C939D6D6292A4D0800C255F2 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		C939D6D8292A8F2200C255F2 /* AnalyticsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsModel.swift; sourceTree = "<group>"; };
+		C939D6DA292AA8EF00C255F2 /* CompareAnalyticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompareAnalyticsView.swift; sourceTree = "<group>"; };
 		C93D7EA028F3166100FEF3D6 /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
 		C947B9E828EAECDD00B97EB1 /* RealMusic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RealMusic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C947B9EB28EAECDD00B97EB1 /* RealMusicApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealMusicApp.swift; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 				C9DBD628290E885600ACD644 /* SignInView.swift */,
 				C9597E5629216BAB0020395E /* AddFriendsView.swift */,
 				C939D6D6292A4D0800C255F2 /* ProfileView.swift */,
+				C939D6DA292AA8EF00C255F2 /* CompareAnalyticsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -537,6 +540,7 @@
 				C9A0A60029140F2E00A6FD97 /* showView.swift in Sources */,
 				C9A0A5FE29128A1700A6FD97 /* SignInViewModel.swift in Sources */,
 				C907BF7D28FFE8A5002197F1 /* SpotifyAPI.swift in Sources */,
+				C939D6DB292AA8EF00C255F2 /* CompareAnalyticsView.swift in Sources */,
 				C9D458FB28F8154300547D30 /* AlbumView.swift in Sources */,
 				C9DBD629290E885600ACD644 /* SignInView.swift in Sources */,
 				C9597E6C29269BE30020395E /* PhotoPicker.swift in Sources */,

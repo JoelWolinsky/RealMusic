@@ -51,10 +51,10 @@ struct ProfileView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
         
             Button {
-                analyticsModel.fetchTopArtists() { (result) in
+                analyticsModel.fetchTopArtistsFromAPI() { (result) in
                     switch result {
                     case .success(let data):
-                        analyticsModel.uploadTopArtists(artists: data)
+                        analyticsModel.uploadTopArtistsToDB(artists: data)
                     case .failure(let error):
                         print(error)
                     }
