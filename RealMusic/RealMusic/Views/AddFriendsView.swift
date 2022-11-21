@@ -154,7 +154,7 @@ struct AddFriendsView: View {
             })
             
             if showCompareAnalytics {
-                CompareAnalyticsView(friendID: friendToCompare.id ?? "ID placeholder")
+                CompareAnalyticsView(friendUID: friendToCompare.id ?? "ID placeholder")
                     .zIndex(1)
 
             }

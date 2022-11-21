@@ -12,8 +12,10 @@ import FirebaseFirestore
 class AnalyticsModel: ObservableObject {
     
     @State var token = UserDefaults.standard.value(forKey: "Authorization") ?? ""
+    
+    @State var score = Double()
 
-    func fetchTopArtistsFromAPI(completion: @escaping (Result<TopArtists, Error>) -> Void)  {
+    func fetchTopArtistsFromAPI(completion: @escaping (Result<[ComparisonItem], Error>) -> Void)  {
         let url = URL(string: "https://api.spotify.com/v1/me/top/artists?time_range=long_term&limit=20&offset=0")!
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
@@ -37,7 +39,11 @@ class AnalyticsModel: ObservableObject {
             if let data = data,
                let results = try? JSONDecoder().decode(TopArtists.self, from: data) {
                     print("done")
-                completion(.success(results))
+                var artists = [ComparisonItem]()
+                for artist in results.items {
+                    artists.append(artist)
+                }
+                completion(.success(artists))
             } else {
                 fatalError()
             }
@@ -45,7 +51,7 @@ class AnalyticsModel: ObservableObject {
         .resume()
     }
     
-    func uploadTopArtistsToDB(artists: TopArtists) {
+    func uploadToDB(items: [ComparisonItem], rankingType: String ) {
 
         let db = Firestore.firestore()
         
@@ -54,10 +60,15 @@ class AnalyticsModel: ObservableObject {
 
         do {
             var rank = 1
-            for artist in artists.items {
-                let artist = TopArtist(name: artist.name, id: artist.id, popularity: artist.popularity, genres: artist.genres, rank: rank)
-                try db.collection("Users").document(uid).collection("Spotify Analytics").document("Top Artists").collection("Top Artists").document(String(rank)).setData(from: artist)
-                print("\(artist.name) added as \(rank)")
+            for item in items {
+                if rankingType == "Top Artists" {
+                    let item = ComparisonItem(name: item.name, id: item.id!, popularity: item.popularity!, genres: item.genres!, rank: rank)
+                } else {
+                    let item = ComparisonItem(name: item.name, rank: rank)
+
+                }
+                try db.collection("Users").document(uid).collection("Spotify Analytics").document(rankingType).collection(rankingType).document(String(rank)).setData(from: item)
+                print("\(item.name) added as \(rank)")
                 rank += 1
             }
            
@@ -66,8 +77,8 @@ class AnalyticsModel: ObservableObject {
         }
     }
     
-    func fetchTopArtistsFromDB(uid id: String, completion: @escaping([TopArtist]) -> Void ) {
-        var artists = [TopArtist]()
+    func fetchTopArtistsFromDB(uid id: String, completion: @escaping (Result<[[ComparisonItem]], Error>) -> Void ) {
+        var artists = [ComparisonItem]()
         let db = Firestore.firestore()
         
         //let id = UserDefaults.standard.value(forKey: "uid") as! String
@@ -81,34 +92,38 @@ class AnalyticsModel: ObservableObject {
                 guard let documents = querySnapshot?.documents else { return }
                 documents.forEach{ artist in
                     let rank = artist.documentID
-                    guard let artist = try? artist.data(as: TopArtist.self) else { return }
+                    guard let artist = try? artist.data(as: ComparisonItem.self) else { return }
                     artists.append(artist)
                 }
                 artists.sort {
                     $0.rank ?? 0 < $1.rank ?? 0
                 }
-                self.getTopGenres(topArtists: artists)
-                completion(artists)
+                print("get genres")
+                let genres = self.getTopGenres(topArtists: artists)
+                completion(.success([artists, genres]))
             }
     }
     
-    func getTopGenres(topArtists: [TopArtist]) {
-        var genres = [Genre]()
+    func getTopGenres(topArtists: [ComparisonItem]) -> [ComparisonItem]{
+        
+        var genres = [ComparisonItem]()
+        var rank = 1
         
         for artist in topArtists {
-            for genre in artist.genres {
-                genres.append(Genre(name: genre, rank: artist.rank ?? 0))
-                print("\(artist.rank) \(genre)")
+            for genre in artist.genres! {
+                genres.append(ComparisonItem(name: genre, rank: rank))
+                print("\(rank) \(genre)")
+                rank += 1
             }
         }
-        
+        return genres
     }
     
-    func compareTopArtists(yourArtists: [TopArtist], friendsArtists: [TopArtist]) -> Double {
-        var yourArtistRank = 1.0
-        var friendsArtistRank = 1.0
+    func compareRankings(yourRanking: [ComparisonItem], friendRanking: [ComparisonItem]) -> Double {
+        var yourRank = 1.0
+        var friendRank = 1.0
         
-        var topArtistsLength = Double(yourArtists.count)
+        let rankingLength = Double(yourRanking.count)
         
         var totalScore = 0.0
         
@@ -117,82 +132,116 @@ class AnalyticsModel: ObservableObject {
         var popularityScore = Double()
 
         
-        for yourArtist in yourArtists {
-            friendsArtistRank = 1
-            for friendsArtist in friendsArtists {
-                if yourArtist.id == friendsArtist.id {
+        for yourItem in yourRanking {
+            friendRank = 1
+            for friendItem in friendRanking {
+                if yourItem.name == friendItem.name { // look into this since there can be duplicate names
                     // calculates how valuable the match is
                     // based of how close common artist is on their leaderboards
-                    distanceApartScore = ((topArtistsLength*1.5)-Double(abs(friendsArtistRank-yourArtistRank))) * 100.0
+                    distanceApartScore = ((rankingLength*1.5)-Double(abs(friendRank-yourRank))) * 100.0
                     // and how high up they are on these leaderboards
-                    distanceFromTopScore = ((topArtistsLength * 2)-yourArtistRank-friendsArtistRank) * 25.0
-                    popularityScore = (100 - Double(yourArtist.popularity)) * 50.0
-                    totalScore += distanceApartScore + distanceFromTopScore + popularityScore
-                    print("\(yourArtist.name) - \( distanceApartScore + distanceFromTopScore + popularityScore)")
+                    distanceFromTopScore = ((rankingLength * 2)-yourRank-friendRank) * 25.0
+                    if yourItem.popularity != nil {
+                        popularityScore = (100 - Double(yourItem.popularity!)) * 50.0
+                        totalScore += distanceApartScore + distanceFromTopScore + popularityScore
+                        print("\(yourItem.name) - \( distanceApartScore + distanceFromTopScore + popularityScore)")
+                    } else {
+                        totalScore += distanceApartScore + distanceFromTopScore
+                        print("\(yourItem.name) - \(distanceApartScore + distanceFromTopScore)")
+                    }
                 }
-                friendsArtistRank += 1
+                friendRank += 1
             }
-            yourArtistRank += 1
+            yourRank += 1
         }
         
         print(totalScore)
         return totalScore
     }
     
-    func compareTopGenres(yourGenres: [Genre], friendsGenres: [Genre]) -> Double {
-        var yourGenretRank = 1.0
-        var friendsGenretRank = 1.0
-        
-        var topGenresLength = Double(yourArtists.count)
-        
-        var totalScore = 0.0
-        
-        var distanceApartScore = Double()
-        var distanceFromTopScore = Double()
+    func compare(yourUID: String, friendUID: String) {
+        var yourRankings = [[ComparisonItem]]()
+        var friendRankings = [[ComparisonItem]]()
 
-        
-        for yourGenre in yourGenres {
-            friendsGenreRank = 1
-            for friendsGenre in friendsGenres {
-                if yourGenre.name == friendsGenre.name {
-                    // calculates how valuable the match is
-                    // based of how close common artist is on their leaderboards
-                    distanceApartScore = ((topGenresLength*1.5)-Double(abs(friendsArtistRank-yourArtistRank))) * 100.0
-                    // and how high up they are on these leaderboards
-                    distanceFromTopScore = ((topArtistsLength * 2)-yourArtistRank-friendsArtistRank) * 25.0
-                    totalScore += distanceApartScore + distanceFromTopScore
-                    print("\(yourArtist.name) - \( distanceApartScore + distanceFromTopScore)")
+        self.fetchTopArtistsFromDB(uid: yourUID) { (rankings) in
+            switch rankings {
+            case .success(let data):
+                print(data)
+                yourRankings = data
+                
+                self.fetchTopArtistsFromDB(uid: friendUID) { (rankings) in
+                    switch rankings {
+                    case .success(let data):
+                        print(data)
+                        friendRankings = data
+                        let artistScore = self.compareRankings(yourRanking: yourRankings[0], friendRanking: friendRankings[0])
+                        let genreScore = self.compareRankings(yourRanking: yourRankings[1], friendRanking: friendRankings[1])
+                        let totalScore = artistScore + genreScore
+                        self.score = totalScore
+                        
+                    case .failure(let error):
+                        print(error)
+                        
+                    }
+                    
+        //            print(rankings[0])
                 }
-                friendsArtistRank += 1
+            case .failure(let error):
+                print(error)
+                
             }
-            yourArtistRank += 1
+            
+//            print(rankings[0])
         }
         
-        print(totalScore)
-        return totalScore
-    }
+//        self.fetchTopArtistsFromDB(uid: friendUID) { rankings in
+//            friendRankings = rankings
+//        }
+//
+//        let artistScore = self.compareRankings(yourRanking: yourRankings[0], friendRanking: friendRankings[0])
+//        let genreScore = self.compareRankings(yourRanking: yourRankings[1], friendRanking: friendRankings[1])
+////
+////        let totalScore = artistScore + genreScore
+////
+////        return totalScore
+//        return 0.0
 
-    
+    }
     
 }
 
 struct TopArtists: Codable {
-    let items: [TopArtist]
+    let items: [ComparisonItem]
 }
 
-struct TopArtist: Codable, Identifiable {
+
+// This can either be an Artist or a Genre
+struct ComparisonItem: Codable, Identifiable {
     let name: String
-    let id: String
-    let popularity: Int
-    let genres: [String]
+    var id: String?
+    var popularity: Int?
+    var genres: [String]?
     let rank: Int?
+    
+//    init(name: String, rank: Int) {
+//        self.name = name
+//        self.rank = rank
+//    }
+//
+//    init(name: String, id: String, popularity: Int, genres: [String], rank: Int) {
+//        self.name = name
+//        self.id = id
+//        self.popularity = popularity
+//        self.genres = genres
+//        self.rank = rank
+//    }
     
 }
 
-struct Genre: Codable {
-    let name: String
-    let rank: Int
-}
+//struct Genre: Codable {
+//    let name: String
+//    let rank: Int
+//}
 
 
 

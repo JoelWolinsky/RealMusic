@@ -54,7 +54,7 @@ struct ProfileView: View {
                 analyticsModel.fetchTopArtistsFromAPI() { (result) in
                     switch result {
                     case .success(let data):
-                        analyticsModel.uploadTopArtistsToDB(artists: data)
+                        analyticsModel.uploadToDB(items: data, rankingType: "Top Artists")
                     case .failure(let error):
                         print(error)
                     }

@@ -11,17 +11,23 @@ import SwiftUI
 
 struct CompareAnalyticsView: View {
     
-    var friendID: String
     
     @ObservedObject var analyticsModel = AnalyticsModel()
     
-    @State var yourTopArtists = [TopArtist]()
-    @State var friendTopArtists = [TopArtist]()
+    @State var yourTopArtists = [ComparisonItem]()
+    @State var friendTopArtists = [ComparisonItem]()
+    
+    @State var yourTopGenres = [ComparisonItem]()
+    @State var friendTopGenres = [ComparisonItem]()
 
     
     @State var yourUID = (UserDefaults.standard.value(forKey: "uid") ?? "") as! String
+    @State var friendUID: String
+
     
     @State var score = Double()
+  
+
 
     
     var body: some View {
@@ -51,25 +57,28 @@ struct CompareAnalyticsView: View {
                 }
             }
             Button {
-                score = analyticsModel.compareTopArtists(yourArtists: yourTopArtists, friendsArtists: friendTopArtists)
+                analyticsModel.compare(yourUID: yourUID, friendUID: friendUID)
             } label: {
-                Text("Compare Top Artists")
+                Text("Compare")
             }
+            Text(String(format: "Score: %.0f", analyticsModel.score))
             
-            Text(String(format: "score: %.0f", score))
 
         }
         .background(.white)
-        .onAppear(perform: {
-            analyticsModel.fetchTopArtistsFromDB(uid: yourUID) { artists in
-                yourTopArtists = artists
-            }
-            
-            analyticsModel.fetchTopArtistsFromDB(uid: friendID) { artists in
-                friendTopArtists = artists
-            }
-
-        })
+//        .onAppear(perform: {
+//            analyticsModel.fetchTopArtistsFromDB(uid: yourUID) { rankings in
+//                yourTopArtists = rankings[0]
+//                yourTopGenres = rankings[1]
+//            }
+//            
+//            analyticsModel.fetchTopArtistsFromDB(uid: friendUID) { rankings in
+//                friendTopArtists = rankings[0]
+//                friendTopGenres = rankings[1]
+//
+//            }
+//
+//        })
         
     }
     
