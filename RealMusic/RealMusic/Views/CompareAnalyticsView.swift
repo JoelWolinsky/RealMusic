@@ -20,29 +20,43 @@ struct CompareAnalyticsView: View {
 
     
     @State var yourUID = (UserDefaults.standard.value(forKey: "uid") ?? "") as! String
+    
+    @State var score = Double()
 
     
     var body: some View {
         VStack {
             Text("Compare Analytics")
-            
-            Text("You")
-            ForEach(yourTopArtists) { artist in
-                Text(artist.name)
+            HStack {
+                VStack {
+                    Text("You")
+                    ForEach(yourTopArtists) { artist in
+                        HStack {
+                            Text("\(artist.rank ?? 0)")
+                            Text(artist.name)
+                        }
+                    }
+                }
+                VStack {
+                    Text("Friend")
+                        .padding(.top, 20)
+                    
+                    ForEach(friendTopArtists) { artist in
+                        HStack {
+                            Text("\(artist.rank ?? 0)")
+                            Text(artist.name)
+                        }
+                        
+                    }
+                }
             }
-            
-            Text("Friend")
-                .padding(.top, 20)
-
-            ForEach(friendTopArtists) { artist in
-                Text(artist.name)
-            }
-            
             Button {
-                analyticsModel.compareTopArtists(yourArtists: yourTopArtists, friendsArtists: friendTopArtists)
+                score = analyticsModel.compareTopArtists(yourArtists: yourTopArtists, friendsArtists: friendTopArtists)
             } label: {
                 Text("Compare Top Artists")
             }
+            
+            Text(String(format: "score: %.0f", score))
 
         }
         .background(.white)
