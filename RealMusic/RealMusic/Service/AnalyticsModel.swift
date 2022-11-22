@@ -13,7 +13,9 @@ class AnalyticsModel: ObservableObject {
     
     @State var token = UserDefaults.standard.value(forKey: "Authorization") ?? ""
     
-    @State var score = Double()
+    @Published var score = Double()
+    
+    //@ObservedObject var scoreModel = ScoreModel()
 
     func fetchTopArtistsFromAPI(completion: @escaping (Result<[ComparisonItem], Error>) -> Void)  {
         let url = URL(string: "https://api.spotify.com/v1/me/top/artists?time_range=long_term&limit=20&offset=0")!
@@ -177,7 +179,10 @@ class AnalyticsModel: ObservableObject {
                         let artistScore = self.compareRankings(yourRanking: yourRankings[0], friendRanking: friendRankings[0])
                         let genreScore = self.compareRankings(yourRanking: yourRankings[1], friendRanking: friendRankings[1])
                         let totalScore = artistScore + genreScore
-                        self.score = totalScore
+                        self.score = totalScore/1000
+                        
+                        //self.scoreModel.score = totalScore
+                        print("setting score as \(totalScore)")
                         
                     case .failure(let error):
                         print(error)

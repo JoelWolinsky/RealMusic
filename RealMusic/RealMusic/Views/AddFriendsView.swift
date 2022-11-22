@@ -137,6 +137,14 @@ struct AddFriendsView: View {
                                         showCompareAnalytics.toggle()
                                         friendToCompare = friend
                                     }
+                                
+                                
+                                CompareAnalyticsView(friendUID: friend.id ?? "ID placeholder")
+                                   
+                                    
+                                        
+
+                                
                             }
                             
                         }
@@ -153,11 +161,7 @@ struct AddFriendsView: View {
                 friendsViewModel.fetchFriends()
             })
             
-            if showCompareAnalytics {
-                CompareAnalyticsView(friendUID: friendToCompare.id ?? "ID placeholder")
-                    .zIndex(1)
-
-            }
+            
                 
         }
         

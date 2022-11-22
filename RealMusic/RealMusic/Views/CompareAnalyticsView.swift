@@ -32,40 +32,49 @@ struct CompareAnalyticsView: View {
     
     var body: some View {
         VStack {
-            Text("Compare Analytics")
-            HStack {
-                VStack {
-                    Text("You")
-                    ForEach(yourTopArtists) { artist in
-                        HStack {
-                            Text("\(artist.rank ?? 0)")
-                            Text(artist.name)
-                        }
-                    }
-                }
-                VStack {
-                    Text("Friend")
-                        .padding(.top, 20)
-                    
-                    ForEach(friendTopArtists) { artist in
-                        HStack {
-                            Text("\(artist.rank ?? 0)")
-                            Text(artist.name)
-                        }
-                        
-                    }
-                }
-            }
-            Button {
-                analyticsModel.compare(yourUID: yourUID, friendUID: friendUID)
-            } label: {
-                Text("Compare")
-            }
-            Text(String(format: "Score: %.0f", analyticsModel.score))
+//            Text("Compare Analytics")
+//            HStack {
+//                VStack {
+//                    Text("You")
+//                    ForEach(yourTopArtists) { artist in
+//                        HStack {
+//                            Text("\(artist.rank ?? 0)")
+//                            Text(artist.name)
+//                        }
+//                    }
+//                }
+//                VStack {
+//                    Text("Friend")
+//                        .padding(.top, 20)
+//
+//                    ForEach(friendTopArtists) { artist in
+//                        HStack {
+//                            Text("\(artist.rank ?? 0)")
+//                            Text(artist.name)
+//                        }
+//
+//                    }
+//                }
+//            }
+//            Button {
+//                analyticsModel.compare(yourUID: yourUID, friendUID: friendUID)
+//            } label: {
+//                Text("Compare")
+//            }
+           Text(String(format: "Score: %.0f", analyticsModel.score))
+                .foregroundColor(.green)
             
-
+//            Text(String(format: "Score: %.0f", analyticsModel.scoreModel.score))
+//                 .foregroundColor(.orange)
+            
+            
+//
+//
         }
-        .background(.white)
+        .onAppear(perform: {
+            print("comparing \(yourUID) & \(friendUID)")
+            analyticsModel.compare(yourUID: yourUID, friendUID: friendUID)
+        })
 //        .onAppear(perform: {
 //            analyticsModel.fetchTopArtistsFromDB(uid: yourUID) { rankings in
 //                yourTopArtists = rankings[0]

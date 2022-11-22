@@ -1,4 +1,5 @@
 
+import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 struct User: Identifiable, Decodable, Encodable {
