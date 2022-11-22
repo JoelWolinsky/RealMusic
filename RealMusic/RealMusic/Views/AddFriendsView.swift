@@ -101,7 +101,7 @@ struct AddFriendsView: View {
                         }
                     }
                 
-                VStack{
+                VStack {
                     
                     Text("Your Friends")
                         .foregroundColor(.white)
@@ -121,12 +121,6 @@ struct AddFriendsView: View {
                                 }
                                 .frame(width: 60, height: 60)
                                 .cornerRadius(30)
-                                //                            .onAppear(perform: {
-                                //                                userViewModel.fetchProfilePic(uid: friend.id!) { profile in
-                                //                                    print(profile)
-                                //                                    friend = User(username: friend.username, profilePic: profile)
-                                //                                }
-                                //                            })
                                 
                                 Text(friend.username)
                                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -140,6 +134,9 @@ struct AddFriendsView: View {
                                 
                                 
                                 CompareAnalyticsView(friendUID: friend.id ?? "ID placeholder")
+                                    .onAppear(perform: {
+                                        print("showing score")
+                                    })
                                    
                                     
                                         
@@ -156,10 +153,7 @@ struct AddFriendsView: View {
             }
             .padding(20)
             .background(.black)
-            .onAppear(perform: {
-                print("AddFriends View")
-                friendsViewModel.fetchFriends()
-            })
+
             
             
                 

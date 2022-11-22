@@ -70,7 +70,7 @@ class AnalyticsModel: ObservableObject {
 
                 }
                 try db.collection("Users").document(uid).collection("Spotify Analytics").document(rankingType).collection(rankingType).document(String(rank)).setData(from: item)
-                print("\(item.name) added as \(rank)")
+                //print("\(item.name) added as \(rank)")
                 rank += 1
             }
            
@@ -100,7 +100,7 @@ class AnalyticsModel: ObservableObject {
                 artists.sort {
                     $0.rank ?? 0 < $1.rank ?? 0
                 }
-                print("get genres")
+                //print("get genres")
                 let genres = self.getTopGenres(topArtists: artists)
                 completion(.success([artists, genres]))
             }
@@ -114,7 +114,7 @@ class AnalyticsModel: ObservableObject {
         for artist in topArtists {
             for genre in artist.genres! {
                 genres.append(ComparisonItem(name: genre, rank: rank))
-                print("\(rank) \(genre)")
+                //print("\(rank) \(genre)")
                 rank += 1
             }
         }
@@ -146,10 +146,10 @@ class AnalyticsModel: ObservableObject {
                     if yourItem.popularity != nil {
                         popularityScore = (100 - Double(yourItem.popularity!)) * 50.0
                         totalScore += distanceApartScore + distanceFromTopScore + popularityScore
-                        print("\(yourItem.name) - \( distanceApartScore + distanceFromTopScore + popularityScore)")
+                        //("\(yourItem.name) - \( distanceApartScore + distanceFromTopScore + popularityScore)")
                     } else {
                         totalScore += distanceApartScore + distanceFromTopScore
-                        print("\(yourItem.name) - \(distanceApartScore + distanceFromTopScore)")
+                        //print("\(yourItem.name) - \(distanceApartScore + distanceFromTopScore)")
                     }
                 }
                 friendRank += 1
@@ -157,7 +157,7 @@ class AnalyticsModel: ObservableObject {
             yourRank += 1
         }
         
-        print(totalScore)
+        //print(totalScore)
         return totalScore
     }
     
@@ -168,13 +168,13 @@ class AnalyticsModel: ObservableObject {
         self.fetchTopArtistsFromDB(uid: yourUID) { (rankings) in
             switch rankings {
             case .success(let data):
-                print(data)
+                //print(data)
                 yourRankings = data
                 
                 self.fetchTopArtistsFromDB(uid: friendUID) { (rankings) in
                     switch rankings {
                     case .success(let data):
-                        print(data)
+                        //print(data)
                         friendRankings = data
                         let artistScore = self.compareRankings(yourRanking: yourRankings[0], friendRanking: friendRankings[0])
                         let genreScore = self.compareRankings(yourRanking: yourRankings[1], friendRanking: friendRankings[1])
