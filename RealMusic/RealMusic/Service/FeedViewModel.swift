@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
 class FeedViewModel: ObservableObject {
     @Published var posts = [Post]()
@@ -34,6 +35,33 @@ class FeedViewModel: ObservableObject {
                     print(user.username)
                 }
             }
+        }
+    }
+    
+    func fetchReactions() {
+        print("Fetch reactions")
+        var emojis = [Emoji]()
+        let db = Firestore.firestore()
+        
+        var counter = 0
+     
+        for post in self.posts {
+            db.collection("Posts")
+                .document(post.id!)
+                .collection("Reactions")
+                .getDocuments() { (querySnapshot, err) in
+                    emojis = []
+                    guard let documents = querySnapshot?.documents else { return }
+                    documents.forEach{ emoji in
+                        guard let emoji = try? emoji.data(as: Emoji.self) else { return }
+                        
+                        emojis.append(emoji)
+                        print("append \(emoji.name)")
+                    }
+                    self.posts[counter].reactions = emojis
+                    counter += 1
+                    
+                }
         }
     }
 }

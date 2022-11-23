@@ -12,6 +12,7 @@ struct Post: Identifiable, Decodable, Encodable {
     var cover : String?
     var datePosted = Date()
     var preview: String?
+    var reactions: [Emoji]?
     
 }
 

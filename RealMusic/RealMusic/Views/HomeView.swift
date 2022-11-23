@@ -70,7 +70,11 @@ struct HomeView: View {
                             
                             
                             ForEach(feedViewModel.posts) { post in
-                                PostView(post: post)
+                                VStack {
+                                    PostView(post: post)
+                                    EmojiPickerView(postUID: post.id!)
+                                    ReactionsView(emojis: post.reactions ?? [], postUID: post.id!)
+                                }
                             }
                         }
                         .padding()
@@ -78,6 +82,8 @@ struct HomeView: View {
                     .refreshable {
                         print("Refreshing")
                         feedViewModel.fetchPosts()
+                        feedViewModel.fetchReactions()
+                        
                         
                         getRequest.getCurrentPlaying() { (result) in
                             switch result {
@@ -180,7 +186,7 @@ struct HomeView: View {
                         switch result {
                         case .success(let data) :
                             print("success \(data)")
-                            if data != nil {
+                            if data.isEmpty != true {
                                 let song = data[0]
                                 currentlyPlaying = SpotifySong(id: song.id, songID: song.songID, title: song.title, artist: song.artist, uid: song.uid, cover: song.cover, preview_url: song.preview_url)
                             }
