@@ -123,7 +123,6 @@ struct AddFriendsView: View {
                                 .onAppear(perform: {
                                     userViewModel.fetchProfilePic(uid: friend.id!) { profile in
                                         print(profile)
-                                        //friend = User(username: friend.username, profilePic: profile)
                                     }
                                 })
     
@@ -132,33 +131,17 @@ struct AddFriendsView: View {
                                     Text(friend.username)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                         .padding(5)
-                                    //.background(.green)
                                         .foregroundColor(Color("Grey"))
-//                                        .onTapGesture {
-//                                            showCompareAnalytics.toggle()
-//                                            friendToCompare = friend
-//                                        }
+
                                     Text(friend.id ?? "")
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                         .padding(5)
-                                    //.background(.green)
                                         .foregroundColor(Color("Grey"))
                                 }
                                 
                                 Text(String(friend.matchScore ?? 0))
                                     .foregroundColor(.purple)
-                                
-//                                CompareAnalyticsView(friendUID: friend.id ?? "ID placeholder")
-//                                    .onAppear(perform: {
-//                                        print("showing score")
-//                                    })
-                                    
-                                    
-                                   
-                                    
-                                        
-
-                                
+   
                             }
                             
                         }

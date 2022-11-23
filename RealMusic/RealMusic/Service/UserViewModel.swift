@@ -104,7 +104,6 @@ class UserViewModel: ObservableObject {
         let riversRef = storageRef.child("images/\(uid).heic")
         //let riversRef = storageRef.child("images/rivers.heic")
 
-
         // Fetch the download URL
         riversRef.downloadURL { url, error in
           if let error = error {
