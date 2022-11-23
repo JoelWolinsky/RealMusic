@@ -32,7 +32,7 @@ class SignInViewModel: ObservableObject {
             // Fetch the users user name from db
             self.userViewModel.fetchUser(withId: self.auth.currentUser?.uid ?? "" ) { user in
                 print(user.username)
-                UserDefaults.standard.setValue(user.username, forKey: "Username")
+                UserDefaults.standard.setValue(user.username, forKey: "username")
                 
             }
             

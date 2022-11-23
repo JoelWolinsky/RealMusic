@@ -13,10 +13,11 @@ class AnalyticsModel: ObservableObject {
     
     @State var token = UserDefaults.standard.value(forKey: "Authorization") ?? ""
     
-    @Published var score = Double()
+    //@Published var score = Double()
     
     //@ObservedObject var scoreModel = ScoreModel()
-
+    
+    // Makes an API call to get the users top artists they listen to on Spotify
     func fetchTopArtistsFromAPI(completion: @escaping (Result<[ComparisonItem], Error>) -> Void)  {
         let url = URL(string: "https://api.spotify.com/v1/me/top/artists?time_range=long_term&limit=20&offset=0")!
         var request = URLRequest(url: url)
@@ -53,6 +54,7 @@ class AnalyticsModel: ObservableObject {
         .resume()
     }
     
+    // Uploads the analytics to Firestore
     func uploadToDB(items: [ComparisonItem], rankingType: String ) {
 
         let db = Firestore.firestore()
@@ -79,6 +81,8 @@ class AnalyticsModel: ObservableObject {
         }
     }
     
+    
+    // Fetches the top artist documents from the DB
     func fetchTopArtistsFromDB(uid id: String, completion: @escaping (Result<[[ComparisonItem]], Error>) -> Void ) {
         var artists = [ComparisonItem]()
         let db = Firestore.firestore()
@@ -106,6 +110,7 @@ class AnalyticsModel: ObservableObject {
             }
     }
     
+    // Pull out the genres from the users top artists
     func getTopGenres(topArtists: [ComparisonItem]) -> [ComparisonItem]{
         
         var genres = [ComparisonItem]()
@@ -121,6 +126,7 @@ class AnalyticsModel: ObservableObject {
         return genres
     }
     
+    // Calculates matchScore
     func compareRankings(yourRanking: [ComparisonItem], friendRanking: [ComparisonItem]) -> Double {
         var yourRank = 1.0
         var friendRank = 1.0
@@ -142,11 +148,11 @@ class AnalyticsModel: ObservableObject {
                     // based of how close common artist is on their leaderboards
                     distanceApartScore = ((rankingLength*1.5)-Double(abs(friendRank-yourRank))) * 100.0
                     // and how high up they are on these leaderboards
-                    distanceFromTopScore = ((rankingLength * 2)-yourRank-friendRank) * 25.0
+                    distanceFromTopScore = ((rankingLength * 2)-yourRank-friendRank) * 50.0
                     if yourItem.popularity != nil {
-                        popularityScore = (100 - Double(yourItem.popularity!)) * 50.0
+                        popularityScore = (100 - Double(yourItem.popularity!)) * 100.0
                         totalScore += distanceApartScore + distanceFromTopScore + popularityScore
-                        //("\(yourItem.name) - \( distanceApartScore + distanceFromTopScore + popularityScore)")
+                        print("\(yourItem.name) - \( distanceApartScore) + \(distanceFromTopScore) + \(popularityScore)")
                     } else {
                         totalScore += distanceApartScore + distanceFromTopScore
                         //print("\(yourItem.name) - \(distanceApartScore + distanceFromTopScore)")
@@ -161,6 +167,7 @@ class AnalyticsModel: ObservableObject {
         return totalScore
     }
     
+    // Fetch both users top artists and compare them to calculate a score then upload it to db
     func compare(yourUID: String, friendUID: String) {
         var yourRankings = [[ComparisonItem]]()
         var friendRankings = [[ComparisonItem]]()
@@ -178,11 +185,11 @@ class AnalyticsModel: ObservableObject {
                         friendRankings = data
                         let artistScore = self.compareRankings(yourRanking: yourRankings[0], friendRanking: friendRankings[0])
                         let genreScore = self.compareRankings(yourRanking: yourRankings[1], friendRanking: friendRankings[1])
-                        let totalScore = artistScore + genreScore
-                        self.score = totalScore/1000
-                        
-                        //self.scoreModel.score = totalScore
+                        let totalScore = (artistScore + genreScore)/20000
+
                         print("setting score as \(totalScore)")
+                        
+                        self.addFriendScore(yourUID: yourUID, friendUID: friendUID, score: totalScore)
                         
                     case .failure(let error):
                         print(error)
@@ -199,19 +206,34 @@ class AnalyticsModel: ObservableObject {
 //            print(rankings[0])
         }
         
-//        self.fetchTopArtistsFromDB(uid: friendUID) { rankings in
-//            friendRankings = rankings
-//        }
-//
-//        let artistScore = self.compareRankings(yourRanking: yourRankings[0], friendRanking: friendRankings[0])
-//        let genreScore = self.compareRankings(yourRanking: yourRankings[1], friendRanking: friendRankings[1])
-////
-////        let totalScore = artistScore + genreScore
-////
-////        return totalScore
-//        return 0.0
+
 
     }
+    
+    // Upload the matchScore to the DB in the collection for your friends
+    func addFriendScore(yourUID: String, friendUID: String, score: Double) {
+        let db = Firestore.firestore()
+        
+        let userUid = UserDefaults.standard.value(forKey: "uid")
+        
+        // add them to your friends
+        do {
+            try db.collection("Users").document(yourUID).collection("Friends").document(friendUID).updateData(["matchScore" : score])
+            //UserDefaults.standard.setValue(username, forKey: "Username")
+            print("friend score added")
+        } catch let error {
+            print("Error writing city to Firestore: \(error)")
+        }
+       
+    }
+    
+    func compareForEach(yourUID: String, friends: [User]) {
+        for friend in friends {
+            compare(yourUID: yourUID, friendUID: friend.id ?? "")
+            
+        }
+    }
+
     
 }
 

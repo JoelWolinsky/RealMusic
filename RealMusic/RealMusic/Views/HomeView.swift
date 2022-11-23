@@ -28,7 +28,7 @@ struct HomeView: View {
     @State var friendsToggle = false
     @State var searchToggle = false
     
-    @State var profilePic = URL(string: "www.google.com")
+    @State var profilePic = String()
     
     @State var userViewModel = UserViewModel()
     
@@ -140,7 +140,7 @@ struct HomeView: View {
                         
                         Spacer()
                         
-                        AsyncImage(url: profilePic) { image in
+                        AsyncImage(url: URL(string: profilePic)) { image in
                             image
                                   .resizable()
                                   .aspectRatio(contentMode: .fill)
@@ -214,7 +214,7 @@ struct HomeView: View {
             
             
             if showProfileView {
-                ProfileView(signInModel: signInModel, profilePic: profilePic!, showProfileView: $showProfileView)
+                ProfileView(signInModel: signInModel, profilePic: profilePic ?? "no profile", showProfileView: $showProfileView)
                     .zIndex(1)
                     .transition(.slideRight)
             }

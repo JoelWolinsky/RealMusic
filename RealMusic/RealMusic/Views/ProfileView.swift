@@ -12,7 +12,7 @@ struct ProfileView: View {
     
     @StateObject var signInModel: SignInViewModel
     
-    @State var profilePic: URL
+    @State var profilePic: String
     
     @Binding var showProfileView: Bool
     
@@ -33,8 +33,8 @@ struct ProfileView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             
-            HStack {
-                AsyncImage(url: profilePic) { image in
+            VStack {
+                AsyncImage(url: URL(string: profilePic)) { image in
                     image
                           .resizable()
                           .aspectRatio(contentMode: .fill)
@@ -44,9 +44,21 @@ struct ProfileView: View {
                 }
                 .frame(width: 100, height: 100)
                 .cornerRadius(50)
-         
-                Text(UserDefaults.standard.value(forKey: "username") as! String)
-                    .foregroundColor(Color("Grey"))
+                .padding( 20)
+                
+                VStack {
+                    Text(UserDefaults.standard.value(forKey: "username") as! String)
+                        .foregroundColor(Color("Grey"))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.bottom, 10)
+
+                    Text("UID: " + (UserDefaults.standard.value(forKey: "uid") as? String ?? ""))
+                        .foregroundColor(Color("Grey"))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.bottom, 10)
+
+
+                }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         

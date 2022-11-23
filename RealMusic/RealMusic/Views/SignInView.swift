@@ -154,7 +154,7 @@ struct CreatUserNameView: View {
     
     @State private var isAddingPhoto = false
 
-    @State var profilePicture = URL(string: "")
+    @State var profilePicture = String()
 
     var body: some View {
         VStack {
@@ -215,7 +215,7 @@ struct CreatUserNameView: View {
                                 print("this is the profile url \( profile)")
                                 profilePicture = profile
                                 
-                                userViewModel.createUser(uid: uid, username: username, profilePic: profilePicture!)
+                                userViewModel.createUser(uid: uid, username: username, profilePic: profilePicture ?? "no profile pic")
                                 viewModel.signedIn = true
                             }
        

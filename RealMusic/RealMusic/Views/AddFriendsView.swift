@@ -11,13 +11,16 @@ import SwiftUI
 struct AddFriendsView: View {
     
     @ObservedObject var userViewModel = UserViewModel()
+    @ObservedObject var analyticsModel = AnalyticsModel()
+    @ObservedObject var friendsViewModel = FriendsViewModel()
+
+
     
     @State var nameFound = false
     @State var errorMessage = ""
     
     @State var username = ""
     
-    @ObservedObject var friendsViewModel = FriendsViewModel()
     
     //@StateObject var feedViewModel: FeedViewModel
     
@@ -26,6 +29,9 @@ struct AddFriendsView: View {
     
     @State var showCompareAnalytics = false
     @State var friendToCompare =  User(username: "")
+    
+    @State var yourUID = (UserDefaults.standard.value(forKey: "uid") ?? "") as! String
+
     
 
     
@@ -45,14 +51,7 @@ struct AddFriendsView: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .trailing)
                 
-                VStack {
-                    Text("Username: " + (UserDefaults.standard.value(forKey: "Username") as? String ?? ""))
-                    Text("UID: " + (UserDefaults.standard.value(forKey: "uid") as? String ?? ""))
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .foregroundColor(.white)
-                .padding(.bottom, 30)
-                
+            
                 
                 
                 Spacer()
@@ -108,10 +107,10 @@ struct AddFriendsView: View {
                         .padding(5)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     ScrollView {
-                        ForEach(friendsViewModel.friends) { friend in
+                        ForEach(friendsViewModel.friends.sorted(by: { $0.matchScore ?? 0 > $1.matchScore ?? 0 })) { friend in
                             HStack {
                                 
-                                AsyncImage(url: friend.profilePic ?? URL(string: "")) { image in
+                                AsyncImage(url: URL(string: friend.profilePic ?? "no profile pic")) { image in
                                     image
                                         .resizable()
                                         .aspectRatio(contentMode: .fill)
@@ -121,22 +120,40 @@ struct AddFriendsView: View {
                                 }
                                 .frame(width: 60, height: 60)
                                 .cornerRadius(30)
-                                
-                                Text(friend.username)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .padding(5)
-                                //.background(.green)
-                                    .foregroundColor(Color("Grey"))
-                                    .onTapGesture {
-                                        showCompareAnalytics.toggle()
-                                        friendToCompare = friend
+                                .onAppear(perform: {
+                                    userViewModel.fetchProfilePic(uid: friend.id!) { profile in
+                                        print(profile)
+                                        //friend = User(username: friend.username, profilePic: profile)
                                     }
+                                })
+    
+
+                                VStack {
+                                    Text(friend.username)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .padding(5)
+                                    //.background(.green)
+                                        .foregroundColor(Color("Grey"))
+//                                        .onTapGesture {
+//                                            showCompareAnalytics.toggle()
+//                                            friendToCompare = friend
+//                                        }
+                                    Text(friend.id ?? "")
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .padding(5)
+                                    //.background(.green)
+                                        .foregroundColor(Color("Grey"))
+                                }
                                 
+                                Text(String(friend.matchScore ?? 0))
+                                    .foregroundColor(.purple)
                                 
-                                CompareAnalyticsView(friendUID: friend.id ?? "ID placeholder")
-                                    .onAppear(perform: {
-                                        print("showing score")
-                                    })
+//                                CompareAnalyticsView(friendUID: friend.id ?? "ID placeholder")
+//                                    .onAppear(perform: {
+//                                        print("showing score")
+//                                    })
+                                    
+                                    
                                    
                                     
                                         
@@ -146,6 +163,14 @@ struct AddFriendsView: View {
                             
                         }
                     }
+                    
+                    .refreshable {
+                        // run function to calculate all scores
+                        await analyticsModel.compareForEach(yourUID: yourUID, friends: friendsViewModel.friends)
+                        friendsViewModel.fetchFriends()
+                    }
+                    
+                    
                 }
                 .frame(maxWidth: .infinity)
                 
@@ -158,6 +183,12 @@ struct AddFriendsView: View {
             
                 
         }
+        .onAppear( perform: {
+            // run function to calculate all scores
+            print("showing add friends view")
+            analyticsModel.compareForEach(yourUID: yourUID, friends: friendsViewModel.friends)
+            friendsViewModel.fetchFriends()
+        })
         
         
 

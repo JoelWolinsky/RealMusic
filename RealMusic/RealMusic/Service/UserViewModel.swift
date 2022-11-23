@@ -38,7 +38,7 @@ class UserViewModel: ObservableObject {
     
     
     
-    func createUser(uid: String, username: String, profilePic: URL) {
+    func createUser(uid: String, username: String, profilePic: String) {
         let db = Firestore.firestore()
         
         let user = User(id: uid, username: username, profilePic: profilePic)
@@ -64,6 +64,7 @@ class UserViewModel: ObservableObject {
                 documents.forEach{ user in
                     guard let user = try? user.data(as: User.self) else { return }
                     friends.append(user)
+                    print("fetched friend \(user.id)")
                 }
                 completion(friends)
             }
@@ -94,7 +95,7 @@ class UserViewModel: ObservableObject {
         }
     }
     
-    func fetchProfilePic (uid: String, completion: @escaping(URL) -> Void) {
+    func fetchProfilePic (uid: String, completion: @escaping(String) -> Void) {
                 
         let storage = Storage.storage()
         let storageRef = storage.reference()
@@ -110,7 +111,7 @@ class UserViewModel: ObservableObject {
             // Handle any errors
           } else {
               print("profile pic \(url)")
-              completion(url!)
+              completion(url?.absoluteString ?? "no profile")
             // Get the download URL for 'images/stars.jpg'
           }
         }
