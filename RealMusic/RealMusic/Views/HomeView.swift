@@ -73,7 +73,7 @@ struct HomeView: View {
                                 VStack {
                                     PostView(post: post)
                                     EmojiPickerView(postUID: post.id!)
-                                    ReactionsView(emojis: post.reactions ?? [], postUID: post.id!)
+                                    ReactionsView(emojis: post.reactions ?? [], postUID: post.id ?? "")
                                 }
                             }
                         }
@@ -82,7 +82,7 @@ struct HomeView: View {
                     .refreshable {
                         print("Refreshing")
                         feedViewModel.fetchPosts()
-                        feedViewModel.fetchReactions()
+                        //feedViewModel.fetchReactions()
                         
                         
                         getRequest.getCurrentPlaying() { (result) in

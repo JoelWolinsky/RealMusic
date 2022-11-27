@@ -70,7 +70,7 @@ struct SearchResultView: View {
                     print("song url: \(song.preview_url)")
                     createPostModel.createPost(
                         post: Post(songID: song.songID,
-                                      uid: "dadsads",
+                                   uid: UserDefaults.standard.value(forKey: "uid") as! String,
                                       username: UserDefaults.standard.value(forKey: "Username") as! String,
                                       cover: song.cover,
                                       preview: song.preview_url))

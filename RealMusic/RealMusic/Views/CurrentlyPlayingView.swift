@@ -101,8 +101,8 @@ struct CurrentlyPlayingView: View {
                     //currentSongBackground = Color(.green)
                     createPostModel.createPost(
                         post: Post(songID: song.songID,
-                                      uid: "dadsads",
-                                      username: "placeholder",//UserDefaults.standard.value(forKey: "Username") as! String ?? "",
+                                   uid: UserDefaults.standard.value(forKey: "uid") as! String,
+                                      username: UserDefaults.standard.value(forKey: "username") as! String ?? "",
                                       cover: song.cover,
                                       preview: song.preview_url))
                 }
