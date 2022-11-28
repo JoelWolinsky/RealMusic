@@ -26,6 +26,8 @@ struct EmojiPickerView: View {
 
     @ObservedObject var emojiReactionModel = EmojiReactionModel()
     
+    @StateObject var reactionViewModel: ReactionViewModel
+
     var body: some View {
         HStack {
             ForEach(emojis) { emoji in
@@ -37,6 +39,8 @@ struct EmojiPickerView: View {
                     disableScroll = 1000
                     let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
                     impactHeavy.impactOccurred()
+                    
+                    reactionViewModel.addLocalReaction(reaction: emoji)
                     
 
                 }, label: {

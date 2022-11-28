@@ -102,7 +102,7 @@ struct PostView: View {
 
             
             if longPress == 10 {
-                EmojiPickerView(postUID: chosenPostID, longPress: $longPress, chosenEmoji: $chosenEmoji, emojiSelected: $emojiSelected, blurModel: blurModel, disableScroll: $disableScroll)
+                EmojiPickerView(postUID: chosenPostID, longPress: $longPress, chosenEmoji: $chosenEmoji, emojiSelected: $emojiSelected, blurModel: blurModel, disableScroll: $disableScroll, reactionViewModel: reactionViewModel)
             }
         }
         

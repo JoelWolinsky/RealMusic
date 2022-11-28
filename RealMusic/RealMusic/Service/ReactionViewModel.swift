@@ -28,4 +28,9 @@ class ReactionViewModel: ObservableObject {
         }
         
     }
+    
+    func addLocalReaction(reaction: Emoji) {
+        //let reaction = Emoji(emoji: "🍅", name: "")
+        self.reactions.append(reaction)
+    }
 }
