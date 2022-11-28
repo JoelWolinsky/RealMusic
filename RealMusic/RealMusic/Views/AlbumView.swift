@@ -98,7 +98,7 @@ struct AlbumView: View {
         .background(Color("Grey 3"))
         //.frame(minHeight: 100)
         .cornerRadius(10)
-   
+    
     }
         
     

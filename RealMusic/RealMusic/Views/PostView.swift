@@ -15,56 +15,96 @@ struct PostView: View {
     @ObservedObject var spotifyAPI = SpotifyAPI()
     
     @StateObject var reactionViewModel: ReactionViewModel
+    
+    @Binding var longPress: Int
+    @Binding var chosenPostID: String
+    
+    @StateObject var blurModel: BlurModel
+    
+    @State var chosenEmoji = Emoji(emoji: "", name: "")
+    @State var emojiSelected = false
+    
+    @Binding var disableScroll: Int
+    
+    
+    
 
     
     var body: some View {
         
         
-        
-        VStack {
-            Text("@" + (post.username ?? ""))
-                .frame(maxWidth: .infinity, alignment: .leading)
+        ZStack {
+            VStack {
+                Text("@" + (post.username ?? ""))
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 
-            
-            AlbumView(album: Album(title: post.title ?? "placeholder",artist: post.artist ?? "placeholder" ,cover: post.cover ?? "KSG Cover", preview: post.preview ?? ""))
+                
+                AlbumView(album: Album(title: post.title ?? "placeholder",artist: post.artist ?? "placeholder" ,cover: post.cover ?? "KSG Cover", preview: post.preview ?? ""))
                 //.padding(.bottom, 50)
-            
-           ReactionsView(reactionViewModel: reactionViewModel, postUID: post.id ?? "")
-                .padding(.leading, 10)
-                .offset(y: -20)
-            
-        }
-        .padding(20)
-        //.scaledToFill
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        //.background(.black)
-        .foregroundColor(.white)
-        .onAppear(perform: {
-            spotifyAPI.getSong(ID: post.songID) { (result) in
-            switch result {
-                case .success(let data) :
-                print("success \(data)")
-                post.title = data[0]
-                post.artist = data[1]
-                case .failure(let error) :
-                    print()
+                
+                ReactionsView(reactionViewModel: reactionViewModel, postUID: post.id ?? "")
+                    .padding(.leading, 10)
+                    .offset(y: -20)
+                
+            }
+            .padding(20)
+            //.scaledToFill
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            //.background(.black)
+            .foregroundColor(.white)
+            .onAppear(perform: {
+                spotifyAPI.getSong(ID: post.songID) { (result) in
+                    switch result {
+                    case .success(let data) :
+                        print("success \(data)")
+                        post.title = data[0]
+                        post.artist = data[1]
+                    case .failure(let error) :
+                        print()
+                    }
+                }
+                
+                
+                //            feedViewModel.fetchReactions(postUID: post.id ?? "") { (result) in
+                //                print("got reactions \(result.count)")
+                //                post.reactions = result
+                //            }
+                //
+                
+            })
+            // Issue with having a long press on a scroll item, so need to have an empty tap gesture before
+            .onTapGesture {
+                print("tap post")
+                if longPress == 10 {
+                    longPress = 0
+                    disableScroll = 1000
+                    blurModel.blur = 0
                 }
             }
-            
-        
-//            feedViewModel.fetchReactions(postUID: post.id ?? "") { (result) in
-//                print("got reactions \(result.count)")
-//                post.reactions = result
-//            }
-//        
+            .onLongPressGesture(perform: {
+                print("long press post")
+                if longPress == 10 {
+                    longPress = 0
+                    disableScroll = 1000
+                } else {
+                    disableScroll = 0
+                    longPress = 10
+                    chosenPostID = post.id ?? ""
+                    
+                }
+                let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
+                impactHeavy.impactOccurred()
+                
+                blurModel.blur = 10
+                
+            })
+            .blur(radius:CGFloat(blurModel.blur))
 
-        })
-        .onLongPressGesture(perform: {
-            print("longpress")
-            let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
-            impactHeavy.impactOccurred()
-        })
-        
+            
+            if longPress == 10 {
+                EmojiPickerView(postUID: chosenPostID, longPress: $longPress, chosenEmoji: $chosenEmoji, emojiSelected: $emojiSelected, blurModel: blurModel, disableScroll: $disableScroll)
+            }
+        }
         
     }
     

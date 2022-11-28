@@ -24,6 +24,8 @@
 		C939D6E7292E945E00C255F2 /* ReactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939D6E6292E945E00C255F2 /* ReactionsView.swift */; };
 		C939D6E9292F7A4D00C255F2 /* Reaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939D6E8292F7A4D00C255F2 /* Reaction.swift */; };
 		C939D6EB2934C61200C255F2 /* ReactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939D6EA2934C61200C255F2 /* ReactionViewModel.swift */; };
+		C939D6ED29351DA800C255F2 /* BlurModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939D6EC29351DA800C255F2 /* BlurModel.swift */; };
+		C939D6EF293524D700C255F2 /* DisableScrolling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939D6EE293524D700C255F2 /* DisableScrolling.swift */; };
 		C93D7EA128F3166100FEF3D6 /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93D7EA028F3166100FEF3D6 /* PostView.swift */; };
 		C947B9EC28EAECDD00B97EB1 /* RealMusicApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C947B9EB28EAECDD00B97EB1 /* RealMusicApp.swift */; };
 		C947B9EE28EAECDD00B97EB1 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C947B9ED28EAECDD00B97EB1 /* HomeView.swift */; };
@@ -97,6 +99,8 @@
 		C939D6E6292E945E00C255F2 /* ReactionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionsView.swift; sourceTree = "<group>"; };
 		C939D6E8292F7A4D00C255F2 /* Reaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reaction.swift; sourceTree = "<group>"; };
 		C939D6EA2934C61200C255F2 /* ReactionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionViewModel.swift; sourceTree = "<group>"; };
+		C939D6EC29351DA800C255F2 /* BlurModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurModel.swift; sourceTree = "<group>"; };
+		C939D6EE293524D700C255F2 /* DisableScrolling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisableScrolling.swift; sourceTree = "<group>"; };
 		C93D7EA028F3166100FEF3D6 /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
 		C947B9E828EAECDD00B97EB1 /* RealMusic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RealMusic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C947B9EB28EAECDD00B97EB1 /* RealMusicApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealMusicApp.swift; sourceTree = "<group>"; };
@@ -229,6 +233,7 @@
 			isa = PBXGroup;
 			children = (
 				C9DBD62C290FDAD200ACD644 /* WebView.swift */,
+				C939D6EC29351DA800C255F2 /* BlurModel.swift */,
 				C939D6D8292A8F2200C255F2 /* AnalyticsModel.swift */,
 				C9848D6B28EC3A79003D4FFA /* PostViewModel.swift */,
 				C9848D7328F2E2DF003D4FFA /* UserViewModel.swift */,
@@ -242,6 +247,7 @@
 				C939D6E2292E864900C255F2 /* EmojiCatalogue.swift */,
 				C939D6E4292E89BF00C255F2 /* EmojiReactionModel.swift */,
 				C939D6EA2934C61200C255F2 /* ReactionViewModel.swift */,
+				C939D6EE293524D700C255F2 /* DisableScrolling.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -556,6 +562,7 @@
 				C939D6D7292A4D0800C255F2 /* ProfileView.swift in Sources */,
 				C907BF8929020749002197F1 /* SearchResultView.swift in Sources */,
 				C947B9EE28EAECDD00B97EB1 /* HomeView.swift in Sources */,
+				C939D6EF293524D700C255F2 /* DisableScrolling.swift in Sources */,
 				C939D6E1292E85EB00C255F2 /* Emoji.swift in Sources */,
 				C9597E5729216BAB0020395E /* AddFriendsView.swift in Sources */,
 				C93D7EA128F3166100FEF3D6 /* PostView.swift in Sources */,
@@ -577,6 +584,7 @@
 				C907BF7B28F9AAC3002197F1 /* CreatePostViewModel.swift in Sources */,
 				C9DBD62D290FDAD200ACD644 /* WebView.swift in Sources */,
 				C939D6D9292A8F2200C255F2 /* AnalyticsModel.swift in Sources */,
+				C939D6ED29351DA800C255F2 /* BlurModel.swift in Sources */,
 				C9848D7428F2E2DF003D4FFA /* UserViewModel.swift in Sources */,
 				C939D6E3292E864900C255F2 /* EmojiCatalogue.swift in Sources */,
 				C9DBD62B290F2B5900ACD644 /* APIConstants.swift in Sources */,

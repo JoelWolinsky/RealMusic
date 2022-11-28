@@ -14,6 +14,16 @@ struct EmojiPickerView: View {
     
     var postUID: String
     
+    @Binding var longPress: Int
+    
+    @Binding var chosenEmoji: Emoji
+    
+    @Binding var emojiSelected: Bool
+    
+    @StateObject var blurModel: BlurModel
+    @Binding var disableScroll: Int
+
+
     @ObservedObject var emojiReactionModel = EmojiReactionModel()
     
     var body: some View {
@@ -22,25 +32,32 @@ struct EmojiPickerView: View {
                 Button (action: {
                     print("upload \(emoji.name)")
                     emojiReactionModel.uploadReaction(postUID: postUID, emoji: emoji)
+                    longPress = 0
+                    blurModel.blur = 0
+                    disableScroll = 1000
+                    let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
+                    impactHeavy.impactOccurred()
                     
 
                 }, label: {
                     Text(emoji.emoji)
+                        .font(.system(size: 36))
                 })
             }
 
         }
-        .frame(width:200, height: 40)
-        .background(.green)
+        .frame(width:300, height: 100)
+        .background(Color("Grey 2"))
         .cornerRadius(20)
+        //.onAppear()
 
         
     }
     
-    struct EmojiView_Previews: PreviewProvider {
-        static var previews: some View {
-            EmojiPickerView(postUID: "")
-            
-        }
-    }
+//    struct EmojiView_Previews: PreviewProvider {
+//        static var previews: some View {
+//            EmojiPickerView(postUID: "", )
+//            
+//        }
+//    }
 }

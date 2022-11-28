@@ -30,72 +30,6 @@ class FeedViewModel: ObservableObject {
             
             self.posts = self.posts.sorted(by: { $0.datePosted > $1.datePosted })
             print("post count \(posts.count)")
-//            for i in 0 ..< posts.count {
-//                print("i \(i)")
-//                let uid = posts[i].id!
-//                userView.fetchUser(withId: uid) { user in
-//                    self.posts[i].username = user.username
-//                    print("username is \(user.username)")
-//                }
-//            }
-            var counter = 1000
-            for post in posts {
-                //counter += 1
-                //let uid = posts[x].id!
-                //print(posts[x].id)
-                //let post = posts[x]
-                print("post title \(post.title)")
-                print("post id \(post.id)")
-                print("post date \(post.datePosted)")
-//                self.fetchReactions(postUID: post.id ?? "") { reactions in
-//                    counter += 1
-//                    //let counter = x
-//                    //print("temp \(reactions.count) \(post.id) for \(counter) \(post.title) ")
-//                    print("reactions for post \(reactions.count) for \(post.title) \(post.datePosted) \(String(counter)) \(post.id)")
-//                    if reactions.count != 0 {
-//                        let temp = post
-//                        print(self.posts.count)
-//                        
-////                        self.posts.removeAll { reactedPost in
-////                            print("removing \(post.id)")
-////                            return reactedPost.id == post.id
-////                        }
-//                        
-//                        //self.posts = self.posts.filter {$0.id != post.id}
-//                        
-//                        for i in 0...self.posts.count-1 {
-//                            if self.posts[i].id == post.id {
-//                                self.posts[i].username = "apple"
-//                            }
-//                        }
-//                        
-//                        
-//                        //print("fo \(filterdObject.count)")
-//                        print(self.posts.count)
-//                        print("reactions for post \(reactions.count) for \(post.title) \(post.datePosted) \(String(counter)) \(post.id)")
-//
-////                        self.posts.append(  Post(id: temp.id,
-////                                                 songID: temp.songID,
-////                                                 title: temp.title,
-////                                                 artist: temp.artist,
-////                                                 uid: temp.uid,
-////                                                 username: "p",//post.username,
-////                                                 cover: temp.cover,
-////                                                 datePosted: temp.datePosted,
-////                                                 preview: temp.preview,
-////                                                 reactions: reactions
-////                                                ))
-//                        print(self.posts.count)
-//
-//                        self.posts = self.posts.sorted(by: { $0.datePosted > $1.datePosted })
-//
-//                    }
-//                   // print("reactions is this \(reactions.count) for \(self.posts[counter].id) post length \(self.posts.count)")
-//                    
-//                }
-            }
-            //self.posts = self.posts.sorted(by: { $0.datePosted > $1.datePosted })
-
         }
         
     }
@@ -126,6 +60,10 @@ class FeedViewModel: ObservableObject {
                 completion(emojis)
                 
             }
+        
+    }
+    
+    func addLocalReaction(postID: String, emoji: Emoji) {
         
     }
 }
