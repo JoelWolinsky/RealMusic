@@ -10,27 +10,33 @@ import SwiftUI
 
 struct ReactionsView: View {
     
-    @State var emojis: [Emoji]
+    @StateObject var reactionViewModel: ReactionViewModel
     
     var postUID: String
     
-    @ObservedObject var emojiReactionModel = EmojiReactionModel()
+    //@ObservedObject var emojiReactionModel = EmojiReactionModel()
     
     var body: some View {
         HStack {
-            ForEach(emojis) { emoji in
+            ForEach(reactionViewModel.reactions) { emoji in
                 Text(emoji.emoji)
             }
-
+//            .padding(10)
+            
+            Image(systemName: "plus.circle.fill")
+                .foregroundColor(.white)
         }
-        .frame(width:200, height: 40)
-        .background(.green)
+        .frame(maxWidth: CGFloat(reactionViewModel.reactions.count * 25) + 50, maxHeight: 40)
+        .background(Color("Grey 3"))
+        //.cornerRadius(20)
+        .overlay(
+            RoundedRectangle(cornerRadius: 20)
+                .stroke(Color.black, lineWidth: 5)
+                )
         .cornerRadius(20)
-//        .onAppear(perform: {
-//            emojiReactionModel.fetchReactions(postUID: postUID) { (emojis) in
-//                self.emojis = emojis
-//            }
-//        })
+        .frame(maxWidth: .infinity, alignment: .leading)
+
+
 
         
     }
@@ -38,7 +44,7 @@ struct ReactionsView: View {
     
     struct EmojiView_Previews: PreviewProvider {
         static var previews: some View {
-            EmojiPickerView(postUID: "")
+            ReactionsView(reactionViewModel: ReactionViewModel(id: ""), postUID: "")
             
         }
     }

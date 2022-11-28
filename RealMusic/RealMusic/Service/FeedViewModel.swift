@@ -47,34 +47,52 @@ class FeedViewModel: ObservableObject {
                 print("post title \(post.title)")
                 print("post id \(post.id)")
                 print("post date \(post.datePosted)")
-                self.fetchReactions(postUID: post.id ?? "") { reactions in
-                    counter += 1
-                    //let counter = x
-                    //print("temp \(reactions.count) \(post.id) for \(counter) \(post.title) ")
-                    print("reactions for post \(reactions.count) for \(post.title) \(post.datePosted) \(String(counter)) \(post.id)")
-                    if reactions.count != 0 {
-                        
-                        self.posts.removeAll { reactedPost in
-                            print("removing \(post.id)")
-                            return reactedPost.id == post.id //&& post.reactions == nil
-                        }
-                        self.posts.append(  Post(id: post.id,
-                                                 songID: post.songID,
-                                                 title: post.title,
-                                                 artist: post.artist,
-                                                 uid: post.uid,
-                                                 username: post.username,
-                                                 cover: post.cover,
-                                                 datePosted: post.datePosted,
-                                                 preview: post.preview,
-                                                 reactions: reactions
-                                                ))
-                        self.posts = self.posts.sorted(by: { $0.datePosted > $1.datePosted })
-
-                    }
-                   // print("reactions is this \(reactions.count) for \(self.posts[counter].id) post length \(self.posts.count)")
-                    
-                }
+//                self.fetchReactions(postUID: post.id ?? "") { reactions in
+//                    counter += 1
+//                    //let counter = x
+//                    //print("temp \(reactions.count) \(post.id) for \(counter) \(post.title) ")
+//                    print("reactions for post \(reactions.count) for \(post.title) \(post.datePosted) \(String(counter)) \(post.id)")
+//                    if reactions.count != 0 {
+//                        let temp = post
+//                        print(self.posts.count)
+//                        
+////                        self.posts.removeAll { reactedPost in
+////                            print("removing \(post.id)")
+////                            return reactedPost.id == post.id
+////                        }
+//                        
+//                        //self.posts = self.posts.filter {$0.id != post.id}
+//                        
+//                        for i in 0...self.posts.count-1 {
+//                            if self.posts[i].id == post.id {
+//                                self.posts[i].username = "apple"
+//                            }
+//                        }
+//                        
+//                        
+//                        //print("fo \(filterdObject.count)")
+//                        print(self.posts.count)
+//                        print("reactions for post \(reactions.count) for \(post.title) \(post.datePosted) \(String(counter)) \(post.id)")
+//
+////                        self.posts.append(  Post(id: temp.id,
+////                                                 songID: temp.songID,
+////                                                 title: temp.title,
+////                                                 artist: temp.artist,
+////                                                 uid: temp.uid,
+////                                                 username: "p",//post.username,
+////                                                 cover: temp.cover,
+////                                                 datePosted: temp.datePosted,
+////                                                 preview: temp.preview,
+////                                                 reactions: reactions
+////                                                ))
+//                        print(self.posts.count)
+//
+//                        self.posts = self.posts.sorted(by: { $0.datePosted > $1.datePosted })
+//
+//                    }
+//                   // print("reactions is this \(reactions.count) for \(self.posts[counter].id) post length \(self.posts.count)")
+//                    
+//                }
             }
             //self.posts = self.posts.sorted(by: { $0.datePosted > $1.datePosted })
 

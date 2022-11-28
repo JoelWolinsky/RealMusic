@@ -23,6 +23,7 @@
 		C939D6E5292E89BF00C255F2 /* EmojiReactionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939D6E4292E89BF00C255F2 /* EmojiReactionModel.swift */; };
 		C939D6E7292E945E00C255F2 /* ReactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939D6E6292E945E00C255F2 /* ReactionsView.swift */; };
 		C939D6E9292F7A4D00C255F2 /* Reaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939D6E8292F7A4D00C255F2 /* Reaction.swift */; };
+		C939D6EB2934C61200C255F2 /* ReactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939D6EA2934C61200C255F2 /* ReactionViewModel.swift */; };
 		C93D7EA128F3166100FEF3D6 /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93D7EA028F3166100FEF3D6 /* PostView.swift */; };
 		C947B9EC28EAECDD00B97EB1 /* RealMusicApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C947B9EB28EAECDD00B97EB1 /* RealMusicApp.swift */; };
 		C947B9EE28EAECDD00B97EB1 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C947B9ED28EAECDD00B97EB1 /* HomeView.swift */; };
@@ -95,6 +96,7 @@
 		C939D6E4292E89BF00C255F2 /* EmojiReactionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiReactionModel.swift; sourceTree = "<group>"; };
 		C939D6E6292E945E00C255F2 /* ReactionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionsView.swift; sourceTree = "<group>"; };
 		C939D6E8292F7A4D00C255F2 /* Reaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reaction.swift; sourceTree = "<group>"; };
+		C939D6EA2934C61200C255F2 /* ReactionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionViewModel.swift; sourceTree = "<group>"; };
 		C93D7EA028F3166100FEF3D6 /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
 		C947B9E828EAECDD00B97EB1 /* RealMusic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RealMusic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C947B9EB28EAECDD00B97EB1 /* RealMusicApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealMusicApp.swift; sourceTree = "<group>"; };
@@ -239,6 +241,7 @@
 				C9597E5829225EEF0020395E /* FriendsViewModel.swift */,
 				C939D6E2292E864900C255F2 /* EmojiCatalogue.swift */,
 				C939D6E4292E89BF00C255F2 /* EmojiReactionModel.swift */,
+				C939D6EA2934C61200C255F2 /* ReactionViewModel.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -580,6 +583,7 @@
 				C9597E68292567000020395E /* Extensions.swift in Sources */,
 				C939D6E5292E89BF00C255F2 /* EmojiReactionModel.swift in Sources */,
 				C9597E64292514280020395E /* CurrentlyPlayingView.swift in Sources */,
+				C939D6EB2934C61200C255F2 /* ReactionViewModel.swift in Sources */,
 				C9848D6E28EC4AE3003D4FFA /* Post.swift in Sources */,
 				C95EC51C290A91E600550F06 /* ContentView.swift in Sources */,
 				C9D458FD28F8165600547D30 /* Album.swift in Sources */,

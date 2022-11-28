@@ -14,6 +14,9 @@ struct PostView: View {
     
     @ObservedObject var spotifyAPI = SpotifyAPI()
     
+    @StateObject var reactionViewModel: ReactionViewModel
+
+    
     var body: some View {
         
         
@@ -26,13 +29,18 @@ struct PostView: View {
             AlbumView(album: Album(title: post.title ?? "placeholder",artist: post.artist ?? "placeholder" ,cover: post.cover ?? "KSG Cover", preview: post.preview ?? ""))
                 //.padding(.bottom, 50)
             
+           ReactionsView(reactionViewModel: reactionViewModel, postUID: post.id ?? "")
+                .padding(.leading, 10)
+                .offset(y: -20)
+            
         }
         .padding(20)
         //.scaledToFill
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         //.background(.black)
         .foregroundColor(.white)
-        .onAppear(perform: {spotifyAPI.getSong(ID: post.songID) { (result) in
+        .onAppear(perform: {
+            spotifyAPI.getSong(ID: post.songID) { (result) in
             switch result {
                 case .success(let data) :
                 print("success \(data)")
@@ -42,20 +50,30 @@ struct PostView: View {
                     print()
                 }
             }
-            })
-        
-
-
-        
-        
-    }
-    
-    
-    
-    struct PostView_Previews: PreviewProvider {
-        static var previews: some View {
-            PostView(post: Post(songID: "xcv", uid: "This uid test", username: "Joel", cover: "KSG Cover"))
             
-        }
+        
+//            feedViewModel.fetchReactions(postUID: post.id ?? "") { (result) in
+//                print("got reactions \(result.count)")
+//                post.reactions = result
+//            }
+//        
+
+        })
+        .onLongPressGesture(perform: {
+            print("longpress")
+            let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
+            impactHeavy.impactOccurred()
+        })
+        
+        
     }
+    
+    
+    
+//    struct PostView_Previews: PreviewProvider {
+//        static var previews: some View {
+//            PostView(post: Post(songID: "xcv", uid: "This uid test", username: "Joel", cover: "KSG Cover"))
+//            
+//        }
+//    }
 }

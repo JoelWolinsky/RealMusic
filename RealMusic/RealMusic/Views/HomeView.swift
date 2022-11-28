@@ -71,9 +71,9 @@ struct HomeView: View {
                             
                             ForEach(feedViewModel.posts) { post in
                                 VStack {
-                                    PostView(post: post)
+                                    PostView(post: post, reactionViewModel: ReactionViewModel(id: post.id ?? ""))
                                     EmojiPickerView(postUID: post.id!)
-                                    ReactionsView(emojis: post.reactions ?? [], postUID: post.id ?? "")
+
                                 }
                             }
                         }
