@@ -26,8 +26,11 @@ struct PostView: View {
     
     @Binding var disableScroll: Int
     
+    @StateObject var emojiCatalogue: EmojiCatalogue
     
     
+    @State var showEmojiLibrary = false
+
 
     
     var body: some View {
@@ -80,6 +83,8 @@ struct PostView: View {
                     longPress = 0
                     disableScroll = 1000
                     blurModel.blur = 0
+                    showEmojiLibrary = false
+
                 }
             }
             .onLongPressGesture(perform: {
@@ -89,6 +94,8 @@ struct PostView: View {
                     longPress = 0
                     disableScroll = 1000
                     blurModel.blur = 0
+                    showEmojiLibrary = false
+
                 } else {
                     print(0)
                     disableScroll = 0
@@ -107,9 +114,15 @@ struct PostView: View {
 
             
             if longPress == 10 {
-                EmojiPickerView(postUID: chosenPostID, longPress: $longPress, chosenEmoji: $chosenEmoji, emojiSelected: $emojiSelected, blurModel: blurModel, disableScroll: $disableScroll, reactionViewModel: reactionViewModel)
+                EmojiPickerView(postUID: chosenPostID, cover: post.cover ?? "", longPress: $longPress, chosenEmoji: $chosenEmoji, emojiSelected: $emojiSelected, blurModel: blurModel, disableScroll: $disableScroll, reactionViewModel: reactionViewModel, emojiCatalogue: emojiCatalogue, showEmojiLibrary: $showEmojiLibrary)
+
             }
         }
+//        .sheet(isPresented: $showEmojiLibrary) {
+//                    EmojiLibraryView()
+//                .presentationDetents([.medium])
+//
+//                }
         
     }
     

@@ -12,7 +12,11 @@ import FirebaseFirestoreSwift
 struct Emoji: Identifiable, Encodable, Decodable {
     
     @DocumentID var docID : String? // document id which is the uid of the user who reacted
-    let id = UUID()
-    let emoji: String
-    let name: String
+    var id = UUID()
+    var emoji: String
+    var name: String?
+    var category: String?
+    var aliases: [String]?
+    var tags: [String]?
+
 }

@@ -23,6 +23,8 @@ struct HomeView: View {
     
     @EnvironmentObject var signInModel: SignInViewModel
     
+    @ObservedObject var emojiCatalogue = EmojiCatalogue()
+    
     @State var currentlyPlaying = SpotifySong(songID: "", title: "", artist: "", uid: "", cover: "")
     
     @State var friendsToggle = false
@@ -46,6 +48,8 @@ struct HomeView: View {
     @ObservedObject var blurModel = BlurModel(blur: 0)
     
     @State var disableScroll = 1000
+    
+    @State var showEmojiLibrary = true
 
     
 
@@ -68,7 +72,7 @@ struct HomeView: View {
                                 
                                 ForEach(feedViewModel.posts) { post in
                                     VStack {
-                                        PostView(post: post, reactionViewModel: ReactionViewModel(id: post.id ?? ""), longPress: $longPress, chosenPostID: $chosenPostID, blurModel: blurModel, disableScroll: $disableScroll)
+                                        PostView(post: post, reactionViewModel: ReactionViewModel(id: post.id ?? ""), longPress: $longPress, chosenPostID: $chosenPostID, blurModel: blurModel, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue)
                                             
                                         //EmojiPickerView(postUID: post.id!)
                                         
@@ -77,8 +81,9 @@ struct HomeView: View {
                             }
                             .padding()
                         }
-                        .simultaneousGesture(DragGesture(minimumDistance: CGFloat(disableScroll)))
-//                        /.disableScrolling(disabled: disableScroll)
+                        //.simultaneousGesture(DragGesture(minimumDistance: CGFloat(disableScroll)))
+                        //.scrollDisabled(true)
+                        //                        /.disableScrolling(disabled: disableScroll)
                         .refreshable {
                             print("Refreshing")
                             feedViewModel.fetchPosts()
@@ -278,6 +283,7 @@ struct HomeView: View {
             
 
         }
+       
         
 
     }
