@@ -78,7 +78,6 @@ struct ProfileView: View {
             .frame(maxWidth: .infinity, alignment: .center)
             
             
-            Spacer()
             Button {
                 signInModel.signOut()
                 UserDefaults.resetStandardUserDefaults()

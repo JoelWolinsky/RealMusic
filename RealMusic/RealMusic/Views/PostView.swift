@@ -35,7 +35,7 @@ struct PostView: View {
         
         ZStack {
             VStack {
-                Text("@" + (post.username ?? ""))
+                Text("@" + (post.id ?? ""))
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
                 
@@ -76,6 +76,7 @@ struct PostView: View {
             .onTapGesture {
                 print("tap post")
                 if longPress == 10 {
+                    print(10)
                     longPress = 0
                     disableScroll = 1000
                     blurModel.blur = 0
@@ -84,18 +85,22 @@ struct PostView: View {
             .onLongPressGesture(perform: {
                 print("long press post")
                 if longPress == 10 {
+                    print(10)
                     longPress = 0
                     disableScroll = 1000
+                    blurModel.blur = 0
                 } else {
+                    print(0)
                     disableScroll = 0
                     longPress = 10
                     chosenPostID = post.id ?? ""
+                    blurModel.blur = 10
                     
                 }
                 let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
                 impactHeavy.impactOccurred()
                 
-                blurModel.blur = 10
+                //blurModel.blur = 10
                 
             })
             .blur(radius:CGFloat(blurModel.blur))

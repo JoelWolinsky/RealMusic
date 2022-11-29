@@ -18,15 +18,18 @@ struct ReactionsView: View {
     
     var body: some View {
         HStack {
-            ForEach(reactionViewModel.reactions) { emoji in
+            ForEach(reactionViewModel.distinctReactions) { emoji in
                 Text(emoji.emoji)
             }
 //            .padding(10)
-            
-            Image(systemName: "plus.circle.fill")
-                .foregroundColor(.white)
+            if reactionViewModel.distinctReactions.count != reactionViewModel.reactions.count {
+                Text(String(reactionViewModel.reactions.count))
+                    .foregroundColor(.white)
+            }
+
         }
-        .frame(maxWidth: CGFloat(reactionViewModel.reactions.count * 25) + 50, maxHeight: 40)
+        //.frame(maxWidth: CGFloat(reactionViewModel.reactions.count * 25) + 50, maxHeight: 40)
+        .padding(10)
         .background(Color("Grey 3"))
         //.cornerRadius(20)
         .overlay(

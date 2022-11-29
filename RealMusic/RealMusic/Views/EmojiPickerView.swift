@@ -40,7 +40,7 @@ struct EmojiPickerView: View {
                     let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
                     impactHeavy.impactOccurred()
                     
-                    reactionViewModel.addLocalReaction(reaction: emoji)
+                    reactionViewModel.addLocalReaction(reaction: Emoji(emoji: emoji.emoji, name: emoji.name))
                     
 
                 }, label: {

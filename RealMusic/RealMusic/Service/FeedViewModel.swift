@@ -52,9 +52,9 @@ class FeedViewModel: ObservableObject {
                 print("number of reactions \(postUID) \(documents.count)")
                 documents.forEach { emoji in
                     guard let emoji = try? emoji.data(as: Emoji.self) else { return }
-                    
+        
                     emojis.append(emoji)
-                    print("append emoji \(emoji.name) to \(postUID)")
+                    print("append emoji to \(postUID) \(emoji.name) ")
                 }
                 
                 completion(emojis)
