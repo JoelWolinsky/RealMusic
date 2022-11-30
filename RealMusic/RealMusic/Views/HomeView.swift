@@ -40,7 +40,7 @@ struct HomeView: View {
     
     @State var chosenPostID = ""
 
-    @State var chosenEmoji = Emoji(emoji: "", name: "")
+    @State var chosenEmoji = Emoji(emoji: "", description: "", category: "")
     @State var emojiSelected = false
 
     @State var blur = 0
@@ -49,7 +49,7 @@ struct HomeView: View {
     
     @State var disableScroll = 1000
     
-    @State var showEmojiLibrary = true
+    @State var showEmojiLibrary = false
 
     
 
@@ -247,29 +247,30 @@ struct HomeView: View {
             .frame(width: 500, height: 1000)
             .background(.black)
             //.blur(radius: CGFloat(longPress))
-            .onTapGesture {
-                print("tap main \(longPress)")
-                if longPress == 10 {
-                    // emoji chosen
-                    longPress = 0
-                    blurModel.blur = 0
-                    disableScroll = 1000
-
-           }
-     //               else {
-//                    blurModel.blur = 10
-//
-//                }
-                
-//                if longPress == 10 {
-//                    blurModel.blur = 10
-//                } else {
+//            .onTapGesture {
+//                print("tap main \(longPress) \(showEmojiLibrary)")
+//                if longPress == 10 && showEmojiLibrary == false {
+//                    
+//                    // emoji chosen
+//                    longPress = 0
 //                    blurModel.blur = 0
+//                    disableScroll = 1000
 //
-//                }
-           
-
-            }
+//           }
+//     //               else {
+////                    blurModel.blur = 10
+////
+////                }
+//                
+////                if longPress == 10 {
+////                    blurModel.blur = 10
+////                } else {
+////                    blurModel.blur = 0
+////
+////                }
+//           
+//
+//            }
 //            .onLongPressGesture(perform: {
 //                print("long press main")
 //                if blurModel.blur == 0 {

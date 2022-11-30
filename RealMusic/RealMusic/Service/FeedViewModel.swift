@@ -54,7 +54,7 @@ class FeedViewModel: ObservableObject {
                     guard let emoji = try? emoji.data(as: Emoji.self) else { return }
         
                     emojis.append(emoji)
-                    print("append emoji to \(postUID) \(emoji.name) ")
+                    print("append emoji to \(postUID) \(emoji.description) ")
                 }
                 
                 completion(emojis)

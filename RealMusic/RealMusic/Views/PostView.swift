@@ -21,7 +21,7 @@ struct PostView: View {
     
     @StateObject var blurModel: BlurModel
     
-    @State var chosenEmoji = Emoji(emoji: "", name: "")
+    @State var chosenEmoji = Emoji(emoji: "", description: "", category: "")
     @State var emojiSelected = false
     
     @Binding var disableScroll: Int
@@ -101,7 +101,7 @@ struct PostView: View {
                     disableScroll = 0
                     longPress = 10
                     chosenPostID = post.id ?? ""
-                    blurModel.blur = 10
+                    blurModel.blur = 20
                     
                 }
                 let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
@@ -114,7 +114,23 @@ struct PostView: View {
 
             
             if longPress == 10 {
-                EmojiPickerView(postUID: chosenPostID, cover: post.cover ?? "", longPress: $longPress, chosenEmoji: $chosenEmoji, emojiSelected: $emojiSelected, blurModel: blurModel, disableScroll: $disableScroll, reactionViewModel: reactionViewModel, emojiCatalogue: emojiCatalogue, showEmojiLibrary: $showEmojiLibrary)
+                VStack {
+                    AsyncImage(url: URL(string: post.cover ?? "")) { image in
+                        image
+                            .resizable()
+                    } placeholder: {
+                        Color.orange
+                    }
+                    .frame(maxWidth: 200, maxHeight: 200)
+                    .padding(.bottom, 20)
+
+                    
+                    EmojiPickerView(postUID: chosenPostID, cover: post.cover ?? "", longPress: $longPress, chosenEmoji: $chosenEmoji, emojiSelected: $emojiSelected, blurModel: blurModel, disableScroll: $disableScroll, reactionViewModel: reactionViewModel, emojiCatalogue: emojiCatalogue, showEmojiLibrary: $showEmojiLibrary)
+                    
+                   
+                }
+                .offset(y: -120)
+
 
             }
         }

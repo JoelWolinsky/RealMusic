@@ -16,9 +16,7 @@ struct EmojiPickerView: View {
     @Binding var longPress: Int
     @Binding var chosenEmoji: Emoji
     @Binding var emojiSelected: Bool
-
     @StateObject var blurModel: BlurModel
-
     @Binding var disableScroll: Int
 
     @ObservedObject var emojiReactionModel = EmojiReactionModel()
@@ -35,81 +33,53 @@ struct EmojiPickerView: View {
     var gridItemLayout = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()),GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
 
     var body: some View {
-        VStack {
+        HStack {
             
-            AsyncImage(url: URL(string: cover)) { image in
-                image
-                    .resizable()
-            } placeholder: {
-                Color.orange
-            }
-            .frame(maxWidth: 200, maxHeight: 200)
-
-            ScrollView {
-                    LazyVGrid(columns: gridItemLayout) {
-//                        Text(String(emojiCatalogue.latest.count))
-//                            .foregroundColor(.orange)
-//                        Text(String(emojiCatalogue.library.count))
-//                            .foregroundColor(.orange)
-                        
-                        ForEach(emojiCatalogue.latest) { emoji in
-                            Button (action: {
-                                print("upload \(emoji.name)")
-                                emojiReactionModel.uploadReaction(postUID: postUID, emoji: emoji)
-                                longPress = 0
-                                blurModel.blur = 0
-                                disableScroll = 1000
-                                let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
-                                impactHeavy.impactOccurred()
-                                
-                                reactionViewModel.addLocalReaction(reaction: Emoji(emoji: emoji.emoji, name: emoji.name))
-                                
-                                
-                            }, label: {
-                                Text(emoji.emoji)
-                                    .font(.system(size: 30))
-                            })
-                        }
-                        .fixedSize(horizontal: false, vertical: true)
-
-
+            ForEach(emojiCatalogue.latest) { emoji in
+                Button (action: {
+                    print("upload \(emoji.description)")
+                    emojiReactionModel.uploadReaction(postUID: postUID, emoji: emoji)
+                    longPress = 0
+                    blurModel.blur = 0
+                    disableScroll = 1000
                     
-                        
-                        Image(systemName: "plus.circle.fill")
-                            .foregroundColor(.white)
-                            .font(.system(size: 30))
-                            .onTapGesture {
-                                print("see more emojis")
-                                withAnimation {
-                                    //expandLibrary.toggle()
-                                    showEmojiLibrary = true
-                                }
-                                
-                            }
-                        
-                        
-                    }
-//                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-                
-                .frame(maxWidth: expandLibrary ? 250 : .infinity, maxHeight: expandLibrary ? 35 : 400)
-                .padding(10)
-                .background(Color("Grey 2"))
-                .cornerRadius(expandLibrary ? 50 : 10)
-
-
-
+                    let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
+                    impactHeavy.impactOccurred()
+                    
+                    reactionViewModel.addLocalReaction(reaction: Emoji(emoji: emoji.emoji, description: emoji.description))
+                    
+                }, label: {
+                    Text(emoji.emoji)
+                        .font(.system(size: 27))
+                        .padding(5)
+                })
             }
-            //.frame(maxWidth: expandLibrary ? 250 : .infinity, maxHeight: expandLibrary ? 35 : 400)
-            //.padding(10)
-           // .background(Color("Grey 2"))
-            //.onAppear()
-        }
-        .sheet(isPresented: $showEmojiLibrary) {
-                    EmojiLibraryView(emojiCatalogue: emojiCatalogue, emojiReactionModel: emojiReactionModel)
-                .presentationDetents([.medium])
-
+            .fixedSize(horizontal: false, vertical: true)
+            
+            Button (action: {
+                print("see more emojis")
+                showEmojiLibrary = true
+            }, label: {
+                VStack {
+                    Image(systemName: "plus.circle.fill")
+                        .foregroundColor(.white)
+                        .font(.system(size: 30))
                 }
-
+            })
+            
+            
+        }
+        .frame(maxWidth: 300, maxHeight: 35)
+        .padding(10)
+        .background(Color("Grey 2"))
+        .cornerRadius(50)
+        .sheet(isPresented: $showEmojiLibrary) {
+            EmojiLibraryView(emojiCatalogue: emojiCatalogue, emojiReactionModel: emojiReactionModel, reactionViewModel: reactionViewModel, showEmojiLibrary: $showEmojiLibrary, longPress: $longPress, chosenEmoji: $chosenEmoji, emojiSelected: $emojiSelected, blurModel: blurModel, disableScroll: $disableScroll, postUID: postUID)
+                .presentationDetents([.medium])
+            
+            
+            
+        }
     }
     
 //    struct EmojiView_Previews: PreviewProvider {

@@ -25,11 +25,11 @@ class EmojiCatalogue: ObservableObject {
     
     func getLatest() {
         self.latest = [
-        Emoji(emoji: "🤯", name: "Exploding Head"),
-        Emoji(emoji: "🥰", name: "Smiling Face with Hearts"),
-        Emoji(emoji: "🤩", name: "Star-Struck"),
-        Emoji(emoji: "🍉", name: "Watermelon"),
-        Emoji(emoji: "🦄", name: "Unicorn")
+        Emoji(emoji: "🤯", description: "Exploding Head", category: ""),
+        Emoji(emoji: "🥰", description: "Smiling Face with Hearts", category: ""),
+        Emoji(emoji: "🤩", description: "Star-Struck", category: ""),
+        Emoji(emoji: "🍉", description: "Watermelon", category: ""),
+        Emoji(emoji: "🦄", description: "Unicorn", category: "")
         
         
         ]
@@ -41,7 +41,7 @@ class EmojiCatalogue: ObservableObject {
         do {
                 let decodedData = try? JSONDecoder().decode([LibraryEmoji].self, from: data!)
             for emoji in decodedData! {
-                let newEmoji = Emoji(emoji: emoji.emoji, name: emoji.description, category: emoji.category, aliases: emoji.aliases, tags: emoji.tags)
+                let newEmoji = Emoji(emoji: emoji.emoji, description: emoji.description, category: emoji.category, aliases: emoji.aliases, tags: emoji.tags)
                 self.library.append(newEmoji)
                 print("added emoji")
             }

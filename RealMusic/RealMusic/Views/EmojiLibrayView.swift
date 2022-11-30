@@ -13,6 +13,19 @@ struct EmojiLibraryView: View {
     
     @StateObject var emojiCatalogue = EmojiCatalogue()
     @StateObject var emojiReactionModel: EmojiReactionModel
+    @StateObject var reactionViewModel: ReactionViewModel
+
+    
+    @Binding var showEmojiLibrary: Bool
+    
+    @Binding var longPress: Int
+    @Binding var chosenEmoji: Emoji
+    @Binding var emojiSelected: Bool
+    @StateObject var blurModel: BlurModel
+    @Binding var disableScroll: Int
+    
+    let postUID: String 
+
 
     
     var gridItemLayout = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()),GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
@@ -29,16 +42,18 @@ struct EmojiLibraryView: View {
                     
                     ForEach(emojiCatalogue.library) { emoji in
                         Button (action: {
-                            print("upload \(emoji.name)")
-                            //emojiReactionModel.uploadReaction(postUID: postUID, emoji: emoji)
-//                            longPress = 0
-//                            blurModel.blur = 0
-//                            disableScroll = 1000
+                            showEmojiLibrary.toggle()
+                            
+                            print("upload \(emoji.description)")
+                            emojiReactionModel.uploadReaction(postUID: postUID, emoji: emoji)
+                            longPress = 0
+                            blurModel.blur = 0
+                            disableScroll = 1000
                             let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
                             impactHeavy.impactOccurred()
                             
-                            //reactionViewModel.addLocalReaction(reaction: Emoji(emoji: emoji.emoji, name: emoji.name))
-                            
+                            reactionViewModel.addLocalReaction(reaction: Emoji(emoji: emoji.emoji, description: emoji.description))
+
                             
                         }, label: {
                             Text(emoji.emoji)
@@ -49,16 +64,16 @@ struct EmojiLibraryView: View {
                     
                     
                     
-                    
-                    Image(systemName: "plus.circle.fill")
-                        .foregroundColor(.white)
-                        .font(.system(size: 30))
-                        .onTapGesture {
-                            print("see more emojis")
-                            withAnimation {
-                            }
-                            
-                        }
+//                    
+//                    Image(systemName: "plus.circle.fill")
+//                        .foregroundColor(.white)
+//                        .font(.system(size: 30))
+//                        .onTapGesture {
+//                            print("see more emojis")
+//                            withAnimation {
+//                            }
+//                            
+//                        }
                     
                     
                 }
@@ -66,5 +81,8 @@ struct EmojiLibraryView: View {
         }
         //.frame(maxWidth: .infinity)
         .background(.white)
+        .onAppear(perform: {
+            print("showing library")
+        })
     }
 }
