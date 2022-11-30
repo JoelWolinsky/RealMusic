@@ -13,8 +13,12 @@ class EmojiCatalogue: ObservableObject {
     
     @State var jsonData = Data()
     
-    @Published var library = [Emoji]()
+    @Published var library = [Category]()
     @Published var latest = [Emoji]()
+    
+//    @Published var categories = [Category(name: "Smileys & Emotion"), Category(name: "People & Body"),Category(name: "Animals & Nature"),Category(name: "Food & Drink"),Category(name: "Travel & Places"), Category(name: "Activities"), Category(name: "Objects"), Category(name: "Symbols"), Category(name: "Flags")]
+    @Published var categories = ["Smileys & Emotion", "People & Body","Animals & Nature","Food & Drink","Travel & Places",
+                                 "Activities","Objects","Symbols", "Flags"]
 
     
     
@@ -39,13 +43,24 @@ class EmojiCatalogue: ObservableObject {
         //var library = [Emoji]()
         
         do {
-                let decodedData = try? JSONDecoder().decode([LibraryEmoji].self, from: data!)
-            for emoji in decodedData! {
-                let newEmoji = Emoji(emoji: emoji.emoji, description: emoji.description, category: emoji.category, aliases: emoji.aliases, tags: emoji.tags)
-                self.library.append(newEmoji)
-                print("added emoji")
+            let decodedData = try? JSONDecoder().decode([LibraryEmoji].self, from: data!)
+            for category in self.categories {
+                var emojis = [Emoji]()
+                for emoji in decodedData! {
+                    if emoji.category == category {
+                        let newEmoji = Emoji(emoji: emoji.emoji, description: emoji.description, category: emoji.category, aliases: emoji.aliases, tags: emoji.tags)
+
+                        emojis.append(newEmoji)
+                    }
+                }
+                self.library.append(Category(name: category, emojis: emojis))
             }
-            //print(decodedData)
+//            for category in decodedData! {
+////                let newEmoji = Emoji(emoji: emoji.emoji, description: emoji.description, category: emoji.category, aliases: emoji.aliases, tags: emoji.tags)
+//                self.library.append(category)
+//                print("added cat")
+//            }
+            print(decodedData)
             } catch {
                 print("decode error")
             }
@@ -64,6 +79,10 @@ class EmojiCatalogue: ObservableObject {
         }
         return nil
     }
+    
+//    func getCategory(category: Category) {
+//        let test = library.filter($0.name.contains(category.name))
+//    }
 }
 
 struct EmojiLibray: Codable {

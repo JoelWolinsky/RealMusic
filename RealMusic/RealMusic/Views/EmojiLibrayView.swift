@@ -31,51 +31,44 @@ struct EmojiLibraryView: View {
     var gridItemLayout = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()),GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
 
     
-    var body: some View {
+    var body: some View { 
         VStack {
             ScrollView {
-                LazyVGrid(columns: gridItemLayout) {
-                    Text(String(emojiCatalogue.latest.count))
-                        .foregroundColor(.orange)
-                    Text(String(emojiCatalogue.library.count))
-                        .foregroundColor(.orange)
-                    
-                    ForEach(emojiCatalogue.library) { emoji in
-                        Button (action: {
-                            showEmojiLibrary.toggle()
-                            
-                            print("upload \(emoji.description)")
-                            emojiReactionModel.uploadReaction(postUID: postUID, emoji: emoji)
-                            longPress = 0
-                            blurModel.blur = 0
-                            disableScroll = 1000
-                            let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
-                            impactHeavy.impactOccurred()
-                            
-                            reactionViewModel.addLocalReaction(reaction: Emoji(emoji: emoji.emoji, description: emoji.description))
+                ForEach(emojiCatalogue.library) { category in
+                    VStack {
 
+                        Text(category.name)
+                            .foregroundColor(Color("Grey"))
+                            .frame(maxWidth: .infinity, alignment: .leading)
+
+                        LazyVGrid(columns: gridItemLayout) {
+                            ForEach(category.emojis) { emoji in
+                               // if emoji.category == category.name {
+                                    Button (action: {
+                                        showEmojiLibrary.toggle()
+                                        
+                                        print("upload \(emoji.description)")
+                                        emojiReactionModel.uploadReaction(postUID: postUID, emoji: emoji)
+                                        longPress = 0
+                                        blurModel.blur = 0
+                                        disableScroll = 1000
+                                        let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
+                                        impactHeavy.impactOccurred()
+                                        
+                                        reactionViewModel.addLocalReaction(reaction: Emoji(emoji: emoji.emoji, description: emoji.description))
+                                        
+                                        
+                                    }, label: {
+                                        Text(emoji.emoji)
+                                            .font(.system(size: 30))
+                                    })
+                                //}
+                            }
+//                            .fixedSize(horizontal: false, vertical: true)
                             
-                        }, label: {
-                            Text(emoji.emoji)
-                                .font(.system(size: 30))
-                        })
+                        }
                     }
-                    .fixedSize(horizontal: false, vertical: true)
-                    
-                    
-                    
-//                    
-//                    Image(systemName: "plus.circle.fill")
-//                        .foregroundColor(.white)
-//                        .font(.system(size: 30))
-//                        .onTapGesture {
-//                            print("see more emojis")
-//                            withAnimation {
-//                            }
-//                            
-//                        }
-                    
-                    
+                    .padding(10)
                 }
             }
         }
@@ -83,6 +76,13 @@ struct EmojiLibraryView: View {
         .background(.white)
         .onAppear(perform: {
             print("showing library")
+//            var cat = [String]()
+//            for i in emojiCatalogue.library {
+//                if !cat.contains(i.category ?? "") {
+//                    cat.append(i.category ?? "")
+//                }
+//            }
+//            print("Categories \(cat)")
         })
     }
 }

@@ -65,6 +65,7 @@ struct EmojiPickerView: View {
                         .foregroundColor(.white)
                         .font(.system(size: 30))
                 }
+                //.frame(width: 70, height: 70)
             })
             
             
