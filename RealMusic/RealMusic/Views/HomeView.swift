@@ -50,6 +50,9 @@ struct HomeView: View {
     @State var disableScroll = 1000
     
     @State var showEmojiLibrary = false
+    
+    @State var showPicker = false
+
 
     
 
@@ -72,7 +75,7 @@ struct HomeView: View {
                                 
                                 ForEach(feedViewModel.posts) { post in
                                     VStack {
-                                        PostView(post: post, reactionViewModel: ReactionViewModel(id: post.id ?? ""), longPress: $longPress, chosenPostID: $chosenPostID, blurModel: blurModel, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue)
+                                        PostView(post: post, reactionViewModel: ReactionViewModel(id: post.id ?? ""), longPress: $longPress, chosenPostID: $chosenPostID, blurModel: blurModel, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue, showPicker: $showPicker)
                                             
                                         //EmojiPickerView(postUID: post.id!)
                                         
@@ -81,7 +84,7 @@ struct HomeView: View {
                             }
                             .padding()
                         }
-                        .simultaneousGesture(DragGesture(minimumDistance: CGFloat(disableScroll)))
+//                        /.simultaneousGesture(DragGesture(minimumDistance: CGFloat(disableScroll)))
                         //.scrollDisabled(true)
                         //                        /.disableScrolling(disabled: disableScroll)
                         .refreshable {
@@ -283,6 +286,10 @@ struct HomeView: View {
 //            }
             
 
+        }
+        .onTapGesture {
+            print("Tap home")
+            showPicker = false
         }
        
         

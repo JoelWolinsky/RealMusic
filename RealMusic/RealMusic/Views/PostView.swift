@@ -31,7 +31,7 @@ struct PostView: View {
     
     @State var showEmojiLibrary = false
     
-    @State var showPicker = false
+    @State var showPicker: Bool
     
 
 
@@ -91,6 +91,8 @@ struct PostView: View {
 
 
                 }
+                showPicker = false
+
             }
             .onLongPressGesture(perform: {
                 print("long press post")
@@ -121,39 +123,55 @@ struct PostView: View {
 
             
             if showPicker == true {
-                VStack {
-                    if let url = URL(string: post.cover ?? ""){
-                        CacheAsyncImage(url: url)  { phase in
-                            switch phase {
-                            case .success(let image):
-                                image
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(maxWidth: 200, maxHeight: 200)
-                                    .padding(.bottom, 20)
-                                
-                            case .failure(let error):
-                                //                    //print(error)
-                                Text("fail")
-                            case .empty:
-                                Rectangle()
-                                    .scaledToFill()
-                                    .cornerRadius(10)
-                                    .padding(20)
-                                    .foregroundColor(.green)
+                ZStack {
+//                    Rectangle()
+//                        .foregroundColor(.purple)
+//                        .opacity(0.5)
+//                        .frame(height: 2000, alignment: .center)
+//                        .offset(y:-1000)
+//                        .onTapGesture {
+//                            print("z tapped")
+//                            longPress = 0
+//                            disableScroll = 1000
+//                            blurModel.blur = 0
+//                            showEmojiLibrary = false
+//                            showPicker = false
+//                        }
+                    VStack {
+                        if let url = URL(string: post.cover ?? ""){
+                            CacheAsyncImage(url: url)  { phase in
+                                switch phase {
+                                case .success(let image):
+                                    image
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(maxWidth: 200, maxHeight: 200)
+                                        .padding(.bottom, 20)
+                                    
+                                case .failure(let error):
+                                    //                    //print(error)
+                                    Text("fail")
+                                case .empty:
+                                    Rectangle()
+                                        .scaledToFill()
+                                        .cornerRadius(10)
+                                        .padding(20)
+                                        .foregroundColor(.green)
+                                }
                             }
+                            .frame(maxWidth: 200, maxHeight: 200)
+                            .padding(.bottom, 20)
+                            
                         }
-                        .frame(maxWidth: 200, maxHeight: 200)
-                        .padding(.bottom, 20)
+                        EmojiPickerView(postUID: chosenPostID, cover: post.cover ?? "", longPress: $longPress, chosenEmoji: $chosenEmoji, emojiSelected: $emojiSelected, blurModel: blurModel, disableScroll: $disableScroll, reactionViewModel: reactionViewModel, emojiCatalogue: emojiCatalogue, showEmojiLibrary: $showEmojiLibrary, showPicker: $showPicker)
+                        
                         
                     }
-                    EmojiPickerView(postUID: chosenPostID, cover: post.cover ?? "", longPress: $longPress, chosenEmoji: $chosenEmoji, emojiSelected: $emojiSelected, blurModel: blurModel, disableScroll: $disableScroll, reactionViewModel: reactionViewModel, emojiCatalogue: emojiCatalogue, showEmojiLibrary: $showEmojiLibrary, showPicker: $showPicker)
+                    .offset(y: 100)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                     
-                   
+                    
                 }
-                .offset(y: -120)
-
-
             }
         }
 //        .sheet(isPresented: $showEmojiLibrary) {
