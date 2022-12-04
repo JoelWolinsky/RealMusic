@@ -23,8 +23,10 @@ struct EmojiLibraryView: View {
     @Binding var emojiSelected: Bool
     @StateObject var blurModel: BlurModel
     @Binding var disableScroll: Int
+    let postUID: String
+    @Binding var showPicker: Bool
+
     
-    let postUID: String 
 
 
     
@@ -52,6 +54,7 @@ struct EmojiLibraryView: View {
                                         longPress = 0
                                         blurModel.blur = 0
                                         disableScroll = 1000
+                                        showPicker = false
                                         let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
                                         impactHeavy.impactOccurred()
                                         

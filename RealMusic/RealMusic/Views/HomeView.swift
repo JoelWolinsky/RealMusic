@@ -81,7 +81,7 @@ struct HomeView: View {
                             }
                             .padding()
                         }
-                        //.simultaneousGesture(DragGesture(minimumDistance: CGFloat(disableScroll)))
+                        .simultaneousGesture(DragGesture(minimumDistance: CGFloat(disableScroll)))
                         //.scrollDisabled(true)
                         //                        /.disableScrolling(disabled: disableScroll)
                         .refreshable {

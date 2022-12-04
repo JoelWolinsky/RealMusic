@@ -31,6 +31,8 @@ struct PostView: View {
     
     @State var showEmojiLibrary = false
     
+    @State var showPicker = false
+    
 
 
     
@@ -85,6 +87,8 @@ struct PostView: View {
                     disableScroll = 1000
                     blurModel.blur = 0
                     showEmojiLibrary = false
+                    showPicker = false
+
 
                 }
             }
@@ -96,11 +100,13 @@ struct PostView: View {
                     disableScroll = 1000
                     blurModel.blur = 0
                     showEmojiLibrary = false
+                    showPicker = false
 
                 } else {
                     print(0)
                     disableScroll = 0
                     longPress = 10
+                    showPicker = true
                     chosenPostID = post.id ?? ""
                     blurModel.blur = 20
                     
@@ -114,7 +120,7 @@ struct PostView: View {
             .blur(radius:CGFloat(blurModel.blur))
 
             
-            if longPress == 10 {
+            if showPicker == true {
                 VStack {
                     if let url = URL(string: post.cover ?? ""){
                         CacheAsyncImage(url: url)  { phase in
@@ -130,14 +136,18 @@ struct PostView: View {
                                 //                    //print(error)
                                 Text("fail")
                             case .empty:
-                                Text("empty")
+                                Rectangle()
+                                    .scaledToFill()
+                                    .cornerRadius(10)
+                                    .padding(20)
+                                    .foregroundColor(.green)
                             }
                         }
                         .frame(maxWidth: 200, maxHeight: 200)
                         .padding(.bottom, 20)
                         
                     }
-                    EmojiPickerView(postUID: chosenPostID, cover: post.cover ?? "", longPress: $longPress, chosenEmoji: $chosenEmoji, emojiSelected: $emojiSelected, blurModel: blurModel, disableScroll: $disableScroll, reactionViewModel: reactionViewModel, emojiCatalogue: emojiCatalogue, showEmojiLibrary: $showEmojiLibrary)
+                    EmojiPickerView(postUID: chosenPostID, cover: post.cover ?? "", longPress: $longPress, chosenEmoji: $chosenEmoji, emojiSelected: $emojiSelected, blurModel: blurModel, disableScroll: $disableScroll, reactionViewModel: reactionViewModel, emojiCatalogue: emojiCatalogue, showEmojiLibrary: $showEmojiLibrary, showPicker: $showPicker)
                     
                    
                 }

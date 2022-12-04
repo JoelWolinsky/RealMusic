@@ -30,6 +30,8 @@ struct EmojiPickerView: View {
     
     @Binding var showEmojiLibrary: Bool
     
+    @Binding var showPicker: Bool
+    
     var gridItemLayout = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()),GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
 
     var body: some View {
@@ -42,6 +44,7 @@ struct EmojiPickerView: View {
                     longPress = 0
                     blurModel.blur = 0
                     disableScroll = 1000
+                    showPicker = false
                     
                     let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
                     impactHeavy.impactOccurred()
@@ -75,7 +78,7 @@ struct EmojiPickerView: View {
         .background(Color("Grey 2"))
         .cornerRadius(50)
         .sheet(isPresented: $showEmojiLibrary) {
-            EmojiLibraryView(emojiCatalogue: emojiCatalogue, emojiReactionModel: emojiReactionModel, reactionViewModel: reactionViewModel, showEmojiLibrary: $showEmojiLibrary, longPress: $longPress, chosenEmoji: $chosenEmoji, emojiSelected: $emojiSelected, blurModel: blurModel, disableScroll: $disableScroll, postUID: postUID)
+            EmojiLibraryView(emojiCatalogue: emojiCatalogue, emojiReactionModel: emojiReactionModel, reactionViewModel: reactionViewModel, showEmojiLibrary: $showEmojiLibrary, longPress: $longPress, chosenEmoji: $chosenEmoji, emojiSelected: $emojiSelected, blurModel: blurModel, disableScroll: $disableScroll, postUID: postUID, showPicker: $showPicker)
                 .presentationDetents([.medium])
             
             

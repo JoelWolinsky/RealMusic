@@ -37,7 +37,12 @@ struct AlbumView: View {
                         //                    //print(error)
                         Text("fail")
                     case .empty:
-                        Text("empty")
+                        // preview loader
+                        Rectangle()
+                            .scaledToFill()
+                            .cornerRadius(10)
+                            .padding(20)
+                            .foregroundColor(.green)
                     }
                 }
                 //.resizable()
