@@ -17,6 +17,8 @@
 		C935010729365FF100EAA4BC /* LibraryEmoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = C935010629365FF100EAA4BC /* LibraryEmoji.swift */; };
 		C9350109293672ED00EAA4BC /* EmojiLibrayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9350108293672ED00EAA4BC /* EmojiLibrayView.swift */; };
 		C935010B2937CC2900EAA4BC /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = C935010A2937CC2900EAA4BC /* Category.swift */; };
+		C935010E293CC96B00EAA4BC /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = C935010D293CC96B00EAA4BC /* CachedAsyncImage */; };
+		C9350110293CD26200EAA4BC /* CacheAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C935010F293CD26200EAA4BC /* CacheAsyncImage.swift */; };
 		C939D6D7292A4D0800C255F2 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939D6D6292A4D0800C255F2 /* ProfileView.swift */; };
 		C939D6D9292A8F2200C255F2 /* AnalyticsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939D6D8292A8F2200C255F2 /* AnalyticsModel.swift */; };
 		C939D6DB292AA8EF00C255F2 /* CompareAnalyticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939D6DA292AA8EF00C255F2 /* CompareAnalyticsView.swift */; };
@@ -96,6 +98,7 @@
 		C935010629365FF100EAA4BC /* LibraryEmoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryEmoji.swift; sourceTree = "<group>"; };
 		C9350108293672ED00EAA4BC /* EmojiLibrayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiLibrayView.swift; sourceTree = "<group>"; };
 		C935010A2937CC2900EAA4BC /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		C935010F293CD26200EAA4BC /* CacheAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheAsyncImage.swift; sourceTree = "<group>"; };
 		C939D6D6292A4D0800C255F2 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		C939D6D8292A8F2200C255F2 /* AnalyticsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsModel.swift; sourceTree = "<group>"; };
 		C939D6DA292AA8EF00C255F2 /* CompareAnalyticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompareAnalyticsView.swift; sourceTree = "<group>"; };
@@ -153,6 +156,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C935010E293CC96B00EAA4BC /* CachedAsyncImage in Frameworks */,
 				C95EC513290833B500550F06 /* Grey.colorset in Frameworks */,
 				899536B029AA01B5932A3B38 /* Pods_RealMusic.framework in Frameworks */,
 			);
@@ -244,6 +248,7 @@
 			isa = PBXGroup;
 			children = (
 				C9DBD62C290FDAD200ACD644 /* WebView.swift */,
+				C935010F293CD26200EAA4BC /* CacheAsyncImage.swift */,
 				C939D6EC29351DA800C255F2 /* BlurModel.swift */,
 				C939D6D8292A8F2200C255F2 /* AnalyticsModel.swift */,
 				C9848D6B28EC3A79003D4FFA /* PostViewModel.swift */,
@@ -346,6 +351,9 @@
 			dependencies = (
 			);
 			name = RealMusic;
+			packageProductDependencies = (
+				C935010D293CC96B00EAA4BC /* CachedAsyncImage */,
+			);
 			productName = RealMusic;
 			productReference = C947B9E828EAECDD00B97EB1 /* RealMusic.app */;
 			productType = "com.apple.product-type.application";
@@ -423,6 +431,7 @@
 			mainGroup = C947B9DF28EAECDD00B97EB1;
 			packageReferences = (
 				C947BA1B28EAF4FF00B97EB1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				C935010C293CC96B00EAA4BC /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
 			);
 			productRefGroup = C947B9E928EAECDD00B97EB1 /* Products */;
 			projectDirPath = "";
@@ -576,6 +585,7 @@
 				C9350109293672ED00EAA4BC /* EmojiLibrayView.swift in Sources */,
 				C907BF8929020749002197F1 /* SearchResultView.swift in Sources */,
 				C935010729365FF100EAA4BC /* LibraryEmoji.swift in Sources */,
+				C9350110293CD26200EAA4BC /* CacheAsyncImage.swift in Sources */,
 				C947B9EE28EAECDD00B97EB1 /* HomeView.swift in Sources */,
 				C939D6EF293524D700C255F2 /* DisableScrolling.swift in Sources */,
 				C939D6E1292E85EB00C255F2 /* Emoji.swift in Sources */,
@@ -1007,6 +1017,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		C935010C293CC96B00EAA4BC /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/lorenzofiamingo/swiftui-cached-async-image";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 		C947BA1B28EAF4FF00B97EB1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -1016,6 +1034,14 @@
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C935010D293CC96B00EAA4BC /* CachedAsyncImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C935010C293CC96B00EAA4BC /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */;
+			productName = CachedAsyncImage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C947B9E028EAECDD00B97EB1 /* Project object */;
 }

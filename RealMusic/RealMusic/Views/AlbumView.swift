@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import AVFoundation
+
 var audioPlayer: AVAudioPlayer!
 
 // View of the song in a post and the info linked to that song, eg song name and artist
@@ -16,20 +17,38 @@ struct AlbumView: View {
     let album: Album
     @State var playButton: String = "play.circle.fill"
     
+    
 
     
     
     var body: some View {
         VStack {
-            AsyncImage(url: URL(string: album.cover)) { image in
-                image
-                    .resizable()
-                    .scaledToFill()
-                    .cornerRadius(10)
-                    .padding(20)
-            } placeholder: {
-                Color.orange
+            if let url = URL(string: album.cover ?? "") {
+                CacheAsyncImage(url: url) { phase in
+                    switch phase {
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .scaledToFill()
+                            .cornerRadius(10)
+                            .padding(20)
+                        
+                    case .failure(let error):
+                        //                    //print(error)
+                        Text("fail")
+                    case .empty:
+                        Text("empty")
+                    }
+                }
+                //.resizable()
+                
+                
             }
+            
+//        placeholder: {
+//                Color.orange
+//            }
+
             
             Text(album.title)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
@@ -107,4 +126,10 @@ struct AlbumView: View {
             AlbumView(album: Album(title: "Goodie Bag", artist: "Still Woozy" , cover: "KSG Cover", preview: ""))
         }
     }
+}
+
+
+extension URLCache {
+    
+    static let imageCache = URLCache(memoryCapacity: 512*1000*1000, diskCapacity: 10*1000*1000*1000)
 }

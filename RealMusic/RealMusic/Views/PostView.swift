@@ -30,6 +30,7 @@ struct PostView: View {
     
     
     @State var showEmojiLibrary = false
+    
 
 
     
@@ -115,16 +116,27 @@ struct PostView: View {
             
             if longPress == 10 {
                 VStack {
-                    AsyncImage(url: URL(string: post.cover ?? "")) { image in
-                        image
-                            .resizable()
-                    } placeholder: {
-                        Color.orange
+                    if let url = URL(string: post.cover ?? ""){
+                        CacheAsyncImage(url: url)  { phase in
+                            switch phase {
+                            case .success(let image):
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(maxWidth: 200, maxHeight: 200)
+                                    .padding(.bottom, 20)
+                                
+                            case .failure(let error):
+                                //                    //print(error)
+                                Text("fail")
+                            case .empty:
+                                Text("empty")
+                            }
+                        }
+                        .frame(maxWidth: 200, maxHeight: 200)
+                        .padding(.bottom, 20)
+                        
                     }
-                    .frame(maxWidth: 200, maxHeight: 200)
-                    .padding(.bottom, 20)
-
-                    
                     EmojiPickerView(postUID: chosenPostID, cover: post.cover ?? "", longPress: $longPress, chosenEmoji: $chosenEmoji, emojiSelected: $emojiSelected, blurModel: blurModel, disableScroll: $disableScroll, reactionViewModel: reactionViewModel, emojiCatalogue: emojiCatalogue, showEmojiLibrary: $showEmojiLibrary)
                     
                    
