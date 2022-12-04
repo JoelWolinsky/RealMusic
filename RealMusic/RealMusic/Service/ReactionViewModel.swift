@@ -60,8 +60,9 @@ class ReactionViewModel: ObservableObject {
                     distinct.append(reaction)
                 }
             }
+            duplicate = false
         }
-        
+        print("number of distinct reactions: \(distinct.count)")
         self.distinctReactions = distinct
     }
 }
