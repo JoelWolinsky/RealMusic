@@ -39,7 +39,7 @@ struct EmojiPickerView: View {
             
             ForEach(emojiCatalogue.latest) { emoji in
                 Button (action: {
-                    print("upload \(emoji.description)")
+                    print("upload \(emoji.description) for \(postUID)")
                     emojiReactionModel.uploadReaction(postUID: postUID, emoji: emoji)
                     longPress = 0
                     blurModel.blur = 0

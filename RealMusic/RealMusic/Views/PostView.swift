@@ -28,7 +28,6 @@ struct PostView: View {
     
     @StateObject var emojiCatalogue: EmojiCatalogue
     
-    
     @State var showEmojiLibrary = false
     
     @State var showPicker: Bool
@@ -45,7 +44,7 @@ struct PostView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
                 
-                AlbumView(album: Album(title: post.title ?? "placeholder",artist: post.artist ?? "placeholder" ,cover: post.cover ?? "KSG Cover", preview: post.preview ?? ""))
+                AlbumView(album: Album(title: post.title ?? "placeholder",artist: post.artist ?? "placeholder" ,cover: post.cover ?? "KSG Cover", preview: post.preview ?? ""), reactionViewModel: reactionViewModel, longPress: $longPress, chosenPostID: $chosenPostID, blurModel: blurModel, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue, showPicker: $showPicker )
                 //.padding(.bottom, 50)
                 
                 ReactionsView(reactionViewModel: reactionViewModel, postUID: post.id ?? "")
@@ -79,65 +78,14 @@ struct PostView: View {
                 
             })
             // Issue with having a long press on a scroll item, so need to have an empty tap gesture before
-            .onTapGesture {
-                print("tap post")
-                if longPress == 10 {
-                    print(10)
-                    longPress = 0
-                    disableScroll = 1000
-                    blurModel.blur = 0
-                    showEmojiLibrary = false
-                    showPicker = false
-
-
-                }
-                showPicker = false
-
-            }
-            .onLongPressGesture(perform: {
-                print("long press post")
-                if longPress == 10 {
-                    print(10)
-                    longPress = 0
-                    disableScroll = 1000
-                    blurModel.blur = 0
-                    showEmojiLibrary = false
-                    showPicker = false
-
-                } else {
-                    print(0)
-                    disableScroll = 0
-                    longPress = 10
-                    showPicker = true
-                    chosenPostID = post.id ?? ""
-                    blurModel.blur = 20
-                    
-                }
-                let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
-                impactHeavy.impactOccurred()
-                
-                //blurModel.blur = 10
-                
-            })
-            .blur(radius:CGFloat(blurModel.blur))
             
-
-            
+            //        .sheet(isPresented: $showEmojiLibrary) {
+            //                    EmojiLibraryView()
+            //                .presentationDetents([.medium])
+            //
+            //                }
             if showPicker == true {
                 ZStack {
-//                    Rectangle()
-//                        .foregroundColor(.purple)
-//                        .opacity(0.5)
-//                        .frame(height: 2000, alignment: .center)
-//                        .offset(y:-1000)
-//                        .onTapGesture {
-//                            print("z tapped")
-//                            longPress = 0
-//                            disableScroll = 1000
-//                            blurModel.blur = 0
-//                            showEmojiLibrary = false
-//                            showPicker = false
-//                        }
                     VStack {
                         if let url = URL(string: post.cover ?? ""){
                             CacheAsyncImage(url: url)  { phase in
@@ -164,7 +112,7 @@ struct PostView: View {
                             .padding(.bottom, 20)
                             
                         }
-                        EmojiPickerView(postUID: chosenPostID, cover: post.cover ?? "", longPress: $longPress, chosenEmoji: $chosenEmoji, emojiSelected: $emojiSelected, blurModel: blurModel, disableScroll: $disableScroll, reactionViewModel: reactionViewModel, emojiCatalogue: emojiCatalogue, showEmojiLibrary: $showEmojiLibrary, showPicker: $showPicker)
+                        EmojiPickerView(postUID: post.id ?? "", cover: post.cover ?? "", longPress: $longPress, chosenEmoji: $chosenEmoji, emojiSelected: $emojiSelected, blurModel: blurModel, disableScroll: $disableScroll, reactionViewModel: reactionViewModel, emojiCatalogue: emojiCatalogue, showEmojiLibrary: $showEmojiLibrary, showPicker: $showPicker)
                         
                         
                     }
@@ -173,23 +121,10 @@ struct PostView: View {
                     
                     
                 }
+                
             }
         }
-        
-        .onChange(of: longPress) { change in
-            if longPress == 0 && showPicker == true {
-                print("yes \(post.id)")
-                showPicker = false
-            }
-        }
-//        .sheet(isPresented: $showEmojiLibrary) {
-//                    EmojiLibraryView()
-//                .presentationDetents([.medium])
-//
-//                }
-        
     }
-    
     
     
 //    struct PostView_Previews: PreviewProvider {
