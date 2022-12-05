@@ -37,142 +37,144 @@ struct AddFriendsView: View {
     
     
     var body: some View {
-        ZStack {
-            VStack {
-                
-                Button {
-                    withAnimation {
-                        friendsToggle.toggle()
-                    }
-                } label: {
-                    Text("Back")
-                        .foregroundColor(.green)
-                        .font(.system(size:20))
-                }
-                .frame(maxWidth: .infinity, alignment: .trailing)
-                
+
+        ScrollView {
             
-                
-                
-                Spacer()
-                
-                Text("Add friends")
-                    .foregroundColor(.white)
-                
-                HStack {
-                    Image(systemName: "magnifyingglass")
-                    TextField("Search for a user ..", text: $username)
+            Button {
+                withAnimation {
+                    friendsToggle.toggle()
                 }
-                .padding(10)
-                .frame(height: 40)
+            } label: {
+                Text("Back")
+                    .foregroundColor(.green)
+                    .font(.system(size:20))
+            }
+            .frame(maxWidth: .infinity, alignment: .trailing)
+            
+        
+            
+            
+            Spacer()
+            
+            Text("Add friends")
+                .foregroundColor(.white)
+            
+            HStack {
+                Image(systemName: "magnifyingglass")
+                TextField("Search for a user ..", text: $username)
+
+            }
+            .padding(10)
+            .frame(height: 40)
+            .background(.green)
+            .cornerRadius(13)
+            .padding(.leading, 30)
+            .padding(.trailing, 30)
+
+            Text(errorMessage)
+                .foregroundColor(.red)
+            Text("Add Friend")
+                .padding(5)
+                .frame(width: 120)
                 .background(.green)
-                .cornerRadius(13)
-                .padding(.leading, 30)
-                .padding(.trailing, 30)
-                
-                Text(errorMessage)
-                    .foregroundColor(.red)
-                Text("Add Friend")
-                    .padding(5)
-                    .frame(width: 120)
-                    .background(.green)
-                    .cornerRadius(20)
-                    .fontWeight(.bold)
-                    .padding(.bottom, 20)
-                    .onTapGesture {
-                        userViewModel.fetchUsers() { users in
-                            self.nameFound = false
-                            self.errorMessage = ""
-                            //print(user.username)
-                            //UserDefaults.standard.setValue(user.username, forKey: "Username")
-                            print("print usernames")
-                            for user in users {
-                                print(user.username)
-                                if username == user.username {
-                                    self.nameFound = true
-                                    let foundUser = user
-                                    userViewModel.addFriend(friend: foundUser)
-                                }
-                            }
-                            if self.nameFound == false {
-                                self.errorMessage = "User not found"
+                .cornerRadius(20)
+                .fontWeight(.bold)
+                .padding(.bottom, 20)
+                .onTapGesture {
+                    userViewModel.fetchUsers() { users in
+                        self.nameFound = false
+                        self.errorMessage = ""
+                        //print(user.username)
+                        //UserDefaults.standard.setValue(user.username, forKey: "Username")
+                        print("print usernames")
+                        for user in users {
+                            print(user.username)
+                            if username == user.username {
+                                self.nameFound = true
+                                let foundUser = user
+                                userViewModel.addFriend(friend: foundUser)
                             }
                         }
+                        if self.nameFound == false {
+                            self.errorMessage = "User not found"
+                        }
                     }
+                }
+
+            
+            ScrollView {
                 
-                VStack {
-                    
-                    Text("Your Friends")
-                        .foregroundColor(.white)
-                        .padding(5)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    ScrollView {
-                        ForEach(friendsViewModel.friends.sorted(by: { $0.matchScore ?? 0 > $1.matchScore ?? 0 })) { friend in
-                            HStack {
+                Text("Your Friends")
+                    .foregroundColor(.white)
+                    .padding(5)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                ScrollView {
+                    ForEach(friendsViewModel.friends.sorted(by: { $0.matchScore ?? 0 > $1.matchScore ?? 0 })) { friend in
+                        HStack {
+                            
+                            AsyncImage(url: URL(string: friend.profilePic ?? "no profile pic")) { image in
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
                                 
-                                AsyncImage(url: URL(string: friend.profilePic ?? "no profile pic")) { image in
-                                    image
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
-                                    
-                                } placeholder: {
-                                    Color.orange
+                            } placeholder: {
+                                Color.orange
+                            }
+                            .frame(width: 60, height: 60)
+                            .cornerRadius(30)
+                            .onAppear(perform: {
+                                userViewModel.fetchProfilePic(uid: friend.id!) { profile in
+                                    print(profile)
                                 }
-                                .frame(width: 60, height: 60)
-                                .cornerRadius(30)
-                                .onAppear(perform: {
-                                    userViewModel.fetchProfilePic(uid: friend.id!) { profile in
-                                        print(profile)
-                                    }
-                                })
-    
+                            })
 
-                                VStack {
-                                    Text(friend.username)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                        .padding(5)
-                                        .foregroundColor(Color("Grey"))
 
-                                    Text(friend.id ?? "")
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                        .padding(5)
-                                        .foregroundColor(Color("Grey"))
-                                }
-                                
-                                Text(String(friend.matchScore ?? 0))
-                                    .foregroundColor(.purple)
-   
+                            VStack {
+                                Text(friend.username)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(5)
+                                    .foregroundColor(Color("Grey"))
+
+                                Text(friend.id ?? "")
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(5)
+                                    .foregroundColor(Color("Grey"))
                             }
                             
-                        }
-                    }
-                    
-                    .refreshable {
-                        // run function to calculate all scores
-                        await analyticsModel.compareForEach(yourUID: yourUID, friends: friendsViewModel.friends)
-                        friendsViewModel.fetchFriends()
-                    }
-                    
-                    
-                }
-                .frame(maxWidth: .infinity)
-                
-                Spacer()
-            }
-            .padding(20)
-            .background(.black)
+                            Text(String(friend.matchScore ?? 0))
+                                .foregroundColor(.purple)
 
-            
-            
+                        }
+                        
+                    }
+                }
                 
+                .refreshable {
+                    // run function to calculate all scores
+                    await analyticsModel.compareForEach(yourUID: yourUID, friends: friendsViewModel.friends)
+                    friendsViewModel.fetchFriends()
+                }
+                
+                
+            }
+            .frame(maxWidth: .infinity)
+            
+            Spacer()
         }
+        .padding(20)
+        .background(.black)
         .onAppear( perform: {
             // run function to calculate all scores
             print("showing add friends view")
             analyticsModel.compareForEach(yourUID: yourUID, friends: friendsViewModel.friends)
             friendsViewModel.fetchFriends()
         })
+            
+            
+            
+                
         
+       
         
 
     }

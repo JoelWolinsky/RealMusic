@@ -160,28 +160,31 @@ struct AlbumView: View {
             
         }
         .onLongPressGesture(perform: {
-            print("long press post")
-            if longPress == 10 {
-                print(10)
-                longPress = 0
-                disableScroll = 1000
-                blurModel.blur = 0
-                showEmojiLibrary = false
-                showPicker = false
-                
-            } else {
-                print(0)
-                disableScroll = 0
-                longPress = 10
-                showPicker = true
-                //chosenPostID = post.id ?? ""
-                blurModel.blur = 20
-                
+            withAnimation(.easeIn(duration: 0.2)) {
+                print("long press post")
+                if longPress == 10 {
+                    print(10)
+                    longPress = 0
+                    disableScroll = 1000
+                    blurModel.blur = 0
+                    showEmojiLibrary = false
+                    showPicker = false
+                    
+                } else {
+                    print(0)
+                    disableScroll = 0
+                    longPress = 10
+                    showPicker = true
+                    
+                    
+                    //chosenPostID = post.id ?? ""
+                    blurModel.blur = 20
+                    
+                }
+                let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
+                impactHeavy.impactOccurred()
             }
-            let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
-            impactHeavy.impactOccurred()
-            
-            //blurModel.blur = 10
+                //blurModel.blur = 10
             
         })
         .blur(radius:CGFloat(blurModel.blur))

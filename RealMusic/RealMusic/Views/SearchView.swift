@@ -62,6 +62,8 @@ struct SearchView: View {
                 HStack {
                     Image(systemName: "magnifyingglass")
                     TextField("Search ..", text: binding)
+
+                    
                 }
                     .padding(10)
                     .frame(height: 40)
@@ -84,6 +86,7 @@ struct SearchView: View {
             }
             .background(.black)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         
     }
     

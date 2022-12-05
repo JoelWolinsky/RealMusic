@@ -32,6 +32,8 @@ struct EmojiPickerView: View {
     
     @Binding var showPicker: Bool
     
+    @State private var animatePicker = false
+    
     var gridItemLayout = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()),GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
 
     var body: some View {
@@ -53,11 +55,10 @@ struct EmojiPickerView: View {
                     
                 }, label: {
                     Text(emoji.emoji)
-                        .font(.system(size: 27))
+                        .font(.system(size: animatePicker ? 27 : 0))
                         .padding(5)
                 })
             }
-            .fixedSize(horizontal: false, vertical: true)
             
             Button (action: {
                 print("see more emojis")
@@ -73,17 +74,24 @@ struct EmojiPickerView: View {
             
             
         }
-        .frame(maxWidth: 300, maxHeight: 35)
+        .frame(width: animatePicker ? 300 : 0, height: 35)
         .padding(10)
         .background(Color("Grey 2"))
         .cornerRadius(50)
         .sheet(isPresented: $showEmojiLibrary) {
             EmojiLibraryView(emojiCatalogue: emojiCatalogue, emojiReactionModel: emojiReactionModel, reactionViewModel: reactionViewModel, showEmojiLibrary: $showEmojiLibrary, longPress: $longPress, chosenEmoji: $chosenEmoji, emojiSelected: $emojiSelected, blurModel: blurModel, disableScroll: $disableScroll, postUID: postUID, showPicker: $showPicker)
                 .presentationDetents([.medium])
+        
             
             
             
         }
+        .offset(x: animatePicker ?  0 : -150)
+        .onAppear(perform: {
+            withAnimation(.easeIn(duration: 0.2)) {
+                animatePicker = true
+            }
+        })
     }
     
 //    struct EmojiView_Previews: PreviewProvider {

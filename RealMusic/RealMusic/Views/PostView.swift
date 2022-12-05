@@ -32,6 +32,8 @@ struct PostView: View {
     
     @State var showPicker: Bool
     
+    @State var animatePicker = false
+    
 
 
     
@@ -42,6 +44,8 @@ struct PostView: View {
             VStack {
                 Text("@" + (post.id ?? ""))
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .blur(radius:CGFloat(blurModel.blur))
+
                 
                 
                 AlbumView(album: Album(title: post.title ?? "placeholder",artist: post.artist ?? "placeholder" ,cover: post.cover ?? "KSG Cover", preview: post.preview ?? ""), reactionViewModel: reactionViewModel, longPress: $longPress, chosenPostID: $chosenPostID, blurModel: blurModel, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue, showPicker: $showPicker )
@@ -50,6 +54,8 @@ struct PostView: View {
                 ReactionsView(reactionViewModel: reactionViewModel, postUID: post.id ?? "")
                     .padding(.leading, 10)
                     .offset(y: -20)
+                    .blur(radius:CGFloat(blurModel.blur))
+
                 
             }
             .padding(20)
@@ -93,8 +99,8 @@ struct PostView: View {
                                 case .success(let image):
                                     image
                                         .resizable()
-                                        .scaledToFill()
-                                        .frame(maxWidth: 200, maxHeight: 200)
+                                        //.scaledToFill()
+                                        .frame(width: showPicker ? 200 : 0, height: showPicker ? 200 : 0)
                                         .padding(.bottom, 20)
                                     
                                 case .failure(let error):
@@ -108,7 +114,8 @@ struct PostView: View {
                                         .foregroundColor(.green)
                                 }
                             }
-                            .frame(maxWidth: 200, maxHeight: 200)
+                            .frame(width: showPicker ? 200 : 0, height: showPicker ? 200 : 0)
+                            //.frame(width: 200, height: 200)
                             .padding(.bottom, 20)
                             
                         }
@@ -121,9 +128,18 @@ struct PostView: View {
                     
                     
                 }
+                .onAppear(perform: {
+                    print("animate picker 2 = \(animatePicker)")
+                    withAnimation(.linear(duration: 5)) {
+                        animatePicker = true
+                        print("animate picker 2 = \(animatePicker)")
+
+                    }
+                })
                 
             }
         }
+        
     }
     
     
