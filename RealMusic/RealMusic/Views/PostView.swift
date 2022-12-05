@@ -120,6 +120,7 @@ struct PostView: View {
                 
             })
             .blur(radius:CGFloat(blurModel.blur))
+            
 
             
             if showPicker == true {
@@ -172,6 +173,13 @@ struct PostView: View {
                     
                     
                 }
+            }
+        }
+        
+        .onChange(of: longPress) { change in
+            if longPress == 0 && showPicker == true {
+                print("yes \(post.id)")
+                showPicker = false
             }
         }
 //        .sheet(isPresented: $showEmojiLibrary) {

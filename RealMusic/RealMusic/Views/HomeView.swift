@@ -75,7 +75,7 @@ struct HomeView: View {
                                 
                                 ForEach(feedViewModel.posts) { post in
                                     VStack {
-                                        PostView(post: post, reactionViewModel: ReactionViewModel(id: post.id ?? ""), longPress: $longPress, chosenPostID: $chosenPostID, blurModel: blurModel, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue, showPicker: $showPicker)
+                                        PostView(post: post, reactionViewModel: ReactionViewModel(id: post.id ?? ""), longPress: $longPress, chosenPostID: $chosenPostID, blurModel: blurModel, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue, showPicker: showPicker)
                                             
                                         //EmojiPickerView(postUID: post.id!)
                                         
@@ -287,11 +287,15 @@ struct HomeView: View {
             
 
         }
-        .onTapGesture {
-            print("Tap home")
-            showPicker = false
-        }
-       
+//        .onTapGesture {
+//            print("Tap home")
+//            longPress = 0
+//            disableScroll = 1000
+//            blurModel.blur = 0
+//            showEmojiLibrary = false
+//            showPicker = false
+//        }
+//       
         
 
     }
