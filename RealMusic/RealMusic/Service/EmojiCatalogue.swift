@@ -60,7 +60,7 @@ class EmojiCatalogue: ObservableObject {
 //                self.library.append(category)
 //                print("added cat")
 //            }
-            print(decodedData)
+            //print(decodedData)
             } catch {
                 print("decode error")
             }

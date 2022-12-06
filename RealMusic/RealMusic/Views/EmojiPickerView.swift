@@ -30,9 +30,9 @@ struct EmojiPickerView: View {
     
     @Binding var showEmojiLibrary: Bool
     
-    @Binding var showPicker: Bool
-    
     @State private var animatePicker = false
+    
+    @Binding var showPicker: Bool
     
     var gridItemLayout = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()),GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
 
@@ -76,11 +76,14 @@ struct EmojiPickerView: View {
         }
         .frame(width: animatePicker ? 300 : 0, height: 35)
         .padding(10)
-        .background(Color("Grey 2"))
+        //.background(Color("Grey 2"))
+        .background(.regularMaterial)
         .cornerRadius(50)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .sheet(isPresented: $showEmojiLibrary) {
             EmojiLibraryView(emojiCatalogue: emojiCatalogue, emojiReactionModel: emojiReactionModel, reactionViewModel: reactionViewModel, showEmojiLibrary: $showEmojiLibrary, longPress: $longPress, chosenEmoji: $chosenEmoji, emojiSelected: $emojiSelected, blurModel: blurModel, disableScroll: $disableScroll, postUID: postUID, showPicker: $showPicker)
                 .presentationDetents([.medium])
+            
         
             
             
@@ -88,7 +91,8 @@ struct EmojiPickerView: View {
         }
         .offset(x: animatePicker ?  0 : -150)
         .onAppear(perform: {
-            withAnimation(.easeIn(duration: 0.2)) {
+            withAnimation(.spring(response: 0.45, dampingFraction: 1, blendDuration: 0)) {
+                print("animate ist true 2")
                 animatePicker = true
             }
         })

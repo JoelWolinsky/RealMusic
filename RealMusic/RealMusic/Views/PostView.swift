@@ -34,6 +34,9 @@ struct PostView: View {
     
     @State var animatePicker = false
     
+    @State var emojiPickerOpacity = 1
+    
+    
 
 
     
@@ -48,13 +51,15 @@ struct PostView: View {
 
                 
                 
-                AlbumView(album: Album(title: post.title ?? "placeholder",artist: post.artist ?? "placeholder" ,cover: post.cover ?? "KSG Cover", preview: post.preview ?? ""), reactionViewModel: reactionViewModel, longPress: $longPress, chosenPostID: $chosenPostID, blurModel: blurModel, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue, showPicker: $showPicker )
+                AlbumView(album: Album(title: post.title ?? "placeholder",artist: post.artist ?? "placeholder" ,cover: post.cover ?? "KSG Cover", preview: post.preview ?? ""), reactionViewModel: reactionViewModel, longPress: $longPress, chosenPostID: $chosenPostID, blurModel: blurModel, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue, showPicker: $showPicker, postID: post.id ?? "" , emojiPickerOpacity: $emojiPickerOpacity)
                 //.padding(.bottom, 50)
                 
                 ReactionsView(reactionViewModel: reactionViewModel, postUID: post.id ?? "")
                     .padding(.leading, 10)
                     .offset(y: -20)
                     .blur(radius:CGFloat(blurModel.blur))
+                
+                
 
                 
             }
@@ -93,51 +98,25 @@ struct PostView: View {
             if showPicker == true {
                 ZStack {
                     VStack {
-                        if let url = URL(string: post.cover ?? ""){
-                            CacheAsyncImage(url: url)  { phase in
-                                switch phase {
-                                case .success(let image):
-                                    image
-                                        .resizable()
-                                        //.scaledToFill()
-                                        .frame(width: showPicker ? 200 : 0, height: showPicker ? 200 : 0)
-                                        .padding(.bottom, 20)
-                                    
-                                case .failure(let error):
-                                    //                    //print(error)
-                                    Text("fail")
-                                case .empty:
-                                    Rectangle()
-                                        .scaledToFill()
-                                        .cornerRadius(10)
-                                        .padding(20)
-                                        .foregroundColor(.green)
-                                }
-                            }
-                            .frame(width: showPicker ? 200 : 0, height: showPicker ? 200 : 0)
-                            //.frame(width: 200, height: 200)
-                            .padding(.bottom, 20)
-                            
-                        }
+                        
+                        
+                        
+                        EmojiPickerCoverView(cover: post.cover ?? "")
+                        
                         EmojiPickerView(postUID: post.id ?? "", cover: post.cover ?? "", longPress: $longPress, chosenEmoji: $chosenEmoji, emojiSelected: $emojiSelected, blurModel: blurModel, disableScroll: $disableScroll, reactionViewModel: reactionViewModel, emojiCatalogue: emojiCatalogue, showEmojiLibrary: $showEmojiLibrary, showPicker: $showPicker)
                         
+                        PostDropDownView()
                         
                     }
-                    .offset(y: 100)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                    //.frame(maxWidth: 200, maxHeight: 300, alignment: .top)
+                    .offset(y: -30)
                     
                     
                 }
-                .onAppear(perform: {
-                    print("animate picker 2 = \(animatePicker)")
-                    withAnimation(.linear(duration: 5)) {
-                        animatePicker = true
-                        print("animate picker 2 = \(animatePicker)")
-
-                    }
-                })
+                .opacity(Double(emojiPickerOpacity))
                 
             }
+                
         }
         
     }
