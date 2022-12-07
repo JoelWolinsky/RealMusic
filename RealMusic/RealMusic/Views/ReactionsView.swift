@@ -47,8 +47,8 @@ struct ReactionsView: View {
 //                    }//
                 
             }
-            
-//            .padding(10)
+            //.padding(10)
+
             if reactionViewModel.distinctReactions.count != reactionViewModel.reactions.count {
                     Text(String(reactionViewModel.reactions.count))
                         .foregroundColor(.white)
@@ -57,14 +57,15 @@ struct ReactionsView: View {
 
         }
         //.frame(maxWidth: CGFloat(reactionViewModel.reactions.count * 25) + 50, maxHeight: 40)
-        .padding(10)
+        .frame(minWidth: reactionViewModel.distinctReactions.isEmpty ? 0 : 20)
+        .padding(reactionViewModel.distinctReactions.isEmpty ? 0 : 10)
         .background(Color("Grey 3"))
         //.cornerRadius(20)
         .overlay(
-            RoundedRectangle(cornerRadius: 20)
+            RoundedRectangle(cornerRadius: 40)
                 .stroke(Color.black, lineWidth: 5)
                 )
-        .cornerRadius(20)
+        .cornerRadius(40)
         .frame(maxWidth: .infinity, alignment: .leading)
         .onReceive(reactionViewModel.objectWillChange, perform: {
             if !reactionViewModel.reactions.isEmpty {
@@ -73,7 +74,7 @@ struct ReactionsView: View {
                 
                 //            let baseAnimation = Animation.easeInOut(duration: 0.6)
                 //            let repeated = baseAnimation.repeatCount(2, autoreverses: true)
-                withAnimation(.spring(response: 0.45, dampingFraction: 1, blendDuration: 1)) {
+                withAnimation(.spring(response: 0.6, dampingFraction: 0.5, blendDuration: 1)) {
                     emojiSize = 20.0
                 }
             }

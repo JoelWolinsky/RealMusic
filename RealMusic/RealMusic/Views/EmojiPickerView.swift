@@ -41,7 +41,7 @@ struct EmojiPickerView: View {
             
             ForEach(emojiCatalogue.latest) { emoji in
                 Button (action: {
-                   // withAnimation(.easeIn(duration: 0.2)) {
+                    withAnimation(.easeIn(duration: 0.2)) {
                         
                         print("upload \(emoji.description) for \(postUID)")
                         
@@ -57,7 +57,7 @@ struct EmojiPickerView: View {
                         impactHeavy.impactOccurred()
                         
                         reactionViewModel.addLocalReaction(reaction: Emoji(emoji: emoji.emoji, description: emoji.description))
-                   // }
+                    }
                 }, label: {
                     Text(emoji.emoji)
                         .font(.system(size: animatePicker ? 27 : 0))

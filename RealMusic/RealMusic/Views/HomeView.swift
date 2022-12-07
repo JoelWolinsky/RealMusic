@@ -66,19 +66,21 @@ struct HomeView: View {
                         ScrollViewReader { (proxy: ScrollViewProxy) in
                             ScrollView {
                                 VStack{
+                                    Text("Currently Listening To")
+                                        .foregroundColor(.white)
+                                        .offset(y: 40)
                                     VStack {
+                                        
                                         CurrentlyPlayingView(song: currentlyPlaying, createPostModel: createPostModel)
                                     }
                                     .frame(width: 350, height: 100)
                                     .padding(.top, 40)
                                     .blur(radius:CGFloat(blurModel.blur))
                                     
-                             
-                                    
-                                    
                                     ForEach(feedViewModel.posts) { post in
                                         VStack {
                                             PostView(post: post, reactionViewModel: ReactionViewModel(id: post.id ?? ""), longPress: $longPress, chosenPostID: $chosenPostID, blurModel: blurModel, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue, showPicker: showPicker)
+                                            
                                             
                                             
                                         }

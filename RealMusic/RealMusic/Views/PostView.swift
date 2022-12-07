@@ -45,7 +45,7 @@ struct PostView: View {
         
         ZStack {
             VStack {
-                Text("@" + (post.id ?? ""))
+                Text("@" + (post.username ?? ""))
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .blur(radius:CGFloat(blurModel.blur))
 
@@ -53,19 +53,11 @@ struct PostView: View {
                 
                 AlbumView(album: Album(title: post.title ?? "placeholder",artist: post.artist ?? "placeholder" ,cover: post.cover ?? "KSG Cover", preview: post.preview ?? ""), reactionViewModel: reactionViewModel, longPress: $longPress, chosenPostID: $chosenPostID, blurModel: blurModel, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue, showPicker: $showPicker, postID: post.id ?? "" , emojiPickerOpacity: $emojiPickerOpacity)
                 //.padding(.bottom, 50)
-                
-                ReactionsView(reactionViewModel: reactionViewModel, post: post)
-                    .padding(.leading, 10)
-                    .offset(y: -20)
-                    .blur(radius:CGFloat(blurModel.blur))
-                
-                
-
-                
+            
             }
             .padding(20)
             //.scaledToFill
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .frame(height:450)
             //.background(.black)
             .foregroundColor(.white)
             .onAppear(perform: {
@@ -95,6 +87,12 @@ struct PostView: View {
             //                .presentationDetents([.medium])
             //
             //                }
+            
+            ReactionsView(reactionViewModel: reactionViewModel, post: post)
+                .padding(.leading, 10)
+                .offset(x: 20, y: 220)
+                .blur(radius:CGFloat(blurModel.blur))
+            
             if showPicker == true {
                 ZStack {
                     VStack {
@@ -118,6 +116,7 @@ struct PostView: View {
             }
                 
         }
+        .padding(.bottom, 20)
         
     }
     
