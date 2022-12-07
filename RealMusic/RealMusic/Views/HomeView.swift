@@ -54,8 +54,6 @@ struct HomeView: View {
     @State var showPicker = false
 
 
-    
-
     var body: some View {
         
             ZStack {
@@ -69,17 +67,20 @@ struct HomeView: View {
                                     Text("Currently Listening To")
                                         .foregroundColor(.white)
                                         .offset(y: 40)
+                                        .blur(radius:CGFloat(blur))
+
                                     VStack {
                                         
                                         CurrentlyPlayingView(song: currentlyPlaying, createPostModel: createPostModel)
                                     }
                                     .frame(width: 350, height: 100)
                                     .padding(.top, 40)
-                                    .blur(radius:CGFloat(blurModel.blur))
+                                    .blur(radius:CGFloat(blur))
+
                                     
                                     ForEach(feedViewModel.posts) { post in
                                         VStack {
-                                            PostView(post: post, reactionViewModel: ReactionViewModel(id: post.id ?? ""), longPress: $longPress, chosenPostID: $chosenPostID, blurModel: blurModel, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue, showPicker: showPicker)
+                                            PostView(post: post, reactionViewModel: ReactionViewModel(id: post.id ?? ""), longPress: $longPress, chosenPostID: $chosenPostID, blur: $blur, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue, showPicker: showPicker)
                                             
                                             
                                             
@@ -101,12 +102,12 @@ struct HomeView: View {
                                 getRequest.getCurrentPlaying() { (result) in
                                     switch result {
                                     case .success(let data) :
-                                        print("success \(data)")
+                                        print("success playing now \(data)")
                                         let song = data[0]
                                         currentlyPlaying = SpotifySong(id: song.id, songID: song.songID, title: song.title, artist: song.artist, uid: song.uid, cover: song.cover, preview_url: song.preview_url)
                                     case .failure(let error) :
                                         print("fail recent")
-                                        print(error)
+                                       // print(error)
                                     }
                                 }
                                 
@@ -207,17 +208,15 @@ struct HomeView: View {
                         }
                         
                         getRequest.getCurrentPlaying() { (result) in
+                            print("get currently pllay")
                             switch result {
                             case .success(let data) :
-                                print("success \(data)")
-                                if data.isEmpty != true {
-                                    let song = data[0]
-                                    currentlyPlaying = SpotifySong(id: song.id, songID: song.songID, title: song.title, artist: song.artist, uid: song.uid, cover: song.cover, preview_url: song.preview_url)
-                                }
-                                
+                                print("success playing now \(data)")
+                                let song = data[0]
+                                currentlyPlaying = SpotifySong(id: song.id, songID: song.songID, title: song.title, artist: song.artist, uid: song.uid, cover: song.cover, preview_url: song.preview_url)
                             case .failure(let error) :
                                 print("fail recent")
-                                print(error)
+                               // print(error)
                             }
                         }
                         

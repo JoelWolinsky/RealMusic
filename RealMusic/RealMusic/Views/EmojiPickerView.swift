@@ -16,7 +16,7 @@ struct EmojiPickerView: View {
     @Binding var longPress: Int
     @Binding var chosenEmoji: Emoji
     @Binding var emojiSelected: Bool
-    @StateObject var blurModel: BlurModel
+    @Binding var blur: Int
     @Binding var disableScroll: Int
 
     @ObservedObject var emojiReactionModel = EmojiReactionModel()
@@ -46,11 +46,10 @@ struct EmojiPickerView: View {
                         print("upload \(emoji.description) for \(postUID)")
                         
                         emojiReactionModel.uploadReaction(postUID: postUID, emoji: emoji)
-                    
+
                         longPress = 0
-                        blurModel.blur = 0
+                        blur = 0
                         disableScroll = 1000
-                        
                         showPicker = false
                         
                         let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
@@ -86,7 +85,7 @@ struct EmojiPickerView: View {
         .cornerRadius(50)
         .frame(maxWidth: .infinity, alignment: .leading)
         .sheet(isPresented: $showEmojiLibrary) {
-            EmojiLibraryView(emojiCatalogue: emojiCatalogue, emojiReactionModel: emojiReactionModel, reactionViewModel: reactionViewModel, showEmojiLibrary: $showEmojiLibrary, longPress: $longPress, chosenEmoji: $chosenEmoji, emojiSelected: $emojiSelected, blurModel: blurModel, disableScroll: $disableScroll, postUID: postUID, showPicker: $showPicker)
+            EmojiLibraryView(emojiCatalogue: emojiCatalogue, emojiReactionModel: emojiReactionModel, reactionViewModel: reactionViewModel, showEmojiLibrary: $showEmojiLibrary, longPress: $longPress, chosenEmoji: $chosenEmoji, emojiSelected: $emojiSelected, blur: $blur, disableScroll: $disableScroll, postUID: postUID, showPicker: $showPicker)
                 .presentationDetents([.medium])
             
         

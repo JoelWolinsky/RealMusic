@@ -22,7 +22,7 @@ struct AlbumView: View {
     @Binding var longPress: Int
     @Binding var chosenPostID: String
     
-    @StateObject var blurModel: BlurModel
+    @Binding var blur: Int
     
     @State var chosenEmoji = Emoji(emoji: "", description: "", category: "")
     @State var emojiSelected = false
@@ -144,7 +144,7 @@ struct AlbumView: View {
                     print(10)
                     longPress = 0
                     disableScroll = 1000
-                    blurModel.blur = 0
+                    blur = 0
                     showEmojiLibrary = false
                     showPicker = false
                     
@@ -160,7 +160,7 @@ struct AlbumView: View {
                     print(10)
                     longPress = 0
                     disableScroll = 1000
-                    blurModel.blur = 0
+                    blur = 0
                     showEmojiLibrary = false
                     
                     
@@ -176,7 +176,7 @@ struct AlbumView: View {
                     
                     
                     //chosenPostID = post.id ?? ""
-                    blurModel.blur = 20
+                    blur = 20
                     
                 }
                 let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
@@ -185,7 +185,7 @@ struct AlbumView: View {
                 //blurModel.blur = 10
             
         })
-        .blur(radius:CGFloat(blurModel.blur))
+        .blur(radius:CGFloat(blur))
         
         
         .onChange(of: longPress) { change in

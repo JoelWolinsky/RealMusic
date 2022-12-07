@@ -19,7 +19,7 @@ struct PostView: View {
     @Binding var longPress: Int
     @Binding var chosenPostID: String
     
-    @StateObject var blurModel: BlurModel
+    @Binding var blur: Int
     
     @State var chosenEmoji = Emoji(emoji: "", description: "", category: "")
     @State var emojiSelected = false
@@ -47,11 +47,11 @@ struct PostView: View {
             VStack {
                 Text("@" + (post.username ?? ""))
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .blur(radius:CGFloat(blurModel.blur))
+                    .blur(radius:CGFloat(blur))
 
                 
                 
-                AlbumView(album: Album(title: post.title ?? "placeholder",artist: post.artist ?? "placeholder" ,cover: post.cover ?? "KSG Cover", preview: post.preview ?? ""), reactionViewModel: reactionViewModel, longPress: $longPress, chosenPostID: $chosenPostID, blurModel: blurModel, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue, showPicker: $showPicker, postID: post.id ?? "" , emojiPickerOpacity: $emojiPickerOpacity)
+                AlbumView(album: Album(title: post.title ?? "placeholder",artist: post.artist ?? "placeholder" ,cover: post.cover ?? "KSG Cover", preview: post.preview ?? ""), reactionViewModel: reactionViewModel, longPress: $longPress, chosenPostID: $chosenPostID, blur: $blur, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue, showPicker: $showPicker, postID: post.id ?? "" , emojiPickerOpacity: $emojiPickerOpacity)
                 //.padding(.bottom, 50)
             
             }
@@ -91,7 +91,7 @@ struct PostView: View {
             ReactionsView(reactionViewModel: reactionViewModel, post: post)
                 .padding(.leading, 10)
                 .offset(x: 20, y: 220)
-                .blur(radius:CGFloat(blurModel.blur))
+                .blur(radius:CGFloat(blur))
             
             if showPicker == true {
                 ZStack {
@@ -101,9 +101,9 @@ struct PostView: View {
                         
                         EmojiPickerCoverView(cover: post.cover ?? "")
                         
-                        EmojiPickerView(postUID: post.id ?? "", cover: post.cover ?? "", longPress: $longPress, chosenEmoji: $chosenEmoji, emojiSelected: $emojiSelected, blurModel: blurModel, disableScroll: $disableScroll, reactionViewModel: reactionViewModel, emojiCatalogue: emojiCatalogue, showEmojiLibrary: $showEmojiLibrary, showPicker: $showPicker)
+                        EmojiPickerView(postUID: post.id ?? "", cover: post.cover ?? "", longPress: $longPress, chosenEmoji: $chosenEmoji, emojiSelected: $emojiSelected, blur: $blur, disableScroll: $disableScroll, reactionViewModel: reactionViewModel, emojiCatalogue: emojiCatalogue, showEmojiLibrary: $showEmojiLibrary, showPicker: $showPicker)
                         
-                        PostDropDownView()
+                        PostDropDownView(trackID: post.songID ?? "", spotifyAPI: spotifyAPI, showPicker: $showPicker, longPress: $longPress, blur: $blur, disableScroll: $disableScroll)
                         
                     }
                     //.frame(maxWidth: 200, maxHeight: 300, alignment: .top)

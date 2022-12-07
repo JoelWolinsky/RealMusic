@@ -21,7 +21,7 @@ struct EmojiLibraryView: View {
     @Binding var longPress: Int
     @Binding var chosenEmoji: Emoji
     @Binding var emojiSelected: Bool
-    @StateObject var blurModel: BlurModel
+    @Binding var blur: Int
     @Binding var disableScroll: Int
     let postUID: String
     @Binding var showPicker: Bool
@@ -52,7 +52,7 @@ struct EmojiLibraryView: View {
                                         print("upload \(emoji.description)")
                                         emojiReactionModel.uploadReaction(postUID: postUID, emoji: emoji)
                                         longPress = 0
-                                        blurModel.blur = 0
+                                        blur = 0
                                         disableScroll = 1000
                                         showPicker = false
                                         let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)

@@ -191,7 +191,7 @@ class SpotifyAPI: ObservableObject {
     }
     
     // Get current playing song
-    func getCurrentPlaying(completion: @escaping (Result<[SpotifySong], Error>) -> Void) {
+    func getCurrentPlaying(completion: @escaping (Result<[SpotifySong], NetworkError>) -> Void) {
         print("get current playing song")
         let url = URL(string: "https://api.spotify.com/v1/me/player/currently-playing")!
         var request = URLRequest(url: url)
@@ -217,17 +217,17 @@ class SpotifyAPI: ObservableObject {
             var post: Post
             if let data = data,
                let results = try? JSONDecoder().decode(CurrentPlay.self, from: data) {
-                print("done")
+                print("done get song")
                 print(results)
             
                 let song = SpotifySong(songID: results.item.id ,title: results.item.name, artist: results.item.artists[0].name, uid: "xyz", cover: results.item.album.images[0].url, preview_url: results.item.preview_url)
-            
+                
                 completion(.success([song]))
                 //post = Post(songID: results.tracks.items[0].id , uid: "xyz", cover: results.tracks.items[0].album.images[0].url)
                 //return post
             } else {
                 print("nothing playing")
-                completion(.success([]))
+                completion(.failure(.badURL))
             }
             //completion(.failure())
             
@@ -235,6 +235,159 @@ class SpotifyAPI: ObservableObject {
         .resume()
     }
     
+    func addToLibrary(trackID: String) {
+        print("123")
+        let url = URL(string: "https://api.spotify.com/v1/me/tracks?ids=" + trackID)!
+        var request = URLRequest(url: url)
+        request.httpMethod = "PUT"
+        let requestHeader:  [String : String] = [
+            "Authorization" : "Bearer \(token)",
+            "Content-Type" : "application/json"
+        ]
+        request.allHTTPHeaderFields = requestHeader
+        print("\(url)")
+        
+        URLSession.shared.dataTask(with: request) { (responseData, response, error) in
+            if let error = error {
+                print("Error making PUT request: \(error.localizedDescription)")
+                return
+            }
+            
+            if let responseCode = (response as? HTTPURLResponse)?.statusCode, let responseData = responseData {
+                guard responseCode == 200 else {
+                    print("Invalid response code: \(responseCode)")
+                    print(response)
+                    return
+                }
+                
+                if let responseJSONData = try? JSONSerialization.jsonObject(with: responseData, options: .allowFragments) {
+                    print("Response JSON data = \(responseJSONData)")
+                }
+            }
+        }.resume()
+    }
+    
+    func addToQueue(trackID: String) {
+        print("123")
+        print(trackID)
+        let url = URL(string: "https://api.spotify.com/v1/me/player/queue?uri=spotify%3Atrack%3A" + trackID)!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        let requestHeader:  [String : String] = [
+            "Authorization" : "Bearer \(token)",
+            "Content-Type" : "application/json"
+        ]
+        print("\(token)")
+        request.allHTTPHeaderFields = requestHeader
+        print("\(url)")
+        
+        URLSession.shared.dataTask(with: request) { (responseData, response, error) in
+            if let error = error {
+                print("Error making PUT request: \(error.localizedDescription)")
+                return
+            }
+            
+            if let responseCode = (response as? HTTPURLResponse)?.statusCode, let responseData = responseData {
+                guard responseCode == 200 else {
+                    print("Invalid response code: \(responseCode)")
+                    print(response)
+                    return
+                }
+                
+                if let responseJSONData = try? JSONSerialization.jsonObject(with: responseData, options: .allowFragments) {
+                    print("Response JSON data = \(responseJSONData)")
+                }
+            }
+        }.resume()
+    }
+    
+    func createPlaylist() {
+        print("123")
+        let url = URL(string: "https://api.spotify.com/v1/users/21lb3onaazabyh7d7pka5pwqi/playlists")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        let requestHeader:  [String : String] = [
+            "Authorization" : "Bearer \(token)",
+            "Content-Type" : "application/json"
+        ]
+        print("\(token)")
+        request.allHTTPHeaderFields = requestHeader
+        
+        let json: [String : Any] = [
+            "name": "RealMusic",
+            "description": "Here you can find all your favourite songs from RealMusic",
+            "public": false
+          ]
+        
+        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+
+        request.httpBody = jsonData
+        
+        print("\(url)")
+        
+        URLSession.shared.dataTask(with: request) { (responseData, response, error) in
+            if let error = error {
+                print("Error making PUT request: \(error.localizedDescription)")
+                return
+            }
+            
+            if let responseCode = (response as? HTTPURLResponse)?.statusCode, let responseData = responseData {
+                guard responseCode == 200 else {
+                    print("Invalid response code: \(responseCode)")
+                    print(response)
+                    return
+                }
+                
+                if let responseJSONData = try? JSONSerialization.jsonObject(with: responseData, options: .allowFragments) {
+                    print("Response JSON data = \(responseJSONData)")
+                }
+            }
+        }.resume()
+    }
+    
+    func getPlaylists() {
+        print("123")
+        let url = URL(string: "https://api.spotify.com/v1/users/21lb3onaazabyh7d7pka5pwqi/playlists?limit=10&offset=0")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        let requestHeader:  [String : String] = [
+            "Authorization" : "Bearer \(token)",
+            "Content-Type" : "application/json"
+        ]
+        print("\(token)")
+        request.allHTTPHeaderFields = requestHeader
+        
+        let json: [String : Any] = [
+            "name": "RealMusic",
+            "description": "Here you can find all your favourite songs from RealMusic",
+            "public": false
+          ]
+        
+        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+
+        request.httpBody = jsonData
+        
+        print("\(url)")
+        
+        URLSession.shared.dataTask(with: request) { (responseData, response, error) in
+            if let error = error {
+                print("Error making PUT request: \(error.localizedDescription)")
+                return
+            }
+            
+            if let responseCode = (response as? HTTPURLResponse)?.statusCode, let responseData = responseData {
+                guard responseCode == 200 else {
+                    print("Invalid response code: \(responseCode)")
+                    print(response)
+                    return
+                }
+                
+                if let responseJSONData = try? JSONSerialization.jsonObject(with: responseData, options: .allowFragments) {
+                    print("Response JSON data = \(responseJSONData)")
+                }
+            }
+        }.resume()
+    }
     
 }
 
@@ -273,4 +426,8 @@ struct Album2: Codable {
 struct AlbumImage: Codable {
     let height: Int
     let url: String
+}
+
+enum NetworkError: Error {
+    case badURL
 }

@@ -11,6 +11,15 @@ import SwiftUI
 struct PostDropDownView : View {
     
     @State private var animatePicker2 = false
+    
+    var trackID: String
+    
+    @StateObject var spotifyAPI: SpotifyAPI
+    
+    @Binding var showPicker: Bool
+    @Binding var longPress: Int
+    @Binding var blur: Int
+    @Binding var disableScroll: Int
 
     
     var body: some View {
@@ -19,6 +28,15 @@ struct PostDropDownView : View {
                 VStack(spacing: 0) {
                     Button(action: {
                         print("add to library")
+                        spotifyAPI.addToLibrary(trackID: trackID)
+                        
+                        withAnimation(.easeIn(duration: 0.2)) {
+                            showPicker = false
+                            longPress = 0
+                            blur = 0
+                            disableScroll = 1000
+                        }
+
                     }, label: {
                         HStack {
                             Text("Add to library")
@@ -35,7 +53,16 @@ struct PostDropDownView : View {
                     .buttonStyle(DropDownButton())
                     
                     Button(action: {
-                        print("add to library")
+                        print("add to queue")
+                        spotifyAPI.addToQueue(trackID: trackID)
+                        
+                        withAnimation(.easeIn(duration: 0.2)) {
+                            showPicker = false
+                            longPress = 0
+                            blur = 0
+                            disableScroll = 1000
+                        }
+
                     }, label: {
                         HStack {
                             Text("Add to queue")
@@ -51,7 +78,39 @@ struct PostDropDownView : View {
                     .buttonStyle(DropDownButton())
                     
                     Button(action: {
-                        print("add to library")
+                        print("add to playlist")
+                        spotifyAPI.addToPlaylist()
+                        
+                        withAnimation(.easeIn(duration: 0.2)) {
+                            showPicker = false
+                            longPress = 0
+                            blur = 0
+                            disableScroll = 1000
+                        }
+
+                    }, label: {
+                        HStack {
+                            Text("Add to playlist")
+                                .foregroundColor(.white)
+                            Spacer ()
+                            Image(systemName: "text.badge.plus")
+                                .foregroundColor(.white)
+                                .font(.system(size: animatePicker2 ? 20 : 0))
+                        }
+                        .frame(maxHeight: animatePicker2 ? 10 : 0, alignment: .center)
+                        .padding(20)
+                    })
+                    .buttonStyle(DropDownButton())
+                    
+                    Button(action: {
+                        print("share")
+                        
+                        withAnimation(.easeIn(duration: 0.2)) {
+                            showPicker = false
+                            longPress = 0
+                            blur = 0
+                            disableScroll = 1000
+                        }
                     }, label: {
                         HStack {
                             Text("Share")
@@ -70,7 +129,6 @@ struct PostDropDownView : View {
                     
                 }
                 
-                
                 VStack {
                     Spacer()
                     Rectangle()
@@ -81,9 +139,14 @@ struct PostDropDownView : View {
                         .foregroundColor(Color("Grey 1"))
                         .frame(maxWidth: .infinity, maxHeight: 1)
                     Spacer()
+                    Rectangle()
+                        .foregroundColor(Color("Grey 1"))
+                        .frame(maxWidth: .infinity, maxHeight: 1)
+                    Spacer()
+                    
                 }
             }
-            .frame(maxWidth: animatePicker2 ? 250 : 0, maxHeight: animatePicker2 ? 150 : 0)
+            .frame(maxWidth: animatePicker2 ? 250 : 0, maxHeight: animatePicker2 ? 200 : 0)
             //.background(Color("Grey 2"))
             .background(.regularMaterial)
             .cornerRadius(15)
@@ -97,12 +160,12 @@ struct PostDropDownView : View {
 
     }
     
-    struct PostDropDownView_Previews: PreviewProvider {
-        static var previews: some View {
-            PostDropDownView()
-            
-        }
-    }
+//    struct PostDropDownView_Previews: PreviewProvider {
+//        static var previews: some View {
+//            PostDropDownView(spotifyAPI: SpotifyAPI())
+//            
+//        }
+//    }
 }
 
 
@@ -111,6 +174,7 @@ struct DropDownButton: ButtonStyle {
         configuration.label
             .background(configuration.isPressed ? Color("Grey 1") : .clear)
             
-            
+
+
     }
 }
