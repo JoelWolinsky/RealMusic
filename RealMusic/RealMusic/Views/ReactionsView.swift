@@ -13,7 +13,7 @@ struct ReactionsView: View {
     @StateObject var reactionViewModel: ReactionViewModel
     
     
-    var postUID: String
+    var post: Post
     
     //@ObservedObject var emojiReactionModel = EmojiReactionModel()
     
@@ -22,9 +22,18 @@ struct ReactionsView: View {
     var body: some View {
         HStack {
             ForEach(reactionViewModel.distinctReactions) { emoji in
-                    
-                Text(emoji.emoji)
-                    .font(.system(size: emojiSize))
+                if emoji.docID == UserDefaults.standard.value(forKey: "uid") as! String {
+                    Text(emoji.emoji)
+                        .font(.system(size: emojiSize))
+                } else {
+                    Text(emoji.emoji)
+                        .font(.system(size: 20))
+                        .onAppear(perform:{
+                            print("user uid \(emoji.docID)")
+                            print("user uid saved \(UserDefaults.standard.value(forKey: "uid") as! String)")
+
+                        })
+                }
 //                    .onAppear {
 ////                        cancellable = reactionViewModel.objectWillChange.sink{ _ in
 ////                            print("object changed")
@@ -76,11 +85,11 @@ struct ReactionsView: View {
     }
         
     
-    struct EmojiView_Previews: PreviewProvider {
-        static var previews: some View {
-            ReactionsView(reactionViewModel: ReactionViewModel(id: ""), postUID: "")
-            
-        }
-    }
+//    struct EmojiView_Previews: PreviewProvider {
+//        static var previews: some View {
+//            //ReactionsView(reactionViewModel: ReactionViewModel(id: ""), post: "")
+//            
+//        }
+//    }
 }
 

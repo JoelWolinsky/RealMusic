@@ -18,12 +18,16 @@ class ReactionViewModel: ObservableObject {
 //                }
 //    }
     var distinctReactions = [Emoji]() {
-        willSet {
-            if !distinctReactions.isEmpty {
-                print("object will change d \(distinctReactions)")
-                objectWillChange.send()
-            }
-                }
+//        willSet {
+//            if !distinctReactions.isEmpty {
+//                print("object will change d \(distinctReactions)")
+//                objectWillChange.send()
+//            }
+//        }
+        didSet {
+            objectWillChange.send()
+
+        }
     }
     
     @ObservedObject var feedViewModel = FeedViewModel()
@@ -37,7 +41,7 @@ class ReactionViewModel: ObservableObject {
     }
     
     func fetchReactions(id: String) {
-        self.reactions = []
+        //self.reactions = []
 //self.distinctReactions = []
         print("fetching reactions ")
         feedViewModel.fetchReactions(postUID: id) { result in

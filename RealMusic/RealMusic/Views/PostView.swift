@@ -54,7 +54,7 @@ struct PostView: View {
                 AlbumView(album: Album(title: post.title ?? "placeholder",artist: post.artist ?? "placeholder" ,cover: post.cover ?? "KSG Cover", preview: post.preview ?? ""), reactionViewModel: reactionViewModel, longPress: $longPress, chosenPostID: $chosenPostID, blurModel: blurModel, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue, showPicker: $showPicker, postID: post.id ?? "" , emojiPickerOpacity: $emojiPickerOpacity)
                 //.padding(.bottom, 50)
                 
-                ReactionsView(reactionViewModel: reactionViewModel, postUID: post.id ?? "")
+                ReactionsView(reactionViewModel: reactionViewModel, post: post)
                     .padding(.leading, 10)
                     .offset(y: -20)
                     .blur(radius:CGFloat(blurModel.blur))
