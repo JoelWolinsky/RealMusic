@@ -39,10 +39,6 @@ struct AlbumView: View {
     
     @Binding var emojiPickerOpacity: Int
     
-    
-
-    
-    
     var body: some View {
         ZStack {
             VStack {

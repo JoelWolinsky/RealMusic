@@ -12,19 +12,38 @@ struct ReactionsView: View {
     
     @StateObject var reactionViewModel: ReactionViewModel
     
+    
     var postUID: String
     
     //@ObservedObject var emojiReactionModel = EmojiReactionModel()
     
+    @State var emojiSize = 20.0
+    
     var body: some View {
         HStack {
             ForEach(reactionViewModel.distinctReactions) { emoji in
+                    
                 Text(emoji.emoji)
+                    .font(.system(size: emojiSize))
+//                    .onAppear {
+////                        cancellable = reactionViewModel.objectWillChange.sink{ _ in
+////                            print("object changed")
+////                        }
+//                        let baseAnimation = Animation.easeInOut(duration: 0.4)
+//                        let repeated = baseAnimation.repeatCount(3, autoreverses: true)
+//
+//                        withAnimation(repeated) {
+//                            emojiSize = 20.0
+//                        }
+//                    }//
+                
             }
+            
 //            .padding(10)
             if reactionViewModel.distinctReactions.count != reactionViewModel.reactions.count {
-                Text(String(reactionViewModel.reactions.count))
-                    .foregroundColor(.white)
+                    Text(String(reactionViewModel.reactions.count))
+                        .foregroundColor(.white)
+                
             }
 
         }
@@ -38,7 +57,19 @@ struct ReactionsView: View {
                 )
         .cornerRadius(20)
         .frame(maxWidth: .infinity, alignment: .leading)
-
+        .onReceive(reactionViewModel.objectWillChange, perform: {
+            if !reactionViewModel.reactions.isEmpty {
+                print("seen object change \(reactionViewModel.reactions)")
+                emojiSize = 2.0
+                
+                //            let baseAnimation = Animation.easeInOut(duration: 0.6)
+                //            let repeated = baseAnimation.repeatCount(2, autoreverses: true)
+                withAnimation(.spring(response: 0.45, dampingFraction: 1, blendDuration: 1)) {
+                    emojiSize = 20.0
+                }
+            }
+        })
+        
 
 
         

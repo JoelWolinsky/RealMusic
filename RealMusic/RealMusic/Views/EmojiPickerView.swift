@@ -41,18 +41,23 @@ struct EmojiPickerView: View {
             
             ForEach(emojiCatalogue.latest) { emoji in
                 Button (action: {
-                    print("upload \(emoji.description) for \(postUID)")
-                    emojiReactionModel.uploadReaction(postUID: postUID, emoji: emoji)
-                    longPress = 0
-                    blurModel.blur = 0
-                    disableScroll = 1000
-                    showPicker = false
+                   // withAnimation(.easeIn(duration: 0.2)) {
+                        
+                        print("upload \(emoji.description) for \(postUID)")
+                        
+                        emojiReactionModel.uploadReaction(postUID: postUID, emoji: emoji)
                     
-                    let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
-                    impactHeavy.impactOccurred()
-                    
-                    reactionViewModel.addLocalReaction(reaction: Emoji(emoji: emoji.emoji, description: emoji.description))
-                    
+                        longPress = 0
+                        blurModel.blur = 0
+                        disableScroll = 1000
+                        
+                        showPicker = false
+                        
+                        let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
+                        impactHeavy.impactOccurred()
+                        
+                        reactionViewModel.addLocalReaction(reaction: Emoji(emoji: emoji.emoji, description: emoji.description))
+                   // }
                 }, label: {
                     Text(emoji.emoji)
                         .font(.system(size: animatePicker ? 27 : 0))

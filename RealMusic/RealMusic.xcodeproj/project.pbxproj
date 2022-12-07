@@ -213,22 +213,22 @@
 		C907BF7928F9A6DC002197F1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				C9597E5629216BAB0020395E /* AddFriendsView.swift */,
+				C9D458FA28F8154300547D30 /* AlbumView.swift */,
+				C939D6DA292AA8EF00C255F2 /* CompareAnalyticsView.swift */,
 				C95EC51B290A91E600550F06 /* ContentView.swift */,
-				C9350111293E723C00EAA4BC /* PostDropDownView.swift */,
+				C9597E63292514280020395E /* CurrentlyPlayingView.swift */,
+				C9350108293672ED00EAA4BC /* EmojiLibrayView.swift */,
+				C9350113293F598E00EAA4BC /* EmojiPickerCoverView.swift */,
 				C939D6DE292E84C100C255F2 /* EmojiPickerView.swift */,
 				C947B9ED28EAECDD00B97EB1 /* HomeView.swift */,
-				C939D6E6292E945E00C255F2 /* ReactionsView.swift */,
+				C9350111293E723C00EAA4BC /* PostDropDownView.swift */,
 				C93D7EA028F3166100FEF3D6 /* PostView.swift */,
-				C9350113293F598E00EAA4BC /* EmojiPickerCoverView.swift */,
-				C907BF84290195CF002197F1 /* SearchView.swift */,
-				C907BF8829020749002197F1 /* SearchResultView.swift */,
-				C9D458FA28F8154300547D30 /* AlbumView.swift */,
-				C9597E63292514280020395E /* CurrentlyPlayingView.swift */,
-				C9DBD628290E885600ACD644 /* SignInView.swift */,
-				C9597E5629216BAB0020395E /* AddFriendsView.swift */,
 				C939D6D6292A4D0800C255F2 /* ProfileView.swift */,
-				C939D6DA292AA8EF00C255F2 /* CompareAnalyticsView.swift */,
-				C9350108293672ED00EAA4BC /* EmojiLibrayView.swift */,
+				C939D6E6292E945E00C255F2 /* ReactionsView.swift */,
+				C907BF8829020749002197F1 /* SearchResultView.swift */,
+				C907BF84290195CF002197F1 /* SearchView.swift */,
+				C9DBD628290E885600ACD644 /* SignInView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -253,24 +253,24 @@
 		C93D7E9F28F3163A00FEF3D6 /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				C9DBD62C290FDAD200ACD644 /* WebView.swift */,
-				C935010F293CD26200EAA4BC /* CacheAsyncImage.swift */,
-				C939D6EC29351DA800C255F2 /* BlurModel.swift */,
 				C939D6D8292A8F2200C255F2 /* AnalyticsModel.swift */,
-				C9848D6B28EC3A79003D4FFA /* PostViewModel.swift */,
-				C9848D7328F2E2DF003D4FFA /* UserViewModel.swift */,
-				C9597E6B29269BE30020395E /* PhotoPicker.swift */,
-				C9848D7128F2DE95003D4FFA /* FeedViewModel.swift */,
-				C907BF7C28FFE8A5002197F1 /* SpotifyAPI.swift */,
-				C9A0A5FD29128A1700A6FD97 /* SignInViewModel.swift */,
-				C907BF7A28F9AAC3002197F1 /* CreatePostViewModel.swift */,
 				C9DBD62A290F2B5900ACD644 /* APIConstants.swift */,
-				C9597E5829225EEF0020395E /* FriendsViewModel.swift */,
-				C939D6E2292E864900C255F2 /* EmojiCatalogue.swift */,
-				C939D6E4292E89BF00C255F2 /* EmojiReactionModel.swift */,
-				C939D6EA2934C61200C255F2 /* ReactionViewModel.swift */,
+				C939D6EC29351DA800C255F2 /* BlurModel.swift */,
+				C935010F293CD26200EAA4BC /* CacheAsyncImage.swift */,
+				C907BF7A28F9AAC3002197F1 /* CreatePostViewModel.swift */,
 				C939D6EE293524D700C255F2 /* DisableScrolling.swift */,
+				C939D6E2292E864900C255F2 /* EmojiCatalogue.swift */,
 				C939D6F02936487200C255F2 /* EmojiLibrary.json */,
+				C939D6E4292E89BF00C255F2 /* EmojiReactionModel.swift */,
+				C9848D7128F2DE95003D4FFA /* FeedViewModel.swift */,
+				C9597E5829225EEF0020395E /* FriendsViewModel.swift */,
+				C9597E6B29269BE30020395E /* PhotoPicker.swift */,
+				C9848D6B28EC3A79003D4FFA /* PostViewModel.swift */,
+				C939D6EA2934C61200C255F2 /* ReactionViewModel.swift */,
+				C9A0A5FD29128A1700A6FD97 /* SignInViewModel.swift */,
+				C907BF7C28FFE8A5002197F1 /* SpotifyAPI.swift */,
+				C9848D7328F2E2DF003D4FFA /* UserViewModel.swift */,
+				C9DBD62C290FDAD200ACD644 /* WebView.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -300,16 +300,16 @@
 		C947B9EA28EAECDD00B97EB1 /* RealMusic */ = {
 			isa = PBXGroup;
 			children = (
-				C947B9EB28EAECDD00B97EB1 /* RealMusicApp.swift */,
-				C9597E5C2923F8520020395E /* CurrentPlay.json */,
 				C9597E6529254D5F0020395E /* Assets.xcassets */,
-				C907BF7928F9A6DC002197F1 /* Views */,
-				C93D7E9F28F3163A00FEF3D6 /* Service */,
-				C93D7E9D28F3161500FEF3D6 /* Model */,
-				C947B9F128EAECDE00B97EB1 /* RealMusic.entitlements */,
-				C947BA1828EAEECD00B97EB1 /* GoogleService-Info.plist */,
-				C947B9F228EAECDE00B97EB1 /* Preview Content */,
 				C95EC4FA2906CD6000550F06 /* Config.xcconfig */,
+				C9597E5C2923F8520020395E /* CurrentPlay.json */,
+				C947BA1828EAEECD00B97EB1 /* GoogleService-Info.plist */,
+				C907BF7928F9A6DC002197F1 /* Views */,
+				C93D7E9D28F3161500FEF3D6 /* Model */,
+				C947B9F228EAECDE00B97EB1 /* Preview Content */,
+				C947B9F128EAECDE00B97EB1 /* RealMusic.entitlements */,
+				C947B9EB28EAECDD00B97EB1 /* RealMusicApp.swift */,
+				C93D7E9F28F3163A00FEF3D6 /* Service */,
 			);
 			path = RealMusic;
 			sourceTree = "<group>";

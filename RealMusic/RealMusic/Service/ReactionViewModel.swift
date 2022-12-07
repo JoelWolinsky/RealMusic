@@ -10,11 +10,24 @@ import SwiftUI
 
 class ReactionViewModel: ObservableObject {
     
-    @Published var reactions = [Emoji]()
-    @Published var distinctReactions = [Emoji]()
+    var reactions = [Emoji]()
+    //{
+//        willSet {
+//                    print("object will change")
+//                    objectWillChange.send()
+//                }
+//    }
+    var distinctReactions = [Emoji]() {
+        willSet {
+            if !distinctReactions.isEmpty {
+                print("object will change d \(distinctReactions)")
+                objectWillChange.send()
+            }
+                }
+    }
     
     @ObservedObject var feedViewModel = FeedViewModel()
-    
+        
     var id: String
     
     
@@ -24,6 +37,9 @@ class ReactionViewModel: ObservableObject {
     }
     
     func fetchReactions(id: String) {
+        self.reactions = []
+//self.distinctReactions = []
+        print("fetching reactions ")
         feedViewModel.fetchReactions(postUID: id) { result in
             self.reactions = result
             self.calculateDistinctReactions()
@@ -37,7 +53,6 @@ class ReactionViewModel: ObservableObject {
         //self.reactions.append(reaction)
         
         //self.calculateDistinctReactions()
-        
         fetchReactions(id: self.id)
     }
     
@@ -66,3 +81,5 @@ class ReactionViewModel: ObservableObject {
         self.distinctReactions = distinct
     }
 }
+
+
