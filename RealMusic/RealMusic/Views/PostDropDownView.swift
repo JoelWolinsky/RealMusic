@@ -79,7 +79,25 @@ struct PostDropDownView : View {
                     
                     Button(action: {
                         print("add to playlist")
-                        spotifyAPI.addToPlaylist()
+                        //spotifyAPI.addToPlaylist()
+                        spotifyAPI.getUserID() { (userID) in
+                            switch userID {
+                            case .success(let data):
+                                print("user id is \(data)")
+                                spotifyAPI.getPlaylists(userSpotifyID: data, offset: 0) { (result) in
+                                        print("Returned playlist id \(result)")
+                                        spotifyAPI.addToPlaylist(playlistID: result, trackID: trackID)
+                                  
+                                    }
+                            
+                            case .failure(let error):
+                                print("no id found")
+                            }
+                        }
+                        
+                        
+                        
+                        
                         
                         withAnimation(.easeIn(duration: 0.2)) {
                             showPicker = false

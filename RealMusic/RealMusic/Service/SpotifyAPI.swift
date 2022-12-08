@@ -345,9 +345,76 @@ class SpotifyAPI: ObservableObject {
         }.resume()
     }
     
-    func getPlaylists() {
+    func getPlaylists(userSpotifyID: String, offset: Int, completion: @escaping (String) -> ()) {
         print("123")
-        let url = URL(string: "https://api.spotify.com/v1/users/21lb3onaazabyh7d7pka5pwqi/playlists?limit=10&offset=0")!
+        let url = URL(string: "https://api.spotify.com/v1/users/\(userSpotifyID)/playlists?limit=50&offset=\(offset)")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        let requestHeader:  [String : String] = [
+            "Authorization" : "Bearer \(token)",
+            "Content-Type" : "application/json"
+        ]
+        print("\(token)")
+        request.allHTTPHeaderFields = requestHeader
+        
+        print("\(url)")
+        
+        let playlists = URLSession.shared.dataTask(with: request) {data, response, error in
+            
+             if let error = error {
+               print("Error with fetching films: \(error)")
+               return
+             }
+             
+             guard let httpResponse = response as? HTTPURLResponse,
+                   (200...299).contains(httpResponse.statusCode) else {
+                 print("Error with the response, unexpected status code: \(response)")
+                 return
+             }
+            var playlists: Playlists
+            if let data = data,
+               let results = try? JSONDecoder().decode(Playlists.self, from: data) {
+                print("done get playlists")
+                print(results)
+                var realmusicID = ""
+                
+                if results.items.isEmpty {
+                    completion("no playlist found")
+                }
+                for playlist in results.items {
+                    if playlist.name == "RealMusic" {
+                        realmusicID = playlist.id
+                    }
+                }
+                
+                if realmusicID == "" {
+                    print("recursion")
+                    self.getPlaylists(userSpotifyID: userSpotifyID, offset: offset + 50) { (playlistID) in
+                      completion(playlistID)
+                    }
+                } else {
+                    print("found playlist and returning")
+                    completion(realmusicID)
+
+                }
+            
+//                let song = SpotifySong(songID: results.item.id ,title: results.item.name, artist: results.item.artists[0].name, uid: "xyz", cover: results.item.album.images[0].url, preview_url: results.item.preview_url)
+                
+                //post = Post(songID: results.tracks.items[0].id , uid: "xyz", cover: results.tracks.items[0].album.images[0].url)
+                //return post
+            } else {
+                print("nothing playing")
+                completion("")
+            }
+            //completion(.failure())
+            
+        }
+        .resume()
+    }
+    
+    func addToPlaylist(playlistID: String, trackID: String) {
+        print("123")
+        let url = URL(string: "https://api.spotify.com/v1/playlists/\(playlistID)/tracks?position=0&uris=spotify%3Atrack%3A\(trackID)")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         let requestHeader:  [String : String] = [
@@ -357,19 +424,10 @@ class SpotifyAPI: ObservableObject {
         print("\(token)")
         request.allHTTPHeaderFields = requestHeader
         
-        let json: [String : Any] = [
-            "name": "RealMusic",
-            "description": "Here you can find all your favourite songs from RealMusic",
-            "public": false
-          ]
-        
-        let jsonData = try? JSONSerialization.data(withJSONObject: json)
-
-        request.httpBody = jsonData
-        
         print("\(url)")
         
         URLSession.shared.dataTask(with: request) { (responseData, response, error) in
+            print("Adding song to playlist")
             if let error = error {
                 print("Error making PUT request: \(error.localizedDescription)")
                 return
@@ -388,6 +446,53 @@ class SpotifyAPI: ObservableObject {
             }
         }.resume()
     }
+    
+    
+    func getUserID(completion: @escaping (Result<String, NetworkError>) -> Void) {
+        print("123")
+        let url = URL(string: "https://api.spotify.com/v1/me")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        let requestHeader:  [String : String] = [
+            "Authorization" : "Bearer \(token)",
+            "Content-Type" : "application/json"
+        ]
+        print("\(token)")
+        request.allHTTPHeaderFields = requestHeader
+        
+        print("\(url)")
+        
+        let playlists = URLSession.shared.dataTask(with: request) {data, response, error in
+            
+             if let error = error {
+               print("Error with fetching films: \(error)")
+               return
+             }
+             
+             guard let httpResponse = response as? HTTPURLResponse,
+                   (200...299).contains(httpResponse.statusCode) else {
+                 print("Error with the response, unexpected status code: \(response)")
+                 return
+             }
+            if let data = data,
+               let results = try? JSONDecoder().decode(SpotifyUser.self, from: data) {
+                print("done get user id")
+                print(results)
+                
+                completion(.success(results.id))
+                //post = Post(songID: results.tracks.items[0].id , uid: "xyz", cover: results.tracks.items[0].album.images[0].url)
+                //return post
+            } else {
+                print("failed to code id")
+                completion(.failure(.badURL))
+            }
+            //completion(.failure())
+            
+        }
+        .resume()
+    }
+    
+    
     
 }
 
@@ -430,4 +535,19 @@ struct AlbumImage: Codable {
 
 enum NetworkError: Error {
     case badURL
+}
+
+struct Playlists: Codable {
+    let items: [Playlist]
+}
+
+struct Playlist: Codable {
+    let id: String
+    let name: String
+    
+}
+
+struct SpotifyUser: Codable {
+    let display_name: String
+    let id: String
 }
