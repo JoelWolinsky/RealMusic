@@ -95,7 +95,7 @@ struct CurrentlyPlayingView: View {
                 .padding(.top, -25)
                 .font(.system(size: 17))
                 .onTapGesture {
-                    postButtonColour = Color("Grey")
+                    postButtonColour = Color(.clear)
                     //let transition = .transition(.slide)
                     postButtonText = "Posted"
                     //currentSongBackground = Color(.green)

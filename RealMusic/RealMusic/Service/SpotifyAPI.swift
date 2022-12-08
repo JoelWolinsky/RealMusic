@@ -235,6 +235,7 @@ class SpotifyAPI: ObservableObject {
         .resume()
     }
     
+    // Adds a song the the users Spotify library (i.e. likes the song for them on Spotify)
     func addToLibrary(trackID: String) {
         print("123")
         let url = URL(string: "https://api.spotify.com/v1/me/tracks?ids=" + trackID)!
@@ -267,6 +268,7 @@ class SpotifyAPI: ObservableObject {
         }.resume()
     }
     
+    // Adds a song the users Spotify queue
     func addToQueue(trackID: String) {
         print("123")
         print(trackID)
@@ -301,6 +303,7 @@ class SpotifyAPI: ObservableObject {
         }.resume()
     }
     
+    // If the user doesn't already have a 'RealMusic' plalist, it will create one for them
     func createPlaylist() {
         print("123")
         let url = URL(string: "https://api.spotify.com/v1/users/21lb3onaazabyh7d7pka5pwqi/playlists")!
@@ -345,6 +348,7 @@ class SpotifyAPI: ObservableObject {
         }.resume()
     }
     
+    // Fetches the playlists in the users library until it finds 'RealMusic' or reaches the end of their library
     func getPlaylists(userSpotifyID: String, offset: Int, completion: @escaping (String) -> ()) {
         print("123")
         let url = URL(string: "https://api.spotify.com/v1/users/\(userSpotifyID)/playlists?limit=50&offset=\(offset)")!
@@ -381,6 +385,7 @@ class SpotifyAPI: ObservableObject {
                 if results.items.isEmpty {
                     completion("no playlist found")
                 }
+                
                 for playlist in results.items {
                     if playlist.name == "RealMusic" {
                         realmusicID = playlist.id
@@ -395,19 +400,12 @@ class SpotifyAPI: ObservableObject {
                 } else {
                     print("found playlist and returning")
                     completion(realmusicID)
-
                 }
-            
-//                let song = SpotifySong(songID: results.item.id ,title: results.item.name, artist: results.item.artists[0].name, uid: "xyz", cover: results.item.album.images[0].url, preview_url: results.item.preview_url)
                 
-                //post = Post(songID: results.tracks.items[0].id , uid: "xyz", cover: results.tracks.items[0].album.images[0].url)
-                //return post
             } else {
                 print("nothing playing")
                 completion("")
             }
-            //completion(.failure())
-            
         }
         .resume()
     }
