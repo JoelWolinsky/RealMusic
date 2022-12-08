@@ -16,6 +16,9 @@ struct SearchResultView: View {
     @ObservedObject var spotifyAPI = SpotifyAPI()
     
     var createPostModel: CreatePostViewModel
+    
+    @Binding var searchToggle: Bool
+
 
     
     var body: some View {
@@ -68,6 +71,9 @@ struct SearchResultView: View {
                 .onTapGesture {
                     print("tapped post")
                     print("song url: \(song.preview_url)")
+                    withAnimation() {
+                        searchToggle.toggle()
+                    }
                     createPostModel.createPost(
                         post: Post(songID: song.songID,
                                    uid: UserDefaults.standard.value(forKey: "uid") as! String,
@@ -90,11 +96,11 @@ struct SearchResultView: View {
         
     }
     
-    struct SearchResultsView_Previews: PreviewProvider {
-        static var previews: some View {
-            SearchResultView(song: SpotifySong(songID: "5GHIsNIT9QH2u9XYuA2xp8", title: "", artist: "",uid: "Joel Wolinsky", cover:"", preview_url: ""), createPostModel: CreatePostViewModel(uid: "cY51kdkZdHhq6r3lTAd2"))
-        }
-    }
+//    struct SearchResultsView_Previews: PreviewProvider {
+//        static var previews: some View {
+//            SearchResultView(song: SpotifySong(songID: "5GHIsNIT9QH2u9XYuA2xp8", title: "", artist: "",uid: "Joel Wolinsky", cover:"", preview_url: ""), createPostModel: CreatePostViewModel(uid: "cY51kdkZdHhq6r3lTAd2"))
+//        }
+//    }
     
 }
 

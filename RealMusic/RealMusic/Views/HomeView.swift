@@ -55,71 +55,91 @@ struct HomeView: View {
 
 
     var body: some View {
-        
+        ScrollViewReader { (proxy: ScrollViewProxy) in
+            
             ZStack {
                 //var posts = [Post(title: "This is a test", userID: "This userID test", username: "Woli")]
                 NavigationView {
                     ZStack {
                         
-                        ScrollViewReader { (proxy: ScrollViewProxy) in
-                            ScrollView {
-                                VStack{
-                                    Text("Currently Listening To")
+                        ScrollView {
+                            VStack{
+                                HStack {
+                                    Text("Currently Listening To:")
                                         .foregroundColor(.white)
-                                        .offset(y: 40)
                                         .blur(radius:CGFloat(blur))
-
-                                    VStack {
-                                        
-                                        CurrentlyPlayingView(song: currentlyPlaying, createPostModel: createPostModel)
-                                    }
-                                    .frame(width: 350, height: 100)
-                                    .padding(.top, 40)
-                                    .blur(radius:CGFloat(blur))
-
+                                    Spacer()
                                     
-                                    ForEach(feedViewModel.posts) { post in
-                                        VStack {
-                                            PostView(post: post, reactionViewModel: ReactionViewModel(id: post.id ?? ""), longPress: $longPress, chosenPostID: $chosenPostID, blur: $blur, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue, showPicker: showPicker, userViewModel: userViewModel)
-                                            
-                                            
-                                            
+                                    HStack {
+                                        Image(systemName: "magnifyingglass")
+                                        Text("Search")
+                                    }
+                                    .padding(10)
+                                    .foregroundColor(.white)
+                                    .background(Color("Grey 2"))
+                                    .cornerRadius(10)
+                                    .onTapGesture {
+                                        print("search")
+                                        withAnimation() {
+                                            searchToggle.toggle()
                                         }
-                                        .id(post.id)
+                                        
                                     }
+                                    
                                 }
-                                .padding()
-                            }
-                            .simultaneousGesture(DragGesture(minimumDistance: CGFloat(disableScroll)))
-                            //.scrollDisabled(true)
-                            //                        /.disableScrolling(disabled: disableScroll)
-                            .refreshable {
-                                print("Refreshing")
-                                feedViewModel.fetchPosts()
-                                //feedViewModel.fetchReactions()
-                                
-                                
-                                getRequest.getCurrentPlaying() { (result) in
-                                    switch result {
-                                    case .success(let data) :
-                                        print("success playing now \(data)")
-                                        let song = data[0]
-                                        currentlyPlaying = SpotifySong(id: song.id, songID: song.songID, title: song.title, artist: song.artist, uid: song.uid, cover: song.cover, preview_url: song.preview_url)
-                                    case .failure(let error) :
-                                        print("fail recent")
-                                       // print(error)
-                                    }
+                                .offset(y: 40)
+                                VStack {
+                                    
+                                    CurrentlyPlayingView(song: currentlyPlaying, createPostModel: createPostModel)
                                 }
+                                .frame(width: 350, height: 100)
+                                .padding(.top, 40)
+                                .padding(.bottom, 20)
+                                .blur(radius:CGFloat(blur))
                                 
-                            }
-                            .onChange(of: chosenPostID) { target in
-                                    withAnimation {
-                                        proxy.scrollTo(chosenPostID, anchor: .center)
-                                        chosenPostID = ""
+                                
+                                ForEach(feedViewModel.posts) { post in
+                                    VStack {
+                                        PostView(post: post, reactionViewModel: ReactionViewModel(id: post.id ?? ""), longPress: $longPress, chosenPostID: $chosenPostID, blur: $blur, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue, showPicker: showPicker, userViewModel: userViewModel)
+                                        
+                                        
+                                        
                                     }
-                                
+                                    .id(post.id)
+                                }
                             }
+                            .padding()
                         }
+                        .simultaneousGesture(DragGesture(minimumDistance: CGFloat(disableScroll)))
+                        //.scrollDisabled(true)
+                        //                        /.disableScrolling(disabled: disableScroll)
+                        .refreshable {
+                            print("Refreshing")
+                            feedViewModel.fetchPosts()
+                            //feedViewModel.fetchReactions()
+                            
+                            
+                            getRequest.getCurrentPlaying() { (result) in
+                                switch result {
+                                case .success(let data) :
+                                    print("success playing now \(data)")
+                                    let song = data[0]
+                                    currentlyPlaying = SpotifySong(id: song.id, songID: song.songID, title: song.title, artist: song.artist, uid: song.uid, cover: song.cover, preview_url: song.preview_url)
+                                case .failure(let error) :
+                                    print("fail recent")
+                                    // print(error)
+                                }
+                            }
+                            
+                        }
+                        .onChange(of: chosenPostID) { target in
+                            withAnimation {
+                                proxy.scrollTo(chosenPostID, anchor: .center)
+                                chosenPostID = ""
+                            }
+                            
+                        }
+                        
                         
                         
                         VStack {
@@ -156,8 +176,7 @@ struct HomeView: View {
                             
                             Button {
                                 withAnimation {
-                                    searchToggle.toggle()
-                                    print("friendsToggle.showView \(friendsToggle)")
+                                    proxy.scrollTo(feedViewModel.posts[0].id, anchor: .bottom)
                                 }
                             } label: {
                                 Text("RealMusic")
@@ -216,7 +235,7 @@ struct HomeView: View {
                                 currentlyPlaying = SpotifySong(id: song.id, songID: song.songID, title: song.title, artist: song.artist, uid: song.uid, cover: song.cover, preview_url: song.preview_url)
                             case .failure(let error) :
                                 print("fail recent")
-                               // print(error)
+                                // print(error)
                             }
                         }
                         
@@ -254,11 +273,29 @@ struct HomeView: View {
                 }
                 
             }
+            .onChange(of: searchToggle, perform: { value in
+                print("Refreshing")
+                feedViewModel.fetchPosts()
+                //feedViewModel.fetchReactions()
+                
+                
+                getRequest.getCurrentPlaying() { (result) in
+                    switch result {
+                    case .success(let data) :
+                        print("success playing now \(data)")
+                        let song = data[0]
+                        currentlyPlaying = SpotifySong(id: song.id, songID: song.songID, title: song.title, artist: song.artist, uid: song.uid, cover: song.cover, preview_url: song.preview_url)
+                    case .failure(let error) :
+                        print("fail recent")
+                        // print(error)
+                    }
+                }
+            })
             
             .background(.black)
             .environment(\.colorScheme, .dark)
-           
             
+        }
 //       
     }
     

@@ -75,7 +75,7 @@ struct SearchView: View {
                 ScrollView {
                     ForEach(searchResults) { song in
                         //Text("searchview \(song.songID)")
-                        SearchResultView(song: song, createPostModel: createPostModel)
+                        SearchResultView(song: song, createPostModel: createPostModel, searchToggle: $searchToggle)
                         
                         
                         //Text(song.title ?? "placeholder")
