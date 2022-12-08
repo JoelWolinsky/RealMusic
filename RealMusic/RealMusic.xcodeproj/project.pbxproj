@@ -17,7 +17,6 @@
 		C935010729365FF100EAA4BC /* LibraryEmoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = C935010629365FF100EAA4BC /* LibraryEmoji.swift */; };
 		C9350109293672ED00EAA4BC /* EmojiLibrayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9350108293672ED00EAA4BC /* EmojiLibrayView.swift */; };
 		C935010B2937CC2900EAA4BC /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = C935010A2937CC2900EAA4BC /* Category.swift */; };
-		C935010E293CC96B00EAA4BC /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = C935010D293CC96B00EAA4BC /* CachedAsyncImage */; };
 		C9350110293CD26200EAA4BC /* CacheAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C935010F293CD26200EAA4BC /* CacheAsyncImage.swift */; };
 		C9350112293E723C00EAA4BC /* PostDropDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9350111293E723C00EAA4BC /* PostDropDownView.swift */; };
 		C9350114293F598E00EAA4BC /* EmojiPickerCoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9350113293F598E00EAA4BC /* EmojiPickerCoverView.swift */; };
@@ -160,7 +159,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C935010E293CC96B00EAA4BC /* CachedAsyncImage in Frameworks */,
 				C95EC513290833B500550F06 /* Grey.colorset in Frameworks */,
 				899536B029AA01B5932A3B38 /* Pods_RealMusic.framework in Frameworks */,
 			);
@@ -358,7 +356,6 @@
 			);
 			name = RealMusic;
 			packageProductDependencies = (
-				C935010D293CC96B00EAA4BC /* CachedAsyncImage */,
 			);
 			productName = RealMusic;
 			productReference = C947B9E828EAECDD00B97EB1 /* RealMusic.app */;
@@ -437,7 +434,6 @@
 			mainGroup = C947B9DF28EAECDD00B97EB1;
 			packageReferences = (
 				C947BA1B28EAF4FF00B97EB1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				C935010C293CC96B00EAA4BC /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
 			);
 			productRefGroup = C947B9E928EAECDD00B97EB1 /* Products */;
 			projectDirPath = "";
@@ -1025,14 +1021,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		C935010C293CC96B00EAA4BC /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/lorenzofiamingo/swiftui-cached-async-image";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
-			};
-		};
 		C947BA1B28EAF4FF00B97EB1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -1042,14 +1030,6 @@
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		C935010D293CC96B00EAA4BC /* CachedAsyncImage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C935010C293CC96B00EAA4BC /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */;
-			productName = CachedAsyncImage;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C947B9E028EAECDD00B97EB1 /* Project object */;
 }

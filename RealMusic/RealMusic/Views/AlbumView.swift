@@ -15,7 +15,8 @@ var audioPlayer: AVAudioPlayer!
 struct AlbumView: View {
     
     let album: Album
-    @State var playButton: String = "play.circle.fill"
+    @State var playButton: String = "pause.fill"
+    @State var playButtonColour: Color = .clear
     
     @StateObject var reactionViewModel: ReactionViewModel
     
@@ -80,20 +81,22 @@ struct AlbumView: View {
                     .font(.system(size: 20))
                 
                 Spacer()
-//                ZStack {
-//                    Rectangle()
-//                        .frame(width: 40, height: 40)
-//                        .foregroundColor(.black)
-//                    Image(systemName: playButton)
-//                        .font(.system(size:70))
-//                        .foregroundColor(.green)
-//                }
-//                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
-//                .padding(20)
+
+            }
+            
+            ZStack {
+
+                Image(systemName: playButton)
+                    .font(.system(size:100))
+                    .offset(y: 60)
+                    .foregroundColor(playButtonColour)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            .padding(20)
 //                .onTapGesture {
 //
-//                    if self.playButton == "pause.circle.fill" {
-//                        self.playButton = "play.circle.fill"
+//                    if self.playButton == "pause.fill" {
+//                        self.playButton = "play.fill"
 //                        audioPlayer.pause()
 //
 //                    } else {
@@ -128,9 +131,6 @@ struct AlbumView: View {
 //                    }
 //
 //                }
-                
-               
-            }
 
         }
         .padding(20)
@@ -149,6 +149,57 @@ struct AlbumView: View {
                     showPicker = false
                     
                     
+                } else {
+                    // play and pause song
+                    if self.playButton == "play.fill" {
+
+                        self.playButton = "pause.fill"
+                        audioPlayer.pause()
+                        withAnimation(.easeIn(duration: 0.5)) {
+                            playButtonColour = .white
+                        }
+                        withAnimation(.easeIn(duration: 1)) {
+                            playButtonColour = .clear
+                        }
+
+                    } else {
+                        self.playButton = "play.fill"
+
+                        withAnimation(.easeIn(duration: 0.5)) {
+                            playButtonColour = .white
+                        }
+                        withAnimation(.easeIn(duration: 1)) {
+                            playButtonColour = .clear
+                        }
+
+                        var downloadTask:URLSessionDownloadTask
+                        print("album prev: \(album.preview)")
+                        print()
+                        if album.preview != nil && album.preview != "" {
+                            downloadTask = URLSession.shared.downloadTask(with: URL(string: album.preview)!) { (url, response, error) in
+                                //self.play(url: url)
+                                print("playing sound")
+                                print("url: \(url)")
+
+                                if let downloadedPath = url?.path, FileManager().fileExists(atPath: downloadedPath) {
+                                    do {
+                                        audioPlayer = try AVAudioPlayer(contentsOf: url!)
+                                        guard let player = audioPlayer else { return }
+
+                                        player.prepareToPlay()
+                                        player.play()
+                                        print("playing")
+                                    } catch let error {
+                                        print(error.localizedDescription)
+                                    }
+                                } else {
+                                    print("The file doesn not exist at path || may not have been downloaded yet")
+                                }
+                            }
+                            downloadTask.resume()
+                        }
+
+                    }
                 }
                 showPicker = false
             }
