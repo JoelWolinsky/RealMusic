@@ -36,6 +36,10 @@ struct PostView: View {
     
     @State var emojiPickerOpacity = 1
     
+    @State var showReactionsList = false
+    
+    @StateObject var userViewModel: UserViewModel
+    
     
 
 
@@ -92,6 +96,9 @@ struct PostView: View {
                 .padding(.leading, 10)
                 .offset(x: 20, y: 220)
                 .blur(radius:CGFloat(blur))
+                .onTapGesture {
+                    showReactionsList.toggle()
+                }
             
             if showPicker == true {
                 ZStack {
@@ -117,7 +124,10 @@ struct PostView: View {
                 
         }
         .padding(.bottom, 20)
-        
+        .sheet(isPresented: $showReactionsList) {
+            PostReactionsListView(reactionViewModel: reactionViewModel, userViewModel: userViewModel)
+                .presentationDetents([.medium])
+        }
     }
     
     

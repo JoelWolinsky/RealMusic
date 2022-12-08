@@ -62,7 +62,7 @@ struct AlbumView: View {
                                 .scaledToFill()
                                 .cornerRadius(7)
                                 .padding(.bottom, 5)
-                                .foregroundColor(.green)
+                                .foregroundColor(.black)
                         }
                     }
                 }
@@ -93,45 +93,6 @@ struct AlbumView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             .padding(20)
-//                .onTapGesture {
-//
-//                    if self.playButton == "pause.fill" {
-//                        self.playButton = "play.fill"
-//                        audioPlayer.pause()
-//
-//                    } else {
-//                        var downloadTask:URLSessionDownloadTask
-//                        print("album prev: \(album.preview)")
-//                        print()
-//                        if album.preview != nil && album.preview != "" {
-//                            downloadTask = URLSession.shared.downloadTask(with: URL(string: album.preview)!) { (url, response, error) in
-//                                //self.play(url: url)
-//                                print("playing sound")
-//                                print("url: \(url)")
-//
-//                                if let downloadedPath = url?.path, FileManager().fileExists(atPath: downloadedPath) {
-//                                    do {
-//                                        audioPlayer = try AVAudioPlayer(contentsOf: url!)
-//                                        guard let player = audioPlayer else { return }
-//
-//                                        player.prepareToPlay()
-//                                        player.play()
-//                                        self.playButton = "pause.circle.fill"
-//                                        print("playing")
-//                                    } catch let error {
-//                                        print(error.localizedDescription)
-//                                    }
-//                                } else {
-//                                    print("The file doesn not exist at path || may not have been downloaded yet")
-//                                }
-//                            }
-//                            downloadTask.resume()
-//                        }
-//
-//                    }
-//
-//                }
-
         }
         .padding(20)
         .background(Color("Grey 3"))
@@ -158,17 +119,17 @@ struct AlbumView: View {
                         withAnimation(.easeIn(duration: 0.5)) {
                             playButtonColour = .white
                         }
-                        withAnimation(.easeIn(duration: 1)) {
+                        withAnimation(.easeIn(duration: 0.5).delay(2)) {
                             playButtonColour = .clear
                         }
 
                     } else {
                         self.playButton = "play.fill"
 
-                        withAnimation(.easeIn(duration: 0.5)) {
+                        withAnimation(.easeIn(duration: 0.5).delay(0.5)) {
                             playButtonColour = .white
                         }
-                        withAnimation(.easeIn(duration: 1)) {
+                        withAnimation(.easeIn(duration: 0.5).delay(2)) {
                             playButtonColour = .clear
                         }
 

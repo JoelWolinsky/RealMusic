@@ -118,15 +118,15 @@ struct AddFriendsView: View {
                                     .aspectRatio(contentMode: .fill)
                                 
                             } placeholder: {
-                                Color.orange
+                                Color.black
                             }
                             .frame(width: 60, height: 60)
                             .cornerRadius(30)
-                            .onAppear(perform: {
-                                userViewModel.fetchProfilePic(uid: friend.id!) { profile in
-                                    print(profile)
-                                }
-                            })
+//                            .onAppear(perform: {
+//                                userViewModel.fetchProfilePic(uid: friend.id!) { profile in
+//                                    print("profilepic is \(profile)")
+//                                }
+//                            })
 
 
                             VStack {

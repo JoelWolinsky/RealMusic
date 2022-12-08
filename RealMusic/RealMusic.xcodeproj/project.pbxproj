@@ -20,6 +20,8 @@
 		C9350110293CD26200EAA4BC /* CacheAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C935010F293CD26200EAA4BC /* CacheAsyncImage.swift */; };
 		C9350112293E723C00EAA4BC /* PostDropDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9350111293E723C00EAA4BC /* PostDropDownView.swift */; };
 		C9350114293F598E00EAA4BC /* EmojiPickerCoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9350113293F598E00EAA4BC /* EmojiPickerCoverView.swift */; };
+		C9350116294240AC00EAA4BC /* PostReactionsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9350115294240AC00EAA4BC /* PostReactionsListView.swift */; };
+		C93501182942431000EAA4BC /* PostReactionsListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93501172942431000EAA4BC /* PostReactionsListItemView.swift */; };
 		C939D6D7292A4D0800C255F2 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939D6D6292A4D0800C255F2 /* ProfileView.swift */; };
 		C939D6D9292A8F2200C255F2 /* AnalyticsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939D6D8292A8F2200C255F2 /* AnalyticsModel.swift */; };
 		C939D6DB292AA8EF00C255F2 /* CompareAnalyticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939D6DA292AA8EF00C255F2 /* CompareAnalyticsView.swift */; };
@@ -102,6 +104,8 @@
 		C935010F293CD26200EAA4BC /* CacheAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheAsyncImage.swift; sourceTree = "<group>"; };
 		C9350111293E723C00EAA4BC /* PostDropDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDropDownView.swift; sourceTree = "<group>"; };
 		C9350113293F598E00EAA4BC /* EmojiPickerCoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiPickerCoverView.swift; sourceTree = "<group>"; };
+		C9350115294240AC00EAA4BC /* PostReactionsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReactionsListView.swift; sourceTree = "<group>"; };
+		C93501172942431000EAA4BC /* PostReactionsListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReactionsListItemView.swift; sourceTree = "<group>"; };
 		C939D6D6292A4D0800C255F2 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		C939D6D8292A8F2200C255F2 /* AnalyticsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsModel.swift; sourceTree = "<group>"; };
 		C939D6DA292AA8EF00C255F2 /* CompareAnalyticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompareAnalyticsView.swift; sourceTree = "<group>"; };
@@ -216,6 +220,8 @@
 				C939D6DA292AA8EF00C255F2 /* CompareAnalyticsView.swift */,
 				C95EC51B290A91E600550F06 /* ContentView.swift */,
 				C9597E63292514280020395E /* CurrentlyPlayingView.swift */,
+				C9350115294240AC00EAA4BC /* PostReactionsListView.swift */,
+				C93501172942431000EAA4BC /* PostReactionsListItemView.swift */,
 				C9350108293672ED00EAA4BC /* EmojiLibrayView.swift */,
 				C9350113293F598E00EAA4BC /* EmojiPickerCoverView.swift */,
 				C939D6DE292E84C100C255F2 /* EmojiPickerView.swift */,
@@ -618,6 +624,8 @@
 				C939D6E3292E864900C255F2 /* EmojiCatalogue.swift in Sources */,
 				C9DBD62B290F2B5900ACD644 /* APIConstants.swift in Sources */,
 				C9597E68292567000020395E /* Extensions.swift in Sources */,
+				C93501182942431000EAA4BC /* PostReactionsListItemView.swift in Sources */,
+				C9350116294240AC00EAA4BC /* PostReactionsListView.swift in Sources */,
 				C939D6E5292E89BF00C255F2 /* EmojiReactionModel.swift in Sources */,
 				C9350114293F598E00EAA4BC /* EmojiPickerCoverView.swift in Sources */,
 				C9597E64292514280020395E /* CurrentlyPlayingView.swift in Sources */,
