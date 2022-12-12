@@ -13,6 +13,8 @@ class SignInViewModel: ObservableObject {
     let auth = Auth.auth()
 
     @Published var signedIn = false
+    @Published var welcomeMessage = false
+
     
     @ObservedObject var userViewModel = UserViewModel()
 
@@ -22,9 +24,11 @@ class SignInViewModel: ObservableObject {
         return auth.currentUser != nil
     }
 
-    func signIn(email: String, password: String) {
+    func signIn(email: String, password: String, completion: @escaping (Bool) -> Void) {
         auth.signIn(withEmail: email, password: password) { result, error in
             guard result != nil, error == nil else {
+                print("wrong password")
+                completion(false)
                 return
             }
             
@@ -38,6 +42,7 @@ class SignInViewModel: ObservableObject {
             
             UserDefaults.standard.setValue(self.auth.currentUser?.uid ?? "", forKey: "uid")
             self.signedIn = true
+            completion(true)
         }
     }
 

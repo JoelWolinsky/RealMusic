@@ -31,6 +31,8 @@ struct AddFriendsView: View {
     @State var friendToCompare =  User(username: "")
     
     @State var yourUID = (UserDefaults.standard.value(forKey: "uid") ?? "") as! String
+    
+    
 
     
 
@@ -38,7 +40,7 @@ struct AddFriendsView: View {
     
     var body: some View {
 
-        ScrollView {
+        VStack {
             
             Button {
                 withAnimation {
@@ -100,12 +102,18 @@ struct AddFriendsView: View {
                 }
 
             
-            ScrollView {
-                
-                Text("Your Friends")
-                    .foregroundColor(.white)
-                    .padding(5)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+            VStack {
+                HStack {
+                    Text("Your Friends")
+                        .foregroundColor(.white)
+                        .padding(5)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Spacer()
+                    Text("Music Taste")
+                        .foregroundColor(.white)
+                        .padding(5)
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                }
                 ScrollView {
                     ForEach(friendsViewModel.friends.sorted(by: { $0.matchScore ?? 0 > $1.matchScore ?? 0 })) { friend in
                         HStack {
@@ -132,15 +140,10 @@ struct AddFriendsView: View {
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .padding(5)
                                     .foregroundColor(Color("Grey"))
-
-                                Text(friend.id ?? "")
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .padding(5)
-                                    .foregroundColor(Color("Grey"))
                             }
                             
                             Text(String(friend.matchScore ?? 0))
-                                .foregroundColor(.purple)
+                                .foregroundColor(.green)
 
                         }
                         
@@ -164,8 +167,17 @@ struct AddFriendsView: View {
         .onAppear( perform: {
             // run function to calculate all scores
             print("showing add friends view")
-            analyticsModel.compareForEach(yourUID: yourUID, friends: friendsViewModel.friends)
-            friendsViewModel.fetchFriends()
+            analyticsModel.fetchTopArtistsFromAPI() { (result) in
+                switch result {
+                case .success(let data):
+                    analyticsModel.uploadToDB(items: data, rankingType: "Top Artists")
+                    analyticsModel.compareForEach(yourUID: yourUID, friends: friendsViewModel.friends)
+                    friendsViewModel.fetchFriends()
+                case .failure(let error):
+                    print(error)
+                }
+            }
+            
         })
             
             

@@ -37,6 +37,9 @@ struct ContentView: View {
                    // .environment(viewModel: viewModel)
                 
                 HomeView(feedViewModel: feedViewModel)
+                    .sheet(isPresented: $viewModel.welcomeMessage) {
+                        WelcomeView()
+                    }
                     .sheet(isPresented: $showWebView.showView) {
                         WebView(showWebView: showWebView)
 //                            .onDisappear(perform: {

@@ -16,6 +16,8 @@ struct SignInView: View {
     
     @StateObject var viewModel = SignInViewModel()
     @ObservedObject var userViewModel = UserViewModel()
+    
+    @State var signInResult = true
 
     
      
@@ -32,12 +34,27 @@ struct SignInView: View {
                     .foregroundColor(.white)
                 
                 VStack {
-                    TextField("Email address", text: $email)
+                    TextField("", text: $email)
+                        .placeholder(when: email.isEmpty) {
+                            Text("Email address").foregroundColor(.gray)
+                        }
                         .background(.white)
                         .cornerRadius(3)
-                    SecureField("Password", text: $password)
+                        .foregroundColor(.black)
+                    SecureField("", text: $password)
+                        .placeholder(when: password.isEmpty) {
+                            Text("Password").foregroundColor(.gray)
+                        }
                         .background(.white)
                         .cornerRadius(3)
+                        .foregroundColor(.black)
+                    
+                    if signInResult == false {
+                        Text("Either your email or password is incorrect")
+                            .foregroundColor(.red)
+                            .multilineTextAlignment(.center)
+                    }
+                        
                 }
                 .frame(maxWidth: 300)
                 .padding(10)
@@ -45,7 +62,15 @@ struct SignInView: View {
                 
                 Button(action: {
                    
-                    viewModel.signIn(email: email, password: password)
+                    viewModel.signIn(email: email, password: password) { (result) in
+                        switch result{
+                        case true:
+                            signInResult = true
+                        case false:
+                            signInResult = false
+                            
+                        }
+                    }
                     
                     
                 }, label: {
@@ -100,12 +125,21 @@ struct SignUpView: View {
                     .foregroundColor(.white)
                 
                 VStack {
-                    TextField("Email address", text: $email)
+                    TextField("", text: $email)
+                        .placeholder(when: email.isEmpty) {
+                            Text("Email address").foregroundColor(.gray)
+                        }
                         .background(.white)
                         .cornerRadius(3)
-                    SecureField("Password", text: $password)
+                        .foregroundColor(.black)
+                    SecureField("", text: $password)
+                        .placeholder(when: password.isEmpty) {
+                            Text("Password").foregroundColor(.gray)
+                        }
+                        .foregroundColor(.black)
                         .background(.white)
                         .cornerRadius(3)
+
                 }
                 .frame(maxWidth: 300)
                 .padding(10)
@@ -167,17 +201,27 @@ struct CreatUserNameView: View {
             Button {
                     isAddingPhoto = true
                 } label: {
-                    Image(systemName: "plus")
-                        .foregroundColor(.blue)
+                    HStack {
+                        Text("Upload Profile Picture")
+                            .foregroundColor(.white)
+                        
+                        Image(systemName: "plus")
+                            .foregroundColor(.green)
+                    }
                 }
+                .padding(.bottom, 10)
 
             Text("Enter Your Username")
                 .foregroundColor(.white)
             
             VStack {
-                TextField("Username", text: $username)
+                TextField("", text: $username)
+                    .placeholder(when: username.isEmpty) {
+                        Text("Username").foregroundColor(.gray)
+                    }
                     .background(.white)
                     .cornerRadius(3)
+                    .foregroundColor(.black)
                 
                 Text(String(errorMessage) ?? "")
                     .foregroundColor(.red)
@@ -216,6 +260,7 @@ struct CreatUserNameView: View {
                                 
                                 userViewModel.createUser(uid: uid, username: username, profilePic: profilePicture ?? "no profile pic")
                                 viewModel.signedIn = true
+                                viewModel.welcomeMessage = true
                             }
        
                            

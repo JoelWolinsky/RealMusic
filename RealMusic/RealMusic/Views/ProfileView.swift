@@ -62,20 +62,6 @@ struct ProfileView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         
-            Button {
-                analyticsModel.fetchTopArtistsFromAPI() { (result) in
-                    switch result {
-                    case .success(let data):
-                        analyticsModel.uploadToDB(items: data, rankingType: "Top Artists")
-                    case .failure(let error):
-                        print(error)
-                    }
-                }
-            } label: {
-                Text("Get Top Artists")
-                    .foregroundColor(.orange)
-            }
-            .frame(maxWidth: .infinity, alignment: .center)
             
             
             Button {
