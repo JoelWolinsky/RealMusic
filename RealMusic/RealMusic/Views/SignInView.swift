@@ -194,8 +194,7 @@ struct CreatUserNameView: View {
  
                     userViewModel.fetchUsers() { users in
                         self.nameTaken = false
-                        //print(user.username)
-                        //UserDefaults.standard.setValue(user.username, forKey: "Username")
+
                         print("print usernames")
                         for user in users {
                             print(user.username)

@@ -79,6 +79,7 @@ struct SearchResultView: View {
                                    uid: UserDefaults.standard.value(forKey: "uid") as! String,
                                       username: UserDefaults.standard.value(forKey: "username") as! String,
                                       cover: song.cover,
+                                    datePosted: Date(),
                                       preview: song.preview_url))
                 }
                 //.fontWeight(.bold)

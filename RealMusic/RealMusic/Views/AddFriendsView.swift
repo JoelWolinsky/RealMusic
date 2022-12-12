@@ -84,8 +84,6 @@ struct AddFriendsView: View {
                     userViewModel.fetchUsers() { users in
                         self.nameFound = false
                         self.errorMessage = ""
-                        //print(user.username)
-                        //UserDefaults.standard.setValue(user.username, forKey: "Username")
                         print("print usernames")
                         for user in users {
                             print(user.username)

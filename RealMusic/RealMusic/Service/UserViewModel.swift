@@ -45,7 +45,7 @@ class UserViewModel: ObservableObject {
         print("user id \(uid)")
         do {
             try db.collection("Users").document(uid).setData(from: user)
-            UserDefaults.standard.setValue(username, forKey: "Username")
+            UserDefaults.standard.setValue(username, forKey: "username")
             print("user added")
         } catch let error {
             print("Error writing city to Firestore: \(error)")
@@ -78,7 +78,6 @@ class UserViewModel: ObservableObject {
         // add them to your friends
         do {
             try db.collection("Users").document(userUid as! String).collection("Friends").document(friend.id as! String).setData(from: friend)
-            //UserDefaults.standard.setValue(username, forKey: "Username")
             print("friend added")
         } catch let error {
             print("Error writing city to Firestore: \(error)")

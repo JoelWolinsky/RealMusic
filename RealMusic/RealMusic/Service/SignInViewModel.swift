@@ -61,7 +61,12 @@ class SignInViewModel: ObservableObject {
     
 
     func signOut() {
-        try? auth.signOut()
+        do {
+            try auth.signOut()
+        } catch {
+            print("could not sign out of firebase")
+        }
+        
 
         self.signedIn = false
     }

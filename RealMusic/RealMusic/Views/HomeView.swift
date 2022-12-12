@@ -70,27 +70,27 @@ struct HomeView: View {
                                         .blur(radius:CGFloat(blur))
                                     Spacer()
                                     
-                                    HStack {
-                                        Image(systemName: "magnifyingglass")
-                                        Text("Search")
-                                    }
-                                    .padding(10)
-                                    .foregroundColor(.white)
-                                    .background(Color("Grey 2"))
-                                    .cornerRadius(10)
-                                    .onTapGesture {
-                                        print("search")
-                                        withAnimation() {
-                                            searchToggle.toggle()
-                                        }
-                                        
-                                    }
+//                                    HStack {
+//                                        Image(systemName: "magnifyingglass")
+//                                        Text("Search")
+//                                    }
+//                                    .padding(10)
+//                                    .foregroundColor(.white)
+//                                    .background(Color("Grey 2"))
+//                                    .cornerRadius(10)
+//                                    .onTapGesture {
+//                                        print("search")
+//                                        withAnimation() {
+//                                            searchToggle.toggle()
+//                                        }
+//
+//                                    }
                                     
                                 }
                                 .offset(y: 40)
                                 VStack {
                                     
-                                    CurrentlyPlayingView(song: currentlyPlaying, createPostModel: createPostModel)
+                                    CurrentlyPlayingView(song: currentlyPlaying, createPostModel: createPostModel, searchToggle: $searchToggle)
                                 }
                                 .frame(width: 350, height: 100)
                                 .padding(.top, 40)
@@ -187,22 +187,26 @@ struct HomeView: View {
                             }
                             
                             Spacer()
+                                .background(.green)
                             
-                            AsyncImage(url: URL(string: profilePic)) { image in
-                                image
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                
-                            } placeholder: {
-                                Image("ProfilePicPlaceholder")
-                            }
-                            .frame(width: 30, height: 30)
-                            .cornerRadius(15)
-                            .onTapGesture {
+                            
+                            Button {
                                 withAnimation {
                                     showProfileView.toggle()
                                 }
+                            } label: {
+                                AsyncImage(url: URL(string: profilePic)) { image in
+                                    image
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                    
+                                } placeholder: {
+                                    Image("ProfilePicPlaceholder")
+                                }
+                                .frame(width: 30, height: 30)
+                                .cornerRadius(15)
                             }
+                            
                         }
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                         .padding(.leading, 20)
@@ -274,20 +278,23 @@ struct HomeView: View {
                 
             }
             .onChange(of: searchToggle, perform: { value in
-                print("Refreshing")
-                feedViewModel.fetchPosts()
-                //feedViewModel.fetchReactions()
                 
-                
-                getRequest.getCurrentPlaying() { (result) in
-                    switch result {
-                    case .success(let data) :
-                        print("success playing now \(data)")
-                        let song = data[0]
-                        currentlyPlaying = SpotifySong(id: song.id, songID: song.songID, title: song.title, artist: song.artist, uid: song.uid, cover: song.cover, preview_url: song.preview_url)
-                    case .failure(let error) :
-                        print("fail recent")
-                        // print(error)
+                if searchToggle == false {
+                    print("Refreshing")
+                    feedViewModel.fetchPosts()
+                    //feedViewModel.fetchReactions()
+                    
+                    
+                    getRequest.getCurrentPlaying() { (result) in
+                        switch result {
+                        case .success(let data) :
+                            print("success playing now \(data)")
+                            let song = data[0]
+                            currentlyPlaying = SpotifySong(id: song.id, songID: song.songID, title: song.title, artist: song.artist, uid: song.uid, cover: song.cover, preview_url: song.preview_url)
+                        case .failure(let error) :
+                            print("fail recent")
+                            // print(error)
+                        }
                     }
                 }
             })

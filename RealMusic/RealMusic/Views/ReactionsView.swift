@@ -22,15 +22,14 @@ struct ReactionsView: View {
     var body: some View {
         HStack {
             ForEach(reactionViewModel.distinctReactions) { emoji in
-                if emoji.docID == UserDefaults.standard.value(forKey: "uid") as! String {
+                if emoji.docID == ("\(UserDefaults.standard.value(forKey: "uid") ?? "")") {
                     Text(emoji.emoji)
                         .font(.system(size: emojiSize))
                 } else {
                     Text(emoji.emoji)
                         .font(.system(size: 20))
                         .onAppear(perform:{
-                            print("user uid \(emoji.docID)")
-                            print("user uid saved \(UserDefaults.standard.value(forKey: "uid") as! String)")
+                            //print("user uid saved \(UserDefaults.standard.value(forKey: "uid") as! String)")
 
                         })
                 }
@@ -69,11 +68,7 @@ struct ReactionsView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .onReceive(reactionViewModel.objectWillChange, perform: {
             if !reactionViewModel.reactions.isEmpty {
-                print("seen object change \(reactionViewModel.reactions)")
                 emojiSize = 2.0
-                
-                //            let baseAnimation = Animation.easeInOut(duration: 0.6)
-                //            let repeated = baseAnimation.repeatCount(2, autoreverses: true)
                 withAnimation(.spring(response: 0.6, dampingFraction: 0.5, blendDuration: 1)) {
                     emojiSize = 20.0
                 }

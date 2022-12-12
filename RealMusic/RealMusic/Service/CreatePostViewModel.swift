@@ -23,8 +23,8 @@ class CreatePostViewModel: ObservableObject {
         //let post = Post(title: "Test Send Post", uid: "test uid")
 
         do {
-            try db.collection("Posts").document().setData(from: post)
-            print("Post created")
+            try db.collection("Posts").document(post.id!).setData(from: post)
+            print("Post created \(post.id)")
         } catch let error {
             print("Error writing city to Firestore: \(error)")
         }

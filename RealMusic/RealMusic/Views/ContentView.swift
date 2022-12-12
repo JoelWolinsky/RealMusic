@@ -50,7 +50,6 @@ struct ContentView: View {
             } else {
                 SignInView(viewModel: viewModel)
                     .onAppear(perform: {
-                        //UserDefaults.standard.setValue(nil, forKey: "Authorization")
                         showWebView.showView = true
                     })
                 // ADD once signed it and redirected to google to close sheet
@@ -79,23 +78,7 @@ struct ContentView: View {
                     showWebView.showView = true
                     }
                 }
-//            spotifyAPI.search(input: "") { (result) in
-//                switch result {
-//                    case .success(let data) :
-//                    print("success 123\(data)")
-//                    print("SEARCH success")
-//                    //showWebView.showView = false
-//                    case .failure(let error) :
-//                    print("SEARCH fail")
-//                    //showWebView.showView = true
-//                    }
-//                }
-            
-            
-//            if let token = UserDefaults.standard.value(forKey: "Authorization") {
-//                showWebView = false
-//            }
-            //UserDefaults.standard.setValue(nil, forKey: "Authorization")
+
             }
         )
 
@@ -103,62 +86,3 @@ struct ContentView: View {
         
 }
 
-//struct SignInView: View {
-//
-//    @State var email = ""
-//    @State var password = ""
-//
-//    @EnvironmentObject var viewModel: SignInViewModel
-//
-//    var body: some View {
-//        NavigationView {
-//            VStack {
-//                Text("Sign In")
-//
-//                TextField("Email address", text: $email)
-//                SecureField("Email address", text: $password)
-//
-//                Button(action: {
-//                    viewModel.signIn(email: email, password: password)
-//                }, label: {
-//                    Text("Sign in")
-//                })
-//
-//
-//                NavigationLink (destination: SignUpView()) {
-//                    Text("Create Account")
-//                }
-//            }
-//
-//        }
-//
-//
-//
-//    }
-//}
-//
-//struct SignUpView: View {
-//
-//    @State var email = ""
-//    @State var password = ""
-//
-//    @EnvironmentObject var viewModel: SignInViewModel
-//
-//    var body: some View {
-//        VStack {
-//            Text("Sign Up")
-//
-//            TextField("Email address", text: $email)
-//            SecureField("Email address", text: $password)
-//
-//            Button(action: {
-//                viewModel.signUp(email: email, password: password)
-//            }, label: {
-//                Text("Sign Up")
-//            })
-//        }
-//
-//
-//
-//    }
-//}

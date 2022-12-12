@@ -49,9 +49,18 @@ struct PostView: View {
         
         ZStack {
             VStack {
-                Text("@" + (post.username ?? ""))
+                Text(post.username ?? "")
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .blur(radius:CGFloat(blur))
+                Text("\(post.datePosted.formatted(date: .omitted, time: .standard))")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.system(size: 15))
+                    .foregroundColor(Color("Grey 1"))
+                    .blur(radius:CGFloat(blur))
+
+                
+
+                    
 
                 
                 
@@ -65,6 +74,7 @@ struct PostView: View {
             //.background(.black)
             .foregroundColor(.white)
             .onAppear(perform: {
+                print("fetching song name and title")
                 spotifyAPI.getSong(ID: post.songID) { (result) in
                     switch result {
                     case .success(let data) :
@@ -75,30 +85,15 @@ struct PostView: View {
                         print()
                     }
                 }
-                
-                
-                //            feedViewModel.fetchReactions(postUID: post.id ?? "") { (result) in
-                //                print("got reactions \(result.count)")
-                //                post.reactions = result
-                //            }
-                //
-                
             })
-            // Issue with having a long press on a scroll item, so need to have an empty tap gesture before
-            
-            //        .sheet(isPresented: $showEmojiLibrary) {
-            //                    EmojiLibraryView()
-            //                .presentationDetents([.medium])
-            //
-            //                }
-            
             ReactionsView(reactionViewModel: reactionViewModel, post: post)
                 .padding(.leading, 10)
-                .offset(x: 20, y: 220)
+                .offset(x: 20, y: 30)
                 .blur(radius:CGFloat(blur))
                 .onTapGesture {
                     showReactionsList.toggle()
                 }
+                .frame(maxHeight: .infinity, alignment: .bottom)
             
             if showPicker == true {
                 ZStack {
@@ -123,7 +118,7 @@ struct PostView: View {
             }
                 
         }
-        .padding(.bottom, 20)
+        .padding(.bottom, 40)
         .sheet(isPresented: $showReactionsList) {
             PostReactionsListView(reactionViewModel: reactionViewModel, userViewModel: userViewModel)
                 .presentationDetents([.medium])

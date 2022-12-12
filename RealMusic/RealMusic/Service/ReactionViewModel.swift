@@ -11,19 +11,7 @@ import SwiftUI
 class ReactionViewModel: ObservableObject {
     
     var reactions = [Emoji]()
-    //{
-//        willSet {
-//                    print("object will change")
-//                    objectWillChange.send()
-//                }
-//    }
     var distinctReactions = [Emoji]() {
-//        willSet {
-//            if !distinctReactions.isEmpty {
-//                print("object will change d \(distinctReactions)")
-//                objectWillChange.send()
-//            }
-//        }
         didSet {
             objectWillChange.send()
 
@@ -41,9 +29,7 @@ class ReactionViewModel: ObservableObject {
     }
     
     func fetchReactions(id: String) {
-        //self.reactions = []
-//self.distinctReactions = []
-        print("fetching reactions ")
+
         feedViewModel.fetchReactions(postUID: id) { result in
             self.reactions = result
             self.calculateDistinctReactions()
@@ -53,15 +39,10 @@ class ReactionViewModel: ObservableObject {
     }
     
     func addLocalReaction(reaction: Emoji) {
-        //let reaction = Emoji(emoji: "🍅", name: "")
-        //self.reactions.append(reaction)
-        
-        //self.calculateDistinctReactions()
         fetchReactions(id: self.id)
     }
     
     func calculateDistinctReactions() {
-        print("calculate distinct for \(self.reactions.count)")
         var distinct = [Emoji]()
         var duplicate = false
         
@@ -81,7 +62,6 @@ class ReactionViewModel: ObservableObject {
             }
             duplicate = false
         }
-        print("number of distinct reactions: \(distinct.count)")
         self.distinctReactions = distinct
     }
 }
