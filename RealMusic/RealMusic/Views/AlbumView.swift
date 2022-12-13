@@ -40,6 +40,9 @@ struct AlbumView: View {
     
     @Binding var emojiPickerOpacity: Int
     
+    @State var noPreview = false
+
+    
     var body: some View {
         ZStack {
             VStack {
@@ -112,54 +115,59 @@ struct AlbumView: View {
                     
                 } else {
                     // play and pause song
-                    if self.playButton == "play.fill" {
-
-                        self.playButton = "pause.fill"
-                        audioPlayer.pause()
-                        withAnimation(.easeIn(duration: 0.5)) {
-                            playButtonColour = .white
-                        }
-                        withAnimation(.easeIn(duration: 0.5).delay(2)) {
-                            playButtonColour = .clear
-                        }
-
-                    } else {
-                        self.playButton = "play.fill"
-
-                        withAnimation(.easeIn(duration: 0.5).delay(0.5)) {
-                            playButtonColour = .white
-                        }
-                        withAnimation(.easeIn(duration: 0.5).delay(2)) {
-                            playButtonColour = .clear
-                        }
-
-                        var downloadTask:URLSessionDownloadTask
-                        print("album prev: \(album.preview)")
-                        print()
-                        if album.preview != nil && album.preview != "" {
-                            downloadTask = URLSession.shared.downloadTask(with: URL(string: album.preview)!) { (url, response, error) in
-                                //self.play(url: url)
-                                print("playing sound")
-                                print("url: \(url)")
-
-                                if let downloadedPath = url?.path, FileManager().fileExists(atPath: downloadedPath) {
-                                    do {
-                                        audioPlayer = try AVAudioPlayer(contentsOf: url!)
-                                        guard let player = audioPlayer else { return }
-
-                                        player.prepareToPlay()
-                                        player.play()
-                                        print("playing")
-                                    } catch let error {
-                                        print(error.localizedDescription)
-                                    }
-                                } else {
-                                    print("The file doesn not exist at path || may not have been downloaded yet")
-                                }
+                    if noPreview == false {
+                        if self.playButton == "play.fill" {
+                            
+                            self.playButton = "pause.fill"
+                            audioPlayer.pause()
+                            withAnimation(.easeIn(duration: 0.5)) {
+                                playButtonColour = .white
                             }
-                            downloadTask.resume()
+                            withAnimation(.easeIn(duration: 0.5).delay(2)) {
+                                playButtonColour = .clear
+                            }
+                            
+                        } else {
+                            
+                            
+                            var downloadTask:URLSessionDownloadTask
+                            print("album prev: \(album.preview)")
+                            print()
+                            if album.preview != nil && album.preview != "" {
+                                self.playButton = "play.fill"
+                                
+                                withAnimation(.easeIn(duration: 0.5).delay(0.5)) {
+                                    playButtonColour = .white
+                                }
+                                withAnimation(.easeIn(duration: 0.5).delay(2)) {
+                                    playButtonColour = .clear
+                                }
+                                downloadTask = URLSession.shared.downloadTask(with: URL(string: album.preview)!) { (url, response, error) in
+                                    //self.play(url: url)
+                                    print("playing sound")
+                                    print("url: \(url)")
+                                    
+                                    if let downloadedPath = url?.path, FileManager().fileExists(atPath: downloadedPath) {
+                                        do {
+                                            audioPlayer = try AVAudioPlayer(contentsOf: url!)
+                                            guard let player = audioPlayer else { return }
+                                            
+                                            player.prepareToPlay()
+                                            player.play()
+                                            print("playing")
+                                        } catch let error {
+                                            print(error.localizedDescription)
+                                        }
+                                    } else {
+                                        print("The file doesn not exist at path || may not have been downloaded yet")
+                                    }
+                                }
+                                downloadTask.resume()
+                            } else {
+                                noPreview = true
+                            }
+                            
                         }
-
                     }
                 }
                 showPicker = false

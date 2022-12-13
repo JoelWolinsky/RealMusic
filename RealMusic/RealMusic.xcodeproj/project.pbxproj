@@ -236,6 +236,7 @@
 				C907BF8829020749002197F1 /* SearchResultView.swift */,
 				C907BF84290195CF002197F1 /* SearchView.swift */,
 				C9DBD628290E885600ACD644 /* SignInView.swift */,
+				C9597E6B29269BE30020395E /* PhotoPicker.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -271,7 +272,6 @@
 				C939D6E4292E89BF00C255F2 /* EmojiReactionModel.swift */,
 				C9848D7128F2DE95003D4FFA /* FeedViewModel.swift */,
 				C9597E5829225EEF0020395E /* FriendsViewModel.swift */,
-				C9597E6B29269BE30020395E /* PhotoPicker.swift */,
 				C9848D6B28EC3A79003D4FFA /* PostViewModel.swift */,
 				C939D6EA2934C61200C255F2 /* ReactionViewModel.swift */,
 				C9A0A5FD29128A1700A6FD97 /* SignInViewModel.swift */,

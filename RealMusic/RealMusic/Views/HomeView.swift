@@ -52,6 +52,8 @@ struct HomeView: View {
     @State var showEmojiLibrary = false
     
     @State var showPicker = false
+    
+    @State var currentSongPosted = false
 
 
     var body: some View {
@@ -90,7 +92,7 @@ struct HomeView: View {
                                 .offset(y: 40)
                                 VStack {
                                     
-                                    CurrentlyPlayingView(song: currentlyPlaying, createPostModel: createPostModel, searchToggle: $searchToggle)
+                                    CurrentlyPlayingView(song: currentlyPlaying, createPostModel: createPostModel, searchToggle: $searchToggle, currentSongPosted: $currentSongPosted)
                                 }
                                 .frame(width: 350, height: 100)
                                 .padding(.top, 40)
@@ -296,6 +298,14 @@ struct HomeView: View {
                             // print(error)
                         }
                     }
+                }
+            })
+            .onChange(of: currentSongPosted, perform: { value in
+                
+                if searchToggle == false {
+                    print("Refreshing")
+                    feedViewModel.fetchPosts()
+                    //feedViewModel.fetchReactions()
                 }
             })
             

@@ -13,7 +13,7 @@ class SignInViewModel: ObservableObject {
     let auth = Auth.auth()
 
     @Published var signedIn = false
-    @Published var welcomeMessage = false
+    @Published var welcomeMessage = true
 
     
     @ObservedObject var userViewModel = UserViewModel()

@@ -23,7 +23,7 @@ struct ContentView: View {
     @ObservedObject var spotifyAPI = SpotifyAPI()
     @ObservedObject var feedViewModel = FeedViewModel()
     
-    @ObservedObject var showWebView = showView(showView: false)
+    @State var showWebView = false
     
     //@Binding var test: String
 
@@ -38,10 +38,10 @@ struct ContentView: View {
                 
                 HomeView(feedViewModel: feedViewModel)
                     .sheet(isPresented: $viewModel.welcomeMessage) {
-                        WelcomeView()
+                        WelcomeView(viewModel: viewModel)
                     }
-                    .sheet(isPresented: $showWebView.showView) {
-                        WebView(showWebView: showWebView)
+                    .sheet(isPresented: $showWebView) {
+                        WebView(showWebView: $showWebView)
 //                            .onDisappear(perform: {
 //                                print("disapear")
 //                                feedViewModel.fetchPosts()
@@ -53,7 +53,7 @@ struct ContentView: View {
             } else {
                 SignInView(viewModel: viewModel)
                     .onAppear(perform: {
-                        showWebView.showView = true
+                        showWebView = true
                     })
                 // ADD once signed it and redirected to google to close sheet
             }
@@ -73,12 +73,12 @@ struct ContentView: View {
                     case true:
                     print("aaaa token valid ")
                 
-                    showWebView.showView = false
+                    showWebView = false
                     //createPostModel.createPost(post: data[0])
 
                     case false:
                     print("aaaa token expired")
-                    showWebView.showView = true
+                    showWebView = true
                     }
                 }
 

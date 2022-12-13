@@ -11,7 +11,7 @@ import SwiftUI
 // A view for user to search through the Spotify library to find a song to post
 struct SearchView: View {
     
-    @State var searchText: String = "Sunny"
+    @State var searchText: String = ""
     
     @ObservedObject var spotifyAPI = SpotifyAPI()
     

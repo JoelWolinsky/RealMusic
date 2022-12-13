@@ -83,9 +83,12 @@ struct SignInView: View {
                     
                 })
             
-                    
-                NavigationLink (destination: SignUpView(viewModel: viewModel)) {
-                    Text("Create Account")
+                VStack {
+                    Text("Don't already have an account?")
+                        .foregroundColor(Color("Grey 1"))
+                    NavigationLink (destination: SignUpView(viewModel: viewModel)) {
+                        Text("Create Account")
+                        .foregroundColor(.green)                    }
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -112,6 +115,8 @@ struct SignUpView: View {
     @State var password = ""
     
     @StateObject var viewModel: SignInViewModel
+    
+    @State var inputNotValid = false
      
     var body: some View {
             VStack {
@@ -143,14 +148,30 @@ struct SignUpView: View {
                 }
                 .frame(maxWidth: 300)
                 .padding(10)
-               
-                NavigationLink(destination: CreatUserNameView(viewModel: viewModel, email: email, password: password)) {
+                
+                Text("Please enter a valid email address and password. Passwords must be at least 6 characters long")
+                    .foregroundColor(inputNotValid ? .red : .black)
+                    .multilineTextAlignment(.center)
+                
+                if password.count > 5 {
+                    NavigationLink(destination: CreatUserNameView(viewModel: viewModel, email: email, password: password)) {
+                        Text("Next")
+                            .frame(width: 100, height: 30)
+                            .background(.green)
+                            .cornerRadius(5)
+                            .foregroundColor(.black)
+                            .padding(10)
+                    }
+                } else  {
                     Text("Next")
                         .frame(width: 100, height: 30)
                         .background(.green)
                         .cornerRadius(5)
                         .foregroundColor(.black)
                         .padding(10)
+                        .onTapGesture {
+                            inputNotValid = true
+                        }
                 }
 
             }
@@ -291,7 +312,7 @@ struct CreatUserNameView: View {
             // create user using inputs from previous view
             viewModel.signUp(email: email, password: password)})
         .sheet(isPresented: $isAddingPhoto) {
-            PhotoPicker()
+            PhotoPicker(isAddingPhoto: $isAddingPhoto)
                 }
     }
 }

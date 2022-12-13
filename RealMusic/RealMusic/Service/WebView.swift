@@ -15,7 +15,7 @@ struct WebView: UIViewRepresentable {
     
     //let var showLoading: Bool
     
-    @StateObject var showWebView: showView
+    @Binding var showWebView: Bool
     
     func makeUIView(context: Context) -> some UIView {
         let urlRequest = SpotifyAPI.shared.getAccessTokenURL() //else { return  }
@@ -39,10 +39,15 @@ struct WebView: UIViewRepresentable {
             //showLoading = true
         }, didFinish: {
             print("error2")
-            showWebView.showView = false
+            //showWebView = false
+            //need to sort this out
+            
             
 
             //showLoading = false
+        }, receivedToken: {
+            print("Received token")
+            showWebView = false
         })
     }
 }
@@ -51,10 +56,12 @@ class WebViewCoordinator: NSObject, WKNavigationDelegate {
     
     var didStart: () -> Void
     var didFinish: () -> Void
+    var receivedToken: () -> Void
     
-    init(didStart: @escaping () -> Void = {}, didFinish: @escaping () -> Void = {}) {
+    init(didStart: @escaping () -> Void = {}, didFinish: @escaping () -> Void = {}, receivedToken: @escaping () -> Void = {}) {
         self.didStart = didStart
         self.didFinish = didFinish
+        self.receivedToken = receivedToken
     }
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigaition: WKNavigation!) {
@@ -87,6 +94,8 @@ class WebViewCoordinator: NSObject, WKNavigationDelegate {
             tokenString = String(tokenString[..<index])
             UserDefaults.standard.setValue(tokenString, forKey: "authorization")
             print("set token")
+            //showWebView = false
+            receivedToken()
             
         }
         

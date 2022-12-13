@@ -31,7 +31,7 @@ struct SearchResultView: View {
                     //.padding(20)
                     .frame(width: 50, height: 50)
             } placeholder: {
-                Color.orange
+                Color.black
                     .frame(width: 50, height: 50)
             }
             
@@ -74,18 +74,24 @@ struct SearchResultView: View {
                     withAnimation() {
                         searchToggle.toggle()
                     }
+                    let formatter = DateFormatter()
+                    formatter.dateFormat = "dd MMM yyyy"
+                    let date = formatter.string(from: Date())
                     createPostModel.createPost(
-                        post: Post(songID: song.songID,
+                        post: Post(id: ("\(date)-\(UserDefaults.standard.value(forKey: "uid"))"),
+                                    songID: song.songID,
                                    uid: UserDefaults.standard.value(forKey: "uid") as! String,
-                                      username: UserDefaults.standard.value(forKey: "username") as! String,
-                                      cover: song.cover,
-                                    datePosted: Date(),
-                                      preview: song.preview_url))
+                                   username: UserDefaults.standard.value(forKey: "username") as! String ?? "",
+                                   cover: song.cover,
+                                   datePosted: Date(),
+                                   preview: song.preview_url
+                                   ))
                 }
                 //.fontWeight(.bold)
 
             
-            
+            //13 Dec 2022 13:33:40
+
                 
   
         }
