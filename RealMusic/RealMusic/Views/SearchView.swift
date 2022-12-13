@@ -21,6 +21,9 @@ struct SearchView: View {
     
     @Binding var searchToggle: Bool
     
+    @State var searchError = false
+    
+    @State var rerun = false
     
     
     var body: some View {
@@ -28,23 +31,25 @@ struct SearchView: View {
         let binding = Binding<String>(get: {
                     self.searchText
                 }, set: {
+                    print("a")
                     self.searchText = $0
-                    // do whatever you want here
-                    print("String change \(searchText)")
-                    spotifyAPI.search(input: searchText) { (result) in
-                        switch result {
-                            case .success(let data) :
-                            print("success 123\(data)")
-                            //createPostModel.createPost(post: data)
-                            searchResults = []
-                            searchResults = data
-                            case .failure(let error) :
-                            searchResults = []
-                                print()
-                            }
-                        }
+                    
+//                    print("String change \(searchText)")
+//                    spotifyAPI.search(input: searchText) { (result) in
+//                        switch result {
+//                            case .success(let data) :
+//                            print("success 123\(data)")
+//                            //createPostModel.createPost(post: data)
+//                            searchResults = []
+//                            searchResults = data
+//                            case .failure(let error) :
+//                            //searchResults = []
+//                                print("recieved an error")
+//                            }
+//                    }
 
                 })
+            
         return
         HStack {
             VStack {
@@ -61,7 +66,8 @@ struct SearchView: View {
                 .padding(20)
                 HStack {
                     Image(systemName: "magnifyingglass")
-                    TextField("Search ..", text: binding)
+                    TextField("Search ..", text: $searchText)
+                        .autocorrectionDisabled(true)
 
                     
                 }
@@ -87,6 +93,64 @@ struct SearchView: View {
             .background(.black)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .onChange(of: searchText, perform: { text in
+            
+            print("search text has changed to \(searchText)")
+            
+            print("String change \(searchText)")
+            if searchText != "" {
+                spotifyAPI.search(input: searchText) { (result) in
+                    switch result {
+                    case .success(let data) :
+                        print("success 123\(data)")
+                        //createPostModel.createPost(post: data)
+                        searchResults = []
+                        searchResults = data
+                        searchError = false
+                    case .failure(let error) :
+                        print("recieved an error")
+                        //searchResults = []
+                        searchError = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            if searchError {
+                                print("toggling rerun")
+                                rerun.toggle()
+                            }
+                        }
+                    }
+                }
+            }
+            
+        })
+        .onChange(of: rerun, perform: { text in
+            
+            print("search text has changed to \(searchText)")
+            
+            print("String change \(searchText)")
+            if searchText != "" {
+                spotifyAPI.search(input: searchText) { (result) in
+                    switch result {
+                    case .success(let data) :
+                        print("success 123\(data)")
+                        //createPostModel.createPost(post: data)
+                        searchResults = []
+                        searchResults = data
+                        searchError = false
+                    case .failure(let error) :
+                        //searchResults = []
+                        searchError = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                            if searchError {
+                                rerun.toggle()
+                                
+                            }
+                        }
+                        print("recieved an error")
+                    }
+                }
+            }
+            
+        })
         
     }
     

@@ -102,45 +102,47 @@ class SpotifyAPI: ObservableObject {
             print("name: \(name)")
         }
         
-        let url = URL(string: "https://api.spotify.com/v1/search?q=track%" + name + "&type=track%2Cartist&market=ES&limit=20&offset=0")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        let requestHeader:  [String : String] = [
-            "Authorization" : "Bearer \(token)",
-            "Content-Type" : "application/json"
-        ]
-        request.allHTTPHeaderFields = requestHeader
-        print("Bearer \(token)")
-
-        let post = URLSession.shared.dataTask(with: request) {data, response, error in
-             if let error = error {
-               print("Error with fetching films: \(error)")
-               return
-             }
-             
-             guard let httpResponse = response as? HTTPURLResponse,
-                   (200...299).contains(httpResponse.statusCode) else {
-                 print("Error with the response, unexpected status code: \(response)")
-                 completion(.failure(APIError.expiredToken))
-                 return
-             }
-            var posts: [SpotifySong] = []
-            if let data = data,
-               let results = try? JSONDecoder().decode(Response.self, from: data) {
+        if let url = URL(string: "https://api.spotify.com/v1/search?q=track%" + name + "&type=track%2Cartist&market=GB&limit=20&offset=0") {
+            var request = URLRequest(url: url)
+            request.httpMethod = "GET"
+            let requestHeader:  [String : String] = [
+                "Authorization" : "Bearer \(token)",
+                "Content-Type" : "application/json"
+            ]
+            request.allHTTPHeaderFields = requestHeader
+            print("Bearer \(token)")
+            
+            let post = URLSession.shared.dataTask(with: request) {data, response, error in
+                if let error = error {
+                    print("Error with fetching films: \(error)")
+                    return
+                }
+                
+                guard let httpResponse = response as? HTTPURLResponse,
+                      (200...299).contains(httpResponse.statusCode) else {
+                    print("Error with the response, unexpected status code: \(response)")
+                    completion(.failure(APIError.expiredToken))
+                    return
+                }
+                var posts: [SpotifySong] = []
+                if let data = data,
+                   let results = try? JSONDecoder().decode(Response.self, from: data) {
                     print("done")
                     print(results)
-                for song in results.tracks.items {
-                    print("adding song to search list")
-                    posts.append(SpotifySong(songID: song.id ,title: song.album.name,artist: song.artists[0].name, uid: "xyz", cover: song.album.images[0].url, preview_url: song.preview_url))
+                    for song in results.tracks.items {
+                        print("adding song to search list")
+                        posts.append(SpotifySong(songID: song.id ,title: song.album.name,artist: song.artists[0].name, uid: "xyz", cover: song.album.images[0].url, preview_url: song.preview_url))
+                    }
+                    //return post
+                } else {
+                    completion(.success([]))
                 }
-                //return post
-            } else {
-                fatalError()
+                
+                completion(.success(posts))
+                
             }
-            completion(.success(posts))
-            
+                .resume()
         }
-        .resume()
     }
     
     
