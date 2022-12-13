@@ -17,7 +17,7 @@ import FirebaseStorage
 struct PhotoPicker: View {
     
     @State private var selectedItem: PhotosPickerItem? = nil
-    @State private var selectedImageData: Data? = nil
+    @Binding var selectedImageData: Data?
     
     @Binding var isAddingPhoto: Bool
     

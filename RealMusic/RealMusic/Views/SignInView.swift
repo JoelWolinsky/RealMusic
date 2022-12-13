@@ -165,9 +165,9 @@ struct SignUpView: View {
                 } else  {
                     Text("Next")
                         .frame(width: 100, height: 30)
-                        .background(.green)
+                        .background(Color("Grey 3"))
                         .cornerRadius(5)
-                        .foregroundColor(.black)
+                        .foregroundColor(Color("Grey 1"))
                         .padding(10)
                         .onTapGesture {
                             inputNotValid = true
@@ -210,6 +210,10 @@ struct CreatUserNameView: View {
     @State private var isAddingPhoto = false
 
     @State var profilePicture = String()
+    
+    @State var selectedImageData: Data? = nil
+    
+    @State var showEmailError = false
 
     var body: some View {
         VStack {
@@ -223,7 +227,7 @@ struct CreatUserNameView: View {
                     isAddingPhoto = true
                 } label: {
                     HStack {
-                        Text("Upload Profile Picture")
+                        Text("Tap To Upload Profile Picture")
                             .foregroundColor(.white)
                         
                         Image(systemName: "plus")
@@ -232,7 +236,7 @@ struct CreatUserNameView: View {
                 }
                 .padding(.bottom, 10)
 
-            Text("Enter Your Username")
+            Text("Enter a username")
                 .foregroundColor(.white)
             
             VStack {
@@ -243,26 +247,28 @@ struct CreatUserNameView: View {
                     .background(.white)
                     .cornerRadius(3)
                     .foregroundColor(.black)
+                    .autocorrectionDisabled(true)
                 
                 Text(String(errorMessage) ?? "")
                     .foregroundColor(.red)
+            
 
             }
             .frame(maxWidth: 300)
             .padding(10)
-              
+            if username.count > 5  && selectedImageData != nil && viewModel.auth.currentUser?.uid != nil {
                 Button(action: {
                     print("username \(username)")
                     print(viewModel.auth.currentUser?.uid)
                     
                     let uid = viewModel.auth.currentUser?.uid ?? ""
- 
+                    
                     userViewModel.fetchUsers() { users in
                         self.nameTaken = false
-
-                        print("print usernames")
+                        
+                        //print("print usernames")
                         for user in users {
-                            print(user.username)
+                            //print(user.username)
                             if username == user.username {
                                 self.nameTaken = true
                                 self.errorMessage = "Username is taken"
@@ -270,32 +276,18 @@ struct CreatUserNameView: View {
                             }
                         }
                         
-                        
                         print("name taken \(nameTaken)")
                         if nameTaken == false {
-                            
-  
+                            print("name taken = false")
                             userViewModel.fetchProfilePic(uid: uid) { profile in
                                 print("this is the profile url \( profile)")
                                 profilePicture = profile
-                                
                                 userViewModel.createUser(uid: uid, username: username, profilePic: profilePicture ?? "no profile pic")
                                 viewModel.signedIn = true
                                 viewModel.welcomeMessage = true
                             }
-       
-                           
-
                         }
-                        //nameTaken = true
                     }
-                    
-                    //print("name taken \(nameTaken)")
-
-                    
-                    //viewModel.signedIn = true
-                    
-                    
                 }, label: {
                     Text("Sign Up")
                         .frame(width: 100, height: 30)
@@ -303,8 +295,34 @@ struct CreatUserNameView: View {
                         .cornerRadius(5)
                         .foregroundColor(.black)
                         .padding(10)
-
+                    
                 })
+            } else {
+                Button (action: {
+                    print("show email error")
+                    if selectedImageData == nil {
+                        self.errorMessage = "Please upload a profile picture"
+                    } else {
+                        if username.count > 5 {
+                            self.errorMessage = "Please go back and enter a valid email"
+
+                        } else {
+                            self.errorMessage = "Username must be at least 6 characters long"
+
+                        }
+
+                    }
+                }, label: {
+                    Text("Sign Up")
+                        .frame(width: 100, height: 30)
+                        .background(Color("Grey 3"))
+                        .cornerRadius(5)
+                        .foregroundColor(Color("Grey 1"))
+                        .padding(10)
+                    
+                })
+                //.disabled(true)
+            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.black)
@@ -312,7 +330,12 @@ struct CreatUserNameView: View {
             // create user using inputs from previous view
             viewModel.signUp(email: email, password: password)})
         .sheet(isPresented: $isAddingPhoto) {
-            PhotoPicker(isAddingPhoto: $isAddingPhoto)
+            PhotoPicker(selectedImageData: $selectedImageData, isAddingPhoto: $isAddingPhoto)
                 }
+        .onChange(of: selectedImageData, perform: { value in
+            if selectedImageData != nil {
+                isAddingPhoto = false
+            }
+        })
     }
 }
