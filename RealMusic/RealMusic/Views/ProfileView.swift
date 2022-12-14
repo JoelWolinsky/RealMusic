@@ -40,7 +40,7 @@ struct ProfileView: View {
                           .aspectRatio(contentMode: .fill)
                           
                 } placeholder: {
-                    Color.orange
+                    Color.black
                 }
                 .frame(width: 100, height: 100)
                 .cornerRadius(50)
@@ -69,7 +69,7 @@ struct ProfileView: View {
                 UserDefaults.resetStandardUserDefaults()
             } label: {
                 Text("Sign out")
-                    .foregroundColor(.orange)
+                    .foregroundColor(.green)
             }
             .frame(maxWidth: .infinity, alignment: .center)
             

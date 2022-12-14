@@ -7,6 +7,8 @@
 
 import Foundation
 import SwiftUI
+import FirebaseStorage
+
 
 // View for users to sign in the app
 struct SignInView: View {
@@ -279,13 +281,43 @@ struct CreatUserNameView: View {
                         print("name taken \(nameTaken)")
                         if nameTaken == false {
                             print("name taken = false")
-                            userViewModel.fetchProfilePic(uid: uid) { profile in
-                                print("this is the profile url \( profile)")
-                                profilePicture = profile
+//                            userViewModel.fetchProfilePic(uid: uid) { profile in
+//                                print("this is the profile url \( profile)")
+//                                profilePicture = profile
                                 userViewModel.createUser(uid: uid, username: username, profilePic: profilePicture ?? "no profile pic")
                                 viewModel.signedIn = true
                                 viewModel.welcomeMessage = true
+                            //}
+                            Task {
+                                let data = selectedImageData
+                                print("select photo")
+                                let storage = Storage.storage()
+                                let storageRef = storage.reference()
+                                // Create a reference to the file you want to upload
+                                let riversRef = storageRef.child("images/\(UserDefaults.standard.value(forKey: "uid")!).heic")
+                                print(UserDefaults.standard.value(forKey: "uid"))
+                                // Upload the file to the path "images/rivers.jpg"
+                                let uploadTask = riversRef.putData(data!, metadata: nil) { (metadata, error) in
+                                    guard let metadata = metadata else {
+                                        // Uh-oh, an error occurred
+                                        print(error)
+                                        //                              fatalError()
+                                        return
+                                    }
+                                    
+                                    // Metadata contains file metadata such as size, content-type.
+                                    let size = metadata.size
+                                    // You can also access to download URL after upload.
+                                    riversRef.downloadURL { (url, error) in
+                                        guard let downloadURL = url else {
+                                            // Uh-oh, an error occurred!
+                                            //  fatalError()
+                                            return
+                                        }
+                                    }
+                                }
                             }
+
                         }
                     }
                 }, label: {

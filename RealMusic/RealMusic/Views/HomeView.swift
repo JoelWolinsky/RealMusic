@@ -54,6 +54,8 @@ struct HomeView: View {
     @State var showPicker = false
     
     @State var currentSongPosted = false
+    
+    @State var welcomeMessage: Bool
 
 
     var body: some View {
@@ -131,6 +133,11 @@ struct HomeView: View {
                                     print("fail recent")
                                     // print(error)
                                 }
+                            }
+                            
+                            userViewModel.fetchProfilePic(uid: (UserDefaults.standard.value(forKey: "uid") ?? "placeholder") as! String ) { profile in
+                                print("fetching profile for \(profile)")
+                                profilePic = profile
                             }
                             
                         }
@@ -246,7 +253,7 @@ struct HomeView: View {
                         }
                         
                         userViewModel.fetchProfilePic(uid: (UserDefaults.standard.value(forKey: "uid") ?? "placeholder") as! String ) { profile in
-                            print(profile)
+                            print("fetching profile for \(profile)")
                             profilePic = profile
                         }
                         
@@ -308,6 +315,13 @@ struct HomeView: View {
                     //feedViewModel.fetchReactions()
                 }
             })
+            .onChange(of: welcomeMessage, perform: { value in
+                userViewModel.fetchProfilePic(uid: (UserDefaults.standard.value(forKey: "uid") ?? "placeholder") as! String ) { profile in
+                    print("fetching profile for \(profile)")
+                    profilePic = profile
+                }
+                
+            })
             
             .background(.black)
             .environment(\.colorScheme, .dark)
@@ -317,12 +331,12 @@ struct HomeView: View {
     }
     
     
-    struct HomeView_Previews: PreviewProvider {
-        static var previews: some View {
-            HomeView(feedViewModel: FeedViewModel())
-            
-        }
-    }
+//    struct HomeView_Previews: PreviewProvider {
+//        static var previews: some View {
+//            HomeView(feedViewModel: FeedViewModel())
+//            
+//        }
+//    }
     
     
 }

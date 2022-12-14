@@ -25,6 +25,16 @@ struct EmojiLibraryView: View {
     @Binding var disableScroll: Int
     let postUID: String
     @Binding var showPicker: Bool
+    
+    @State var searchText = String()
+    
+    private var searchResults: [Emoji] {
+        var results = emojiCatalogue.emojis
+          if searchText.isEmpty { return results }
+            return results.filter {
+            $0.description.lowercased().contains(searchText.lowercased()) || $0.emoji.contains(searchText)
+          }
+    }
 
     
 
@@ -35,9 +45,37 @@ struct EmojiLibraryView: View {
     
     var body: some View { 
         VStack {
+            TextField("Search", text: $searchText)
+                .padding(20)
+            ScrollView(.horizontal) {
+                LazyHStack {
+                    ForEach(searchResults) { result in
+                        Button (action: {
+                            showEmojiLibrary.toggle()
+                            
+                            print("upload \(result.description)")
+                            emojiReactionModel.uploadReaction(postUID: postUID, emoji: result)
+                            longPress = 0
+                            blur = 0
+                            disableScroll = 1000
+                            showPicker = false
+                            let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
+                            impactHeavy.impactOccurred()
+                            
+                            reactionViewModel.addLocalReaction(reaction: Emoji(emoji: result.emoji, description: result.description))
+                            
+                            
+                        }, label: {
+                            Text(result.emoji)
+                                .font(.system(size: 40))
+                        })
+                    }
+                }
+            }
+            .frame(height: 50)
             ScrollView {
                 ForEach(emojiCatalogue.library) { category in
-                    VStack {
+                    LazyVStack {
 
                         Text(category.name)
                             .foregroundColor(Color("Grey"))

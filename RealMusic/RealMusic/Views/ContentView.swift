@@ -36,7 +36,7 @@ struct ContentView: View {
             if viewModel.signedIn {
                    // .environment(viewModel: viewModel)
                 
-                HomeView(feedViewModel: feedViewModel)
+                HomeView(feedViewModel: feedViewModel, welcomeMessage: viewModel.welcomeMessage)
                     .sheet(isPresented: $viewModel.welcomeMessage) {
                         WelcomeView(viewModel: viewModel)
                     }
@@ -84,6 +84,7 @@ struct ContentView: View {
 
             }
         )
+        
 
     }
         

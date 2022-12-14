@@ -93,6 +93,9 @@ struct AddFriendsView: View {
                                 self.nameFound = true
                                 let foundUser = user
                                 userViewModel.addFriend(friend: foundUser)
+                                friendsViewModel.fetchFriends()
+                                analyticsModel.compareForEach(yourUID: yourUID, friends: friendsViewModel.friends)
+                                username = ""
                             }
                         }
                         if self.nameFound == false {

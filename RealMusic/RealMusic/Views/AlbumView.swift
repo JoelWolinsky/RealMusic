@@ -46,30 +46,36 @@ struct AlbumView: View {
     var body: some View {
         ZStack {
             VStack {
-                if let url = URL(string: album.cover ?? "") {
-                    CacheAsyncImage(url: url) { phase in
-                        switch phase {
-                        case .success(let image):
-                            image
-                                .resizable()
-                                .scaledToFill()
-                                .cornerRadius(7)
-                                .padding(.bottom, 5)
-                            
-                        case .failure(let error):
-                            //                    //print(error)
-                            Text("fail")
-                        case .empty:
-                            // preview loader
-                            Rectangle()
-                                .scaledToFill()
-                                .cornerRadius(7)
-                                .padding(.bottom, 5)
-                                .foregroundColor(.black)
+                ZStack {
+                    if let url = URL(string: album.cover ?? "") {
+                        CacheAsyncImage(url: url) { phase in
+                            switch phase {
+                            case .success(let image):
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                                    .cornerRadius(7)
+                                    .padding(.bottom, 5)
+                                
+                            case .failure(let error):
+                                //                    //print(error)
+                                Text("fail")
+                            case .empty:
+                                // preview loader
+                                Rectangle()
+                                    .scaledToFill()
+                                    .cornerRadius(7)
+                                    .padding(.bottom, 5)
+                                    .foregroundColor(.black)
+                            }
                         }
                     }
-                }
                     
+                    Image(systemName: playButton)
+                        .font(.system(size:100))
+                        .foregroundColor(playButtonColour)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                }
 
                 Text(album.title)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
@@ -87,22 +93,22 @@ struct AlbumView: View {
 
             }
             
-            ZStack {
-
-                Image(systemName: playButton)
-                    .font(.system(size:100))
-                    .offset(y: 60)
-                    .foregroundColor(playButtonColour)
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-            .padding(20)
+//            ZStack {
+//
+//                Image(systemName: playButton)
+//                    .font(.system(size:100))
+//                    .offset(y: 60)
+//                    .foregroundColor(playButtonColour)
+//            }
+//            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+//            .padding(20)
         }
         .padding(20)
         .background(Color("Grey 3"))
         .cornerRadius(10)
         .onTapGesture {
             print("tap post")
-            withAnimation(.easeIn(duration: 0.2)) {
+            withAnimation(.easeIn(duration: 0.0)) {
                 
                 if longPress == 10 {
                     print(10)

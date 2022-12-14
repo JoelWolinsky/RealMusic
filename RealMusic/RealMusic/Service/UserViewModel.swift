@@ -96,6 +96,7 @@ class UserViewModel: ObservableObject {
     
     func fetchProfilePic (uid: String, completion: @escaping(String) -> Void) {
                 
+        print("Fetching profile pic for \(uid)")
         let storage = Storage.storage()
         let storageRef = storage.reference()
         
