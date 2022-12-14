@@ -9,6 +9,7 @@ import SwiftUI
 import FirebaseCore
 import FirebaseFirestore
 import FirebaseAuth
+import SwiftUITrackableScrollView
 
 // This is the main screen of the app which displays the users feed consisting of posts made by other users
 struct HomeView: View {
@@ -56,18 +57,24 @@ struct HomeView: View {
     @State var currentSongPosted = false
     
     @State var welcomeMessage: Bool
+    
+    @State private var scrollViewContentOffset = CGFloat(0)
 
 
     var body: some View {
         ScrollViewReader { (proxy: ScrollViewProxy) in
             
             ZStack {
+              
                 //var posts = [Post(title: "This is a test", userID: "This userID test", username: "Woli")]
                 NavigationView {
                     ZStack {
+                       
                         
-                        ScrollView {
+                        TrackableScrollView(.vertical, showIndicators: false, contentOffset: $scrollViewContentOffset) {
                             VStack{
+                                Text("\(scrollViewContentOffset)")
+                                    .foregroundColor(.orange)
                                 HStack {
                                     Text("Currently Listening To:")
                                         .foregroundColor(.white)
@@ -104,7 +111,7 @@ struct HomeView: View {
                                 
                                 ForEach(feedViewModel.posts) { post in
                                     VStack {
-                                        PostView(post: post, reactionViewModel: ReactionViewModel(id: post.id ?? ""), longPress: $longPress, chosenPostID: $chosenPostID, blur: $blur, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue, showPicker: showPicker, userViewModel: userViewModel)
+                                        PostView(post: post, reactionViewModel: ReactionViewModel(id: post.id ?? ""), longPress: $longPress, chosenPostID: $chosenPostID, blur: $blur, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue, showPicker: showPicker, userViewModel: userViewModel, scrollViewContentOffset: $scrollViewContentOffset)
                                         
                                         
                                         
@@ -196,7 +203,6 @@ struct HomeView: View {
                             }
                             
                             Spacer()
-                                .background(.green)
                             
                             
                             Button {

@@ -29,7 +29,11 @@ struct PhotoPicker: View {
                 selection: $selectedItem,
                 matching: .images,
                 photoLibrary: .shared()) {
-                    Text("Select a photo")
+                    Text("Select a profile picture")
+                        .foregroundColor(.black)
+                        .padding(5)
+                        .background(.white)
+                        .cornerRadius(5)
                 }
                 .onChange(of: selectedItem) { newItem in
                     Task {
@@ -69,23 +73,22 @@ struct PhotoPicker: View {
                     }
                 }
             
-            if let selectedImageData,
-               let uiImage = UIImage(data: selectedImageData) {
-                Image(uiImage: uiImage)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 250, height: 250)
-                Button {
-                    isAddingPhoto.toggle()
-                    
-                } label: {
-                    Text("Upload")
-                }
-                .padding(20)            }
+//            if let selectedImageData,
+//               let uiImage = UIImage(data: selectedImageData) {
+//                Image(uiImage: uiImage)
+//                    .resizable()
+//                    .scaledToFit()
+//                    .frame(width: 250, height: 250)
+//                Button {
+//                    isAddingPhoto.toggle()
+//
+//                } label: {
+//                    Text("Upload")
+//                }
+//                .padding(20)            }
             
             
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.black)
     }
 }

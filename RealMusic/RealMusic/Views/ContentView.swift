@@ -72,7 +72,6 @@ struct ContentView: View {
                 switch result {
                     case true:
                     print("aaaa token valid ")
-                
                     showWebView = false
                     //createPostModel.createPost(post: data[0])
 
@@ -84,6 +83,8 @@ struct ContentView: View {
 
             }
         )
+        .accentColor(.white)
+
         
 
     }

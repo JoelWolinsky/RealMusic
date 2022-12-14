@@ -18,11 +18,13 @@ struct WebView: UIViewRepresentable {
     @Binding var showWebView: Bool
     
     func makeUIView(context: Context) -> some UIView {
-        let urlRequest = SpotifyAPI.shared.getAccessTokenURL() //else { return  }
+        var urlRequest = SpotifyAPI.shared.getAccessTokenURL() //else { return  }
+        //urlRequest!.httpShouldHandleCookies = false
         let webview = WKWebView()
         webview.navigationDelegate = context.coordinator
         print("loading webview")
         print(urlRequest)
+
         webview.load(urlRequest!)
             
         return webview

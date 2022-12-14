@@ -40,6 +40,8 @@ struct PostView: View {
     
     @StateObject var userViewModel: UserViewModel
     
+    @Binding var scrollViewContentOffset: CGFloat
+    
     
 
 
@@ -64,7 +66,7 @@ struct PostView: View {
 
                 
                 
-                AlbumView(album: Album(title: post.title ?? "placeholder",artist: post.artist ?? "placeholder" ,cover: post.cover ?? "KSG Cover", preview: post.preview ?? ""), reactionViewModel: reactionViewModel, longPress: $longPress, chosenPostID: $chosenPostID, blur: $blur, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue, showPicker: $showPicker, postID: post.id ?? "" , emojiPickerOpacity: $emojiPickerOpacity)
+                AlbumView(album: Album(title: post.title ?? "placeholder",artist: post.artist ?? "placeholder" ,cover: post.cover ?? "KSG Cover", preview: post.preview ?? ""), reactionViewModel: reactionViewModel, longPress: $longPress, chosenPostID: $chosenPostID, blur: $blur, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue, showPicker: $showPicker, postID: post.id ?? "" , emojiPickerOpacity: $emojiPickerOpacity, scrollViewContentOffset: $scrollViewContentOffset)
                 //.padding(.bottom, 50)
             
             }
@@ -116,7 +118,7 @@ struct PostView: View {
                 .opacity(Double(emojiPickerOpacity))
                 
             }
-                
+            
         }
         .padding(.bottom, 40)
         .sheet(isPresented: $showReactionsList) {

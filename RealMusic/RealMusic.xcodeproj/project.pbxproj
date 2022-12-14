@@ -59,6 +59,9 @@
 		C9848D7028EEDA17003D4FFA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9848D6F28EEDA17003D4FFA /* User.swift */; };
 		C9848D7228F2DE95003D4FFA /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9848D7128F2DE95003D4FFA /* FeedViewModel.swift */; };
 		C9848D7428F2E2DF003D4FFA /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9848D7328F2E2DF003D4FFA /* UserViewModel.swift */; };
+		C9941713294A47A3007DC026 /* ChooseProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9941712294A47A3007DC026 /* ChooseProfileView.swift */; };
+		C9941715294A47E4007DC026 /* ChooseUsernameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9941714294A47E4007DC026 /* ChooseUsernameView.swift */; };
+		C9941718294A5982007DC026 /* SwiftUITrackableScrollView in Frameworks */ = {isa = PBXBuildFile; productRef = C9941717294A5982007DC026 /* SwiftUITrackableScrollView */; };
 		C9A0A5FE29128A1700A6FD97 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A0A5FD29128A1700A6FD97 /* SignInViewModel.swift */; };
 		C9A0A60029140F2E00A6FD97 /* showView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A0A5FF29140F2E00A6FD97 /* showView.swift */; };
 		C9D458FB28F8154300547D30 /* AlbumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D458FA28F8154300547D30 /* AlbumView.swift */; };
@@ -149,6 +152,8 @@
 		C9848D6F28EEDA17003D4FFA /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		C9848D7128F2DE95003D4FFA /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		C9848D7328F2E2DF003D4FFA /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
+		C9941712294A47A3007DC026 /* ChooseProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseProfileView.swift; sourceTree = "<group>"; };
+		C9941714294A47E4007DC026 /* ChooseUsernameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseUsernameView.swift; sourceTree = "<group>"; };
 		C9A0A5FD29128A1700A6FD97 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
 		C9A0A5FF29140F2E00A6FD97 /* showView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = showView.swift; sourceTree = "<group>"; };
 		C9D458FA28F8154300547D30 /* AlbumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumView.swift; sourceTree = "<group>"; };
@@ -165,6 +170,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9941718294A5982007DC026 /* SwiftUITrackableScrollView in Frameworks */,
 				C95EC513290833B500550F06 /* Grey.colorset in Frameworks */,
 				899536B029AA01B5932A3B38 /* Pods_RealMusic.framework in Frameworks */,
 			);
@@ -236,6 +242,8 @@
 				C907BF8829020749002197F1 /* SearchResultView.swift */,
 				C907BF84290195CF002197F1 /* SearchView.swift */,
 				C9DBD628290E885600ACD644 /* SignInView.swift */,
+				C9941712294A47A3007DC026 /* ChooseProfileView.swift */,
+				C9941714294A47E4007DC026 /* ChooseUsernameView.swift */,
 				C9597E6B29269BE30020395E /* PhotoPicker.swift */,
 			);
 			path = Views;
@@ -365,6 +373,7 @@
 			);
 			name = RealMusic;
 			packageProductDependencies = (
+				C9941717294A5982007DC026 /* SwiftUITrackableScrollView */,
 			);
 			productName = RealMusic;
 			productReference = C947B9E828EAECDD00B97EB1 /* RealMusic.app */;
@@ -443,6 +452,7 @@
 			mainGroup = C947B9DF28EAECDD00B97EB1;
 			packageReferences = (
 				C947BA1B28EAF4FF00B97EB1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				C9941716294A5982007DC026 /* XCRemoteSwiftPackageReference "trackable-scroll-view" */,
 			);
 			productRefGroup = C947B9E928EAECDD00B97EB1 /* Products */;
 			projectDirPath = "";
@@ -623,8 +633,10 @@
 				C9DBD62D290FDAD200ACD644 /* WebView.swift in Sources */,
 				C939D6D9292A8F2200C255F2 /* AnalyticsModel.swift in Sources */,
 				C939D6ED29351DA800C255F2 /* BlurModel.swift in Sources */,
+				C9941715294A47E4007DC026 /* ChooseUsernameView.swift in Sources */,
 				C9848D7428F2E2DF003D4FFA /* UserViewModel.swift in Sources */,
 				C939D6E3292E864900C255F2 /* EmojiCatalogue.swift in Sources */,
+				C9941713294A47A3007DC026 /* ChooseProfileView.swift in Sources */,
 				C9DBD62B290F2B5900ACD644 /* APIConstants.swift in Sources */,
 				C9597E68292567000020395E /* Extensions.swift in Sources */,
 				C93501182942431000EAA4BC /* PostReactionsListItemView.swift in Sources */,
@@ -1047,7 +1059,23 @@
 				minimumVersion = 9.0.0;
 			};
 		};
+		C9941716294A5982007DC026 /* XCRemoteSwiftPackageReference "trackable-scroll-view" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/maxnatchanon/trackable-scroll-view";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C9941717294A5982007DC026 /* SwiftUITrackableScrollView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C9941716294A5982007DC026 /* XCRemoteSwiftPackageReference "trackable-scroll-view" */;
+			productName = SwiftUITrackableScrollView;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C947B9E028EAECDD00B97EB1 /* Project object */;
 }

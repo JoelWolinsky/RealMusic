@@ -48,7 +48,7 @@ struct AddFriendsView: View {
                 }
             } label: {
                 Text("Back")
-                    .foregroundColor(.green)
+                    .foregroundColor(.white)
                     .font(.system(size:20))
             }
             .frame(maxWidth: .infinity, alignment: .trailing)
@@ -63,22 +63,29 @@ struct AddFriendsView: View {
             
             HStack {
                 Image(systemName: "magnifyingglass")
-                TextField("Search for a user ..", text: $username)
+                    .foregroundColor(Color("Grey 1"))
+                TextField("", text: $username)
+                    .placeholder(when: username.isEmpty) {
+                           Text("Search for a user ..").foregroundColor(Color("Grey 1"))
+                   }
+                
 
             }
             .padding(10)
             .frame(height: 40)
-            .background(.green)
+            .background(.white)
             .cornerRadius(13)
             .padding(.leading, 30)
             .padding(.trailing, 30)
+            .foregroundColor(.black)
 
             Text(errorMessage)
                 .foregroundColor(.red)
             Text("Add Friend")
                 .padding(5)
                 .frame(width: 120)
-                .background(.green)
+                .background(.white)
+                .foregroundColor(.black)
                 .cornerRadius(20)
                 .fontWeight(.bold)
                 .padding(.bottom, 20)
@@ -127,7 +134,7 @@ struct AddFriendsView: View {
                                     .aspectRatio(contentMode: .fill)
                                 
                             } placeholder: {
-                                Color.black
+                                Color("Grey 3")
                             }
                             .frame(width: 60, height: 60)
                             .cornerRadius(30)
@@ -146,7 +153,7 @@ struct AddFriendsView: View {
                             }
                             
                             Text(String(friend.matchScore ?? 0))
-                                .foregroundColor(.green)
+                                .foregroundColor(.white)
 
                         }
                         

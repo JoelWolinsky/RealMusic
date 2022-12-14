@@ -41,6 +41,9 @@ struct AlbumView: View {
     @Binding var emojiPickerOpacity: Int
     
     @State var noPreview = false
+    
+    @Binding var scrollViewContentOffset: CGFloat
+
 
     
     var body: some View {
@@ -102,6 +105,38 @@ struct AlbumView: View {
 //            }
 //            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
 //            .padding(20)
+            
+            Image(systemName: "face.smiling")
+                .foregroundColor(.white)
+                .font(.system(size: 20))
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
+                .offset(x: 10, y: 10)
+                .onTapGesture {
+                    withAnimation(.easeIn(duration: 0.0)) {
+                        if longPress == 10 {
+                            print(10)
+                            longPress = 0
+                            disableScroll = 1000
+                            blur = 0
+                            showEmojiLibrary = false
+                            showPicker = false
+                        } else {
+                            print(0)
+                            disableScroll = 0
+                            longPress = 10
+                            showPicker = true
+                            
+                            chosenPostID = postID
+                            
+                            
+                            //chosenPostID = post.id ?? ""
+                            blur = 20
+                            
+                        }
+                        let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
+                        impactHeavy.impactOccurred()
+                    }
+                }
         }
         .padding(20)
         .background(Color("Grey 3"))
@@ -220,6 +255,18 @@ struct AlbumView: View {
                 showPicker = false
             }
         }
+        .onChange(of: scrollViewContentOffset, perform: { value in
+            if self.playButton == "play.fill"  {
+                self.playButton = "pause.fill"
+                audioPlayer.pause()
+                withAnimation(.easeIn(duration: 0.5)) {
+                    playButtonColour = .white
+                }
+                withAnimation(.easeIn(duration: 0.5).delay(2)) {
+                    playButtonColour = .clear
+                }            }
+
+        })
         
     }
     

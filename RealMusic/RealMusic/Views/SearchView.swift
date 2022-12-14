@@ -66,17 +66,21 @@ struct SearchView: View {
                 .padding(20)
                 HStack {
                     Image(systemName: "magnifyingglass")
-                    TextField("Search ..", text: $searchText)
-                        .autocorrectionDisabled(true)
+                        .foregroundColor(Color("Grey 1"))
+                    TextField("", text: $searchText)
+                        .placeholder(when: searchText.isEmpty) {
+                               Text("Search...").foregroundColor(Color("Grey 1"))
+                       }
 
                     
                 }
                     .padding(10)
                     .frame(height: 40)
-                    .background(.green)
+                    .background(.white)
                     .cornerRadius(13)
                     .padding(30)
                     .padding(.top, -40)
+                    .foregroundColor(.black)
                 
                 ScrollView {
                     ForEach(searchResults) { song in

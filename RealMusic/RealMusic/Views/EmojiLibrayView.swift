@@ -75,8 +75,7 @@ struct EmojiLibraryView: View {
             .frame(height: 50)
             ScrollView {
                 ForEach(emojiCatalogue.library) { category in
-                    LazyVStack {
-
+                    VStack {
                         Text(category.name)
                             .foregroundColor(Color("Grey"))
                             .frame(maxWidth: .infinity, alignment: .leading)

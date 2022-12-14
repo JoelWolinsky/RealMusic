@@ -64,7 +64,7 @@ struct SearchResultView: View {
             
             Text("Post")
                 .frame(width: 60, height: 25)
-                .background(.green)
+                .background(.white)
                 .cornerRadius(3)
                 .frame(maxWidth: 60, maxHeight: .infinity, alignment: .bottomTrailing)
                 .foregroundColor(.black)

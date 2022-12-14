@@ -8,6 +8,8 @@
 import Foundation
 import SwiftUI
 import FirebaseStorage
+import PhotosUI
+
 
 
 // View for users to sign in the app
@@ -78,7 +80,7 @@ struct SignInView: View {
                 }, label: {
                     Text("Sign In")
                         .frame(width: 100, height: 30)
-                        .background(.green)
+                        .background(.white)
                         .cornerRadius(5)
                         .foregroundColor(.black)
                         .padding(10)
@@ -90,7 +92,9 @@ struct SignInView: View {
                         .foregroundColor(Color("Grey 1"))
                     NavigationLink (destination: SignUpView(viewModel: viewModel)) {
                         Text("Create Account")
-                        .foregroundColor(.green)                    }
+                        .foregroundColor(.white)
+                        .fontWeight(.bold)
+                    }
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -159,7 +163,7 @@ struct SignUpView: View {
                     NavigationLink(destination: CreatUserNameView(viewModel: viewModel, email: email, password: password)) {
                         Text("Next")
                             .frame(width: 100, height: 30)
-                            .background(.green)
+                            .background(.white)
                             .cornerRadius(5)
                             .foregroundColor(.black)
                             .padding(10)
@@ -225,18 +229,41 @@ struct CreatUserNameView: View {
                 .fontWeight(.bold)
                 .padding(.bottom, 10)
             
+            
+            
             Button {
                     isAddingPhoto = true
                 } label: {
-                    HStack {
-                        Text("Tap To Upload Profile Picture")
-                            .foregroundColor(.white)
-                        
-                        Image(systemName: "plus")
-                            .foregroundColor(.green)
+                    VStack {
+                        VStack {
+                            if let selectedImageData,
+                               let uiImage = UIImage(data: selectedImageData) {
+                                Image(uiImage: uiImage)
+                                    .resizable()
+                                    .scaledToFill()
+                                    .clipShape(Circle())
+
+                            }
+                            else {
+                                Circle()
+                                    .foregroundColor(Color("Grey 3"))
+                            }
+                        }
+                        .frame(maxWidth: 100, maxHeight: 100)
+
+                        HStack {
+                            //Text("Choose a Profile Picture")
+                            PhotoPicker(selectedImageData: $selectedImageData, isAddingPhoto: $isAddingPhoto)
+                                //.foregroundColor(.black)
+                                //.padding(5)
+                                //.background(.white)
+                                .frame(maxWidth: 200, maxHeight: 30)
+                                //.cornerRadius(5)
+                        }
+                        .padding(5)
                     }
                 }
-                .padding(.bottom, 10)
+                .padding(.bottom, 30)
 
             Text("Enter a username")
                 .foregroundColor(.white)
@@ -323,7 +350,7 @@ struct CreatUserNameView: View {
                 }, label: {
                     Text("Sign Up")
                         .frame(width: 100, height: 30)
-                        .background(.green)
+                        .background(.white)
                         .cornerRadius(5)
                         .foregroundColor(.black)
                         .padding(10)
@@ -361,9 +388,9 @@ struct CreatUserNameView: View {
         .onAppear(perform: {
             // create user using inputs from previous view
             viewModel.signUp(email: email, password: password)})
-        .sheet(isPresented: $isAddingPhoto) {
-            PhotoPicker(selectedImageData: $selectedImageData, isAddingPhoto: $isAddingPhoto)
-                }
+//        .sheet(isPresented: $isAddingPhoto) {
+//            PhotoPicker(selectedImageData: $selectedImageData, isAddingPhoto: $isAddingPhoto)
+//                }
         .onChange(of: selectedImageData, perform: { value in
             if selectedImageData != nil {
                 isAddingPhoto = false

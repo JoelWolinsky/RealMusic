@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import WebKit
 
 struct ProfileView: View {
     
@@ -28,7 +29,7 @@ struct ProfileView: View {
                 }
             } label: {
                 Text("Back")
-                    .foregroundColor(.green)
+                    .foregroundColor(.white)
                     .font(.system(size:20))
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -67,9 +68,19 @@ struct ProfileView: View {
             Button {
                 signInModel.signOut()
                 UserDefaults.resetStandardUserDefaults()
+                
+                // Clears cookies so that user is logged out of their Spotify account and it can't be accessed by the next user
+                HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
+                WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
+                            records.forEach { record in
+                                WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {})
+                                print("[WebCacheCleaner] Record \(record) deleted")
+                            }
+                        }
+                
             } label: {
                 Text("Sign out")
-                    .foregroundColor(.green)
+                    .foregroundColor(.white)
             }
             .frame(maxWidth: .infinity, alignment: .center)
             

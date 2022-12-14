@@ -105,12 +105,13 @@ struct CurrentlyPlayingView: View {
                 
                 Text(postButtonText)
                     .frame(width: 80, height: 30)
-                    .background(postButtonColour)
+                    .background(backgroundColor)
                     .cornerRadius(15)
                     .foregroundColor(song.title == "" ? Color("Grey 1") : .white)
                     .padding(.bottom, 5)
                     .padding(.top, -25)
                     .font(.system(size: 17))
+                    .brightness(-0.1)
                     .onTapGesture {
                         if song.title != "" {
                             currentSongPosted.toggle()

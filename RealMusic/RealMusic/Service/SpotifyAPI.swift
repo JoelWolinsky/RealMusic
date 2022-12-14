@@ -33,6 +33,7 @@ class SpotifyAPI: ObservableObject {
         guard let url = components.url else { return nil }
         
         print("URL ACCESS TOKEN", url)
+        
         return URLRequest(url: url)
     }
     
