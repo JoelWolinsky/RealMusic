@@ -3494,6 +3494,7 @@
 		C96AEB7F4EAD67AE75D0BD6EF13C254F /* export.h in Headers */ = {isa = PBXBuildFile; fileRef = F8E6B8B820360FCCB26391FB8E31BF38 /* export.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C971ADAE52E6D8403164FAB63AB72E5A /* pollset.cc in Sources */ = {isa = PBXBuildFile; fileRef = 26390A18D42E1D8675B15F28842DD49D /* pollset.cc */; settings = {COMPILER_FLAGS = "-DGRPC_ARES=0 -Wno-comma -DGRPC_SHADOW_BORINGSSL_SYMBOLS -fno-objc-arc"; }; };
 		C983107B3BEED0AAB21E1C0A54E5115F /* mpmcqueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 78B31025153C5B08504E8FC10F972444 /* mpmcqueue.h */; };
+		C994171B2950DD0A007DC026 /* SwiftUITrackableScrollView in Frameworks */ = {isa = PBXBuildFile; productRef = C994171A2950DD0A007DC026 /* SwiftUITrackableScrollView */; };
 		C9A15D50D4D668164B3A5856290AC8BB /* ssl_stat.cc in Sources */ = {isa = PBXBuildFile; fileRef = 32717E3DB6845304C599F85B1D15B876 /* ssl_stat.cc */; settings = {COMPILER_FLAGS = "-DOPENSSL_NO_ASM -GCC_WARN_INHIBIT_ALL_WARNINGS -w -fno-objc-arc"; }; };
 		C9ADAC3E617A1499FD7E4ED24E2BB157 /* endpoint.upb.c in Sources */ = {isa = PBXBuildFile; fileRef = B4D15ABECDD6B35FF3D25773A7AA15B5 /* endpoint.upb.c */; settings = {COMPILER_FLAGS = "-DGRPC_ARES=0 -Wno-comma -DGRPC_SHADOW_BORINGSSL_SYMBOLS -fno-objc-arc"; }; };
 		C9DD39DF76AEBB3B838F31B4712C70F9 /* http_server_filter.h in Headers */ = {isa = PBXBuildFile; fileRef = 30A3B866D80B9E1E8166B3A59F2CE3A1 /* http_server_filter.h */; };
@@ -12136,6 +12137,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C994171B2950DD0A007DC026 /* SwiftUITrackableScrollView in Frameworks */,
 				164FC990D89C3C19681C9A8940F9E75F /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -18746,6 +18748,9 @@
 			dependencies = (
 			);
 			name = abseil;
+			packageProductDependencies = (
+				C994171A2950DD0A007DC026 /* SwiftUITrackableScrollView */,
+			);
 			productName = absl;
 			productReference = BF96B57ADE05E8909F823BDF6868B3E3 /* abseil */;
 			productType = "com.apple.product-type.framework";
@@ -19000,6 +19005,9 @@
 				en,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
+			packageReferences = (
+				C99417192950DD0A007DC026 /* XCRemoteSwiftPackageReference "trackable-scroll-view" */,
+			);
 			productRefGroup = 808DD4ADBBB1A069E1B71D7C3BDE070E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -23493,6 +23501,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C99417192950DD0A007DC026 /* XCRemoteSwiftPackageReference "trackable-scroll-view" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/maxnatchanon/trackable-scroll-view";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C994171A2950DD0A007DC026 /* SwiftUITrackableScrollView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C99417192950DD0A007DC026 /* XCRemoteSwiftPackageReference "trackable-scroll-view" */;
+			productName = SwiftUITrackableScrollView;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 }

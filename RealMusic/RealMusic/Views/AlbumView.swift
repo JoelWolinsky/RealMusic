@@ -43,6 +43,8 @@ struct AlbumView: View {
     @State var noPreview = false
     
     @Binding var scrollViewContentOffset: CGFloat
+    
+    @State var scrollViewContentOffsetCounter = 0
 
 
     
@@ -255,17 +257,23 @@ struct AlbumView: View {
                 showPicker = false
             }
         }
+        // Pauses playback when the user scrolls on
         .onChange(of: scrollViewContentOffset, perform: { value in
             if self.playButton == "play.fill"  {
-                self.playButton = "pause.fill"
-                audioPlayer.pause()
-                withAnimation(.easeIn(duration: 0.5)) {
-                    playButtonColour = .white
+                if scrollViewContentOffsetCounter > 100 {
+                    self.playButton = "pause.fill"
+                    audioPlayer.pause()
+                    withAnimation(.easeIn(duration: 0.5)) {
+                        playButtonColour = .white
+                    }
+                    withAnimation(.easeIn(duration: 0.5).delay(2)) {
+                        playButtonColour = .clear
+                    }
+                    scrollViewContentOffsetCounter = 0
+                } else {
+                    scrollViewContentOffsetCounter += 1
                 }
-                withAnimation(.easeIn(duration: 0.5).delay(2)) {
-                    playButtonColour = .clear
-                }            }
-
+            }
         })
         
     }

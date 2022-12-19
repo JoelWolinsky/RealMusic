@@ -63,18 +63,12 @@ struct HomeView: View {
 
     var body: some View {
         ScrollViewReader { (proxy: ScrollViewProxy) in
-            
             ZStack {
-              
                 //var posts = [Post(title: "This is a test", userID: "This userID test", username: "Woli")]
                 NavigationView {
                     ZStack {
-                       
-                        
                         TrackableScrollView(.vertical, showIndicators: false, contentOffset: $scrollViewContentOffset) {
                             VStack{
-                                Text("\(scrollViewContentOffset)")
-                                    .foregroundColor(.orange)
                                 HStack {
                                     Text("Currently Listening To:")
                                         .foregroundColor(.white)
@@ -285,7 +279,7 @@ struct HomeView: View {
                 
                 
                 if showProfileView {
-                    ProfileView(signInModel: signInModel, profilePic: profilePic ?? "no profile", showProfileView: $showProfileView)
+                    ProfileView(signInModel: signInModel, profilePic: profilePic ?? "no profile", showProfileView: $showProfileView, feedViewModel: feedViewModel, splitByDate: SplitByDate(posts: feedViewModel.myPosts))
                         .zIndex(1)
                         .transition(.slideRight)
                     

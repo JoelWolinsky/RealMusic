@@ -10,6 +10,8 @@ import FirebaseFirestore
 
 class FeedViewModel: ObservableObject {
     @Published var posts = [Post]()
+    @Published var myPosts = [Post]()
+
 //    @Published var postReactions = [Reactions]
 //    let postView = PostViewModel()
 //    let userView = UserViewModel()
@@ -26,8 +28,19 @@ class FeedViewModel: ObservableObject {
         let userView = UserViewModel()
         posts = []
         postView.fetchData { posts in
-            self.posts = posts
+            for post in posts {
+                
+                if post.datePosted.formatted(date: .numeric, time: .omitted) == Date().formatted(date: .numeric, time: .omitted) {
+                    self.posts.append(post)
+                    print("todays post: \(post.uid)")
+                }
+                if post.uid == UserDefaults.standard.value(forKey: "uid") as! String {
+                    self.myPosts.append(post)
+                }
+            }
             self.posts = self.posts.sorted(by: { $0.datePosted > $1.datePosted })
+            self.myPosts = self.myPosts.sorted(by: { $0.datePosted > $1.datePosted })
+
         }
         
     }

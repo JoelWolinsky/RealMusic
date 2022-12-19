@@ -19,6 +19,15 @@ struct ProfileView: View {
     
     @ObservedObject var analyticsModel = AnalyticsModel()
     
+    @StateObject var feedViewModel: FeedViewModel
+    
+    var gridItemLayout = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()),GridItem(.flexible()), GridItem(.flexible())]
+    
+    @ObservedObject var getDateModel = GetDateModel()
+    
+    @State var splitByDate: SplitByDate
+    
+    
     var body: some View {
         
         VStack {
@@ -35,6 +44,9 @@ struct ProfileView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             
             VStack {
+                Text("Profile")
+                    .foregroundColor(.white)
+                    .fontWeight(.bold)
                 AsyncImage(url: URL(string: profilePic)) { image in
                     image
                           .resizable()
@@ -43,22 +55,90 @@ struct ProfileView: View {
                 } placeholder: {
                     Color.black
                 }
-                .frame(width: 100, height: 100)
-                .cornerRadius(50)
+                .frame(width: 130, height: 130)
+                .cornerRadius(80)
                 .padding( 20)
                 
+                Text(UserDefaults.standard.value(forKey: "username") as! String)
+                    .foregroundColor(.white)
+                    .font(.system(size: 30))
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding(.bottom, 10)
+                
+//                VStack {
+//                    Text("UID: " + (UserDefaults.standard.value(forKey: "uid") as? String ?? ""))
+//                        .foregroundColor(Color("Grey"))
+//                        .frame(maxWidth: .infinity, alignment: .leading)
+//                        .padding(.bottom, 10)
+//                }
                 VStack {
-                    Text(UserDefaults.standard.value(forKey: "username") as! String)
-                        .foregroundColor(Color("Grey"))
+                    Text("Memories")
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.bottom, 10)
+                        .font(.system(size: 25))
+                    ScrollView {
+                        VStack {
+                            ForEach(splitByDate.sections) { section in
+                                VStack {
+                                    Text("\(getDateModel.getMonthYear(datePosted: section.date))")
+                                        .foregroundColor(.white)
+                                        .fontWeight(.bold)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
 
-                    Text("UID: " + (UserDefaults.standard.value(forKey: "uid") as? String ?? ""))
-                        .foregroundColor(Color("Grey"))
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.bottom, 10)
-
-
+                                    LazyVGrid(columns: gridItemLayout) {
+                                        ForEach(section.occurrences) { post in
+                                            ZStack {
+                                                if let url = URL(string: post.cover ?? "") {
+                                                    CacheAsyncImage(url: url) { phase in
+                                                        switch phase {
+                                                        case .success(let image):
+                                                            image
+                                                                .resizable()
+                                                                .scaledToFill()
+                                                                .cornerRadius(1)
+                                                                .padding(.bottom, 5)
+                                                            
+                                                        case .failure(let error):
+                                                            //                    //print(error)
+                                                            Text("fail")
+                                                        case .empty:
+                                                            // preview loader
+                                                            Rectangle()
+                                                                .scaledToFill()
+                                                                .cornerRadius(1)
+                                                                .padding(.bottom, 5)
+                                                                .foregroundColor(.black)
+                                                        }
+                                                    }
+                                                }
+                                                Text("\(getDateModel.getDay(datePosted: post.datePosted))")
+                                                    .foregroundColor(.white)
+                                                
+                                            }
+                                            
+                                        }
+                                    }
+                                }
+                            }
+                            //
+                            //                        ForEach(feedViewModel.myPosts) { post in
+                            //                            ZStack {
+                            //                                VStack {
+                            //
+                            ////                                    Text("\(getDateModel.getDay(datePosted: post.datePosted))")
+                            ////                                        .foregroundColor(.white)
+                            ////                                    Text("\(getDateModel.getMonth(datePosted: post.datePosted))")
+                            ////                                        .foregroundColor(.white)
+                            //                                }
+                            ////                                post.datePosted
+                            ////                                formatter.string(from: post.datePosted)
+                            ////                                let formatter = DateFormatter()
+                            ////                                formatter.dateFormat = "dd MMM yyyy HH:mm:ss"
+                            ////                                print(formatter.string(from: Date()))
+                            //                            }
+                            //                        }
+                        }
+                        
+                    }
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -90,8 +170,13 @@ struct ProfileView: View {
         .padding(30)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(.black)
+//        .onAppear(perform: {
+//            splitByDate = SplitByDate(posts: feedViewModel.myPosts)
+//
+//        })
 //        .scaledToFill()
 //        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
 
     }
+    
 }
