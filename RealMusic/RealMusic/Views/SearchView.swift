@@ -58,9 +58,9 @@ struct SearchView: View {
                         searchToggle.toggle()
                     }
                 } label: {
-                    Text("Back")
+                    Image(systemName: "arrow.left")
                         .foregroundColor(.white)
-                        .font(.system(size:20))
+                        .font(.system(size: 20))
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(20)

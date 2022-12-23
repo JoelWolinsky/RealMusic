@@ -13,7 +13,7 @@ class SignInViewModel: ObservableObject {
     let auth = Auth.auth()
 
     @Published var signedIn = false
-    @Published var welcomeMessage = true
+    @Published var welcomeMessage = false
 
     
     @ObservedObject var userViewModel = UserViewModel()
@@ -40,8 +40,9 @@ class SignInViewModel: ObservableObject {
                 
             }
             
-            UserDefaults.standard.setValue(self.auth.currentUser?.uid ?? "", forKey: "uid")
+            UserDefaults.standard.setValue(self.auth.currentUser!.uid, forKey: "uid")
             self.signedIn = true
+            self.welcomeMessage = true
             completion(true)
         }
     }
@@ -54,6 +55,7 @@ class SignInViewModel: ObservableObject {
                 return
             }
             var uid = self.auth.currentUser?.uid
+            self.welcomeMessage = true
             UserDefaults.standard.setValue(uid ?? "", forKey: "uid")
             print("uid \(uid)")
 

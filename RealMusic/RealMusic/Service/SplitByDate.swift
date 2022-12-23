@@ -42,7 +42,7 @@ struct SplitByDate {
         // Then we want to sort them so that they are in the correct order
         self.sections = grouped.map { month -> Month in
             Month(title: month.key, occurrences: month.value, date: month.value[0].datePosted)
-        }.sorted { $0.date < $1.date }
+        }.sorted { $0.date > $1.date }
         
         print("number of sections \(sections.count)")
     }

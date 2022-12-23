@@ -33,7 +33,7 @@ struct ContentView: View {
         VStack {
 //            Text(test)
 //                .foregroundColor(.orange)
-            if viewModel.signedIn {
+            if viewModel.signedIn && UserDefaults.standard.value(forKey: "uid") != nil {
                    // .environment(viewModel: viewModel)
                 
                 HomeView(feedViewModel: feedViewModel, welcomeMessage: viewModel.welcomeMessage)
@@ -61,6 +61,7 @@ struct ContentView: View {
         }.onAppear( perform: {
             
             viewModel.signedIn = viewModel.isSignedIn
+            
             //viewModel.signedIn = false
             //test = "hello world"
             // check if token still valid here, make nil if so

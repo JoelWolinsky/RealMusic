@@ -204,18 +204,31 @@ struct HomeView: View {
                                     showProfileView.toggle()
                                 }
                             } label: {
-                                AsyncImage(url: URL(string: profilePic)) { image in
-                                    image
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
-                                    
-                                } placeholder: {
-                                    Image("ProfilePicPlaceholder")
+                                if let url = URL(string: profilePic) {
+                                    CacheAsyncImage(url: url) { phase in
+                                        switch phase {
+                                        case .success(let image):
+                                            image
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fill)
+                                            
+                                        case .failure(let error):
+                                            //                    //print(error)
+                                            Text("fail")
+                                                .foregroundColor(.white)
+                                        case .empty:
+                                            // preview loader
+                                            Rectangle()
+                                                .background(.green)
+                                                .foregroundColor(.green)
+                                                .frame(width: 30, height: 30)
+
+                                        }
+                                    }
+                                    .frame(width: 30, height: 30)
+                                    .cornerRadius(15)
                                 }
-                                .frame(width: 30, height: 30)
-                                .cornerRadius(15)
                             }
-                            
                         }
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                         .padding(.leading, 20)
@@ -319,15 +332,30 @@ struct HomeView: View {
                 userViewModel.fetchProfilePic(uid: (UserDefaults.standard.value(forKey: "uid") ?? "placeholder") as! String ) { profile in
                     print("fetching profile for \(profile)")
                     profilePic = profile
+//                    feedViewModel.fetchMyPosts()
+//                    feedViewModel.fetchPosts()
+
                 }
                 
             })
+            
+//            .onChange(of: ("\(UserDefaults.standard.value(forKey: "token"))") ?? "", perform: { value in
+//                print("Token changed")
+//                feedViewModel.fetchMyPosts()
+//                feedViewModel.fetchPosts()
+//
+//            })
             
             .background(.black)
             .environment(\.colorScheme, .dark)
             
         }
-//       
+        .onAppear(perform: {
+            feedViewModel.fetchMyPosts()
+            //feedViewModel.fetchPosts()
+
+        })
+       
     }
     
     

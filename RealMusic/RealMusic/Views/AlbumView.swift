@@ -195,6 +195,13 @@ struct AlbumView: View {
                                             audioPlayer = try AVAudioPlayer(contentsOf: url!)
                                             guard let player = audioPlayer else { return }
                                             
+                                            // To play even if phone on silent
+                                            do {
+                                                try AVAudioSession.sharedInstance().setCategory(.playback)
+                                            } catch(let error) {
+                                                print(error.localizedDescription)
+                                            }
+                                            
                                             player.prepareToPlay()
                                             player.play()
                                             print("playing")
@@ -260,7 +267,7 @@ struct AlbumView: View {
         // Pauses playback when the user scrolls on
         .onChange(of: scrollViewContentOffset, perform: { value in
             if self.playButton == "play.fill"  {
-                if scrollViewContentOffsetCounter > 100 {
+                if scrollViewContentOffsetCounter > 70 {
                     self.playButton = "pause.fill"
                     audioPlayer.pause()
                     withAnimation(.easeIn(duration: 0.5)) {

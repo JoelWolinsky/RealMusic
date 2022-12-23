@@ -18,6 +18,7 @@ class FeedViewModel: ObservableObject {
     
     init() {
         fetchPosts()
+        //fetchMyPosts()
         print("fetching")
     }
     
@@ -34,15 +35,25 @@ class FeedViewModel: ObservableObject {
                     self.posts.append(post)
                     print("todays post: \(post.uid)")
                 }
+            }
+            self.posts = self.posts.sorted(by: { $0.datePosted > $1.datePosted })
+        }
+    }
+    
+    // Fetches every post and user who made the post
+    func fetchMyPosts() {
+        self.myPosts = []
+        let postView = PostViewModel()
+        let userView = UserViewModel()
+        postView.fetchData { posts in
+            for post in posts {
+                print("this is my uid \(UserDefaults.standard.value(forKey: "uid"))")
                 if post.uid == UserDefaults.standard.value(forKey: "uid") as! String {
                     self.myPosts.append(post)
                 }
             }
-            self.posts = self.posts.sorted(by: { $0.datePosted > $1.datePosted })
             self.myPosts = self.myPosts.sorted(by: { $0.datePosted > $1.datePosted })
-
         }
-        
     }
     
     func fetchReactions(postUID: String, completion: @escaping([Emoji]) -> Void) {

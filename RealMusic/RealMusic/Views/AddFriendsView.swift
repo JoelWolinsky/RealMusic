@@ -47,9 +47,9 @@ struct AddFriendsView: View {
                     friendsToggle.toggle()
                 }
             } label: {
-                Text("Back")
+                Image(systemName: "arrow.right")
                     .foregroundColor(.white)
-                    .font(.system(size:20))
+                    .font(.system(size: 20))
             }
             .frame(maxWidth: .infinity, alignment: .trailing)
             
@@ -127,17 +127,33 @@ struct AddFriendsView: View {
                 ScrollView {
                     ForEach(friendsViewModel.friends.sorted(by: { $0.matchScore ?? 0 > $1.matchScore ?? 0 })) { friend in
                         HStack {
-                            
-                            AsyncImage(url: URL(string: friend.profilePic ?? "no profile pic")) { image in
-                                image
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                
-                            } placeholder: {
-                                Color("Grey 3")
+                            if let url = URL(string: friend.profilePic ?? "") {
+                                CacheAsyncImage(url: url) { phase in
+                                    switch phase {
+                                    case .success(let image):
+                                        image
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fill)
+                                        
+                                    case .failure(let error):
+                                        //                    //print(error)
+                                        Rectangle()
+                                            .background(.green)
+                                            .foregroundColor(.black)
+                                            .frame(width: 100, height: 110)
+                                    case .empty:
+                                        // preview loader
+                                        Rectangle()
+                                            .background(.green)
+                                            .foregroundColor(.black)
+                                            .frame(width: 100, height: 110)
+
+                                    }
+                                }
+                                .frame(width: 60, height: 60)
+                                .cornerRadius(30)
                             }
-                            .frame(width: 60, height: 60)
-                            .cornerRadius(30)
+                           
 //                            .onAppear(perform: {
 //                                userViewModel.fetchProfilePic(uid: friend.id!) { profile in
 //                                    print("profilepic is \(profile)")

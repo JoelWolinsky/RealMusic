@@ -232,7 +232,7 @@ struct CreatUserNameView: View {
             
             
             Button {
-                    isAddingPhoto = true
+                    //isAddingPhoto = true
                 } label: {
                     VStack {
                         VStack {

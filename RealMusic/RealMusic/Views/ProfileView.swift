@@ -21,11 +21,12 @@ struct ProfileView: View {
     
     @StateObject var feedViewModel: FeedViewModel
     
-    var gridItemLayout = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()),GridItem(.flexible()), GridItem(.flexible())]
+    @State var gridItemLayout = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()),GridItem(.flexible()), GridItem(.flexible())]
     
     @ObservedObject var getDateModel = GetDateModel()
     
     @State var splitByDate: SplitByDate
+    
     
     
     var body: some View {
@@ -37,9 +38,10 @@ struct ProfileView: View {
                     showProfileView.toggle()
                 }
             } label: {
-                Text("Back")
+                Image(systemName: "arrow.left")
                     .foregroundColor(.white)
-                    .font(.system(size:20))
+                    .font(.system(size: 20))
+                    //.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             
@@ -47,17 +49,27 @@ struct ProfileView: View {
                 Text("Profile")
                     .foregroundColor(.white)
                     .fontWeight(.bold)
-                AsyncImage(url: URL(string: profilePic)) { image in
-                    image
-                          .resizable()
-                          .aspectRatio(contentMode: .fill)
-                          
-                } placeholder: {
-                    Color.black
+                if let url = URL(string: profilePic) {
+                    CacheAsyncImage(url: url) { phase in
+                        switch phase {
+                        case .success(let image):
+                            image
+                                  .resizable()
+                                  .aspectRatio(contentMode: .fill)
+                            
+                        case .failure(let error):
+                            //                    //print(error)
+                            Text("fail")
+                        case .empty:
+                            // preview loader
+                            Color.black
+                        }
+                    }
+                    .frame(width: 130, height: 130)
+                    .cornerRadius(80)
+                    .padding( 20)
                 }
-                .frame(width: 130, height: 130)
-                .cornerRadius(80)
-                .padding( 20)
+
                 
                 Text(UserDefaults.standard.value(forKey: "username") as! String)
                     .foregroundColor(.white)
@@ -119,6 +131,7 @@ struct ProfileView: View {
                                     }
                                 }
                             }
+
                             //
                             //                        ForEach(feedViewModel.myPosts) { post in
                             //                            ZStack {
@@ -146,9 +159,8 @@ struct ProfileView: View {
             
             
             Button {
-                signInModel.signOut()
                 UserDefaults.resetStandardUserDefaults()
-                
+                UserDefaults.standard.set(nil, forKey: "uid")
                 // Clears cookies so that user is logged out of their Spotify account and it can't be accessed by the next user
                 HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
                 WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
@@ -157,7 +169,8 @@ struct ProfileView: View {
                                 print("[WebCacheCleaner] Record \(record) deleted")
                             }
                         }
-                
+                signInModel.signOut()
+
             } label: {
                 Text("Sign out")
                     .foregroundColor(.white)
@@ -170,10 +183,12 @@ struct ProfileView: View {
         .padding(30)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(.black)
-//        .onAppear(perform: {
-//            splitByDate = SplitByDate(posts: feedViewModel.myPosts)
-//
-//        })
+        .onChange(of: showProfileView) { change in
+            print("appear profile")
+            gridItemLayout = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()),GridItem(.flexible()), GridItem(.flexible())]
+            splitByDate = SplitByDate(posts: feedViewModel.myPosts)
+
+        }
 //        .scaledToFill()
 //        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
 
