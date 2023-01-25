@@ -17,7 +17,7 @@ struct ReactionsView: View {
     
     //@ObservedObject var emojiReactionModel = EmojiReactionModel()
     
-    @State var emojiSize = 20.0
+    @State var emojiSize: CGFloat
     
     var body: some View {
         HStack {
@@ -27,7 +27,7 @@ struct ReactionsView: View {
                         .font(.system(size: emojiSize))
                 } else {
                     Text(emoji.emoji)
-                        .font(.system(size: 20))
+                        .font(.system(size: emojiSize))
                         .onAppear(perform:{
                             //print("user uid saved \(UserDefaults.standard.value(forKey: "uid") as! String)")
 
@@ -57,7 +57,7 @@ struct ReactionsView: View {
         }
         //.frame(maxWidth: CGFloat(reactionViewModel.reactions.count * 25) + 50, maxHeight: 40)
         .frame(minWidth: reactionViewModel.distinctReactions.isEmpty ? 0 : 20)
-        .padding(reactionViewModel.distinctReactions.isEmpty ? 0 : 10)
+        .padding(reactionViewModel.distinctReactions.isEmpty ? 0 : emojiSize/2)
         .background(Color("Grey 3"))
         //.cornerRadius(20)
         .overlay(
@@ -67,10 +67,12 @@ struct ReactionsView: View {
         .cornerRadius(40)
         .frame(maxWidth: .infinity, alignment: .leading)
         .onReceive(reactionViewModel.objectWillChange, perform: {
+            print("number of emojis has changed for post \(post.title)")
+            let temp = emojiSize
             if !reactionViewModel.reactions.isEmpty {
                 emojiSize = 2.0
                 withAnimation(.spring(response: 0.6, dampingFraction: 0.5, blendDuration: 1)) {
-                    emojiSize = 20.0
+                    emojiSize = temp
                 }
             }
         })

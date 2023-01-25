@@ -32,7 +32,14 @@ class FeedViewModel: ObservableObject {
             for post in posts {
                 
                 if post.datePosted.formatted(date: .numeric, time: .omitted) == Date().formatted(date: .numeric, time: .omitted) {
-                    self.posts.append(post)
+                    print("this is a post UID \(post.uid)")
+                    if post.uid == UserDefaults.standard.value(forKey: "uid") as! String {
+                        self.myPosts.append(post)
+
+                    } else {
+                        self.posts.append(post)
+
+                    }
                     print("todays post: \(post.uid)")
                 }
             }

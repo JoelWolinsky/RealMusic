@@ -148,7 +148,7 @@ struct WelcomeView4: View {
     var body: some View {
         VStack{
         
-            Text("Tip: You can only post one song per day and the post will dissapear after midnight so choose wisely!")
+            Text("Tip: You can only post one song per day and the post will disappear after midnight so choose wisely!")
                 .padding(.bottom, 5)
                 .multilineTextAlignment(.center)
 

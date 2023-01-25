@@ -28,21 +28,6 @@ class EmojiReactionModel: ObservableObject {
         
     }
     
-    func fetchReactions(postUID: String, completion: @escaping([Emoji]) -> Void ) {
-//        var emojis = [Emoji]()
-//        let db = Firestore.firestore()
-//        
-//        db.collection("Posts")
-//            .document(postUID)
-//            .collection("Reactions")
-//            .getDocuments() { (querySnapshot, err) in
-//                guard let documents = querySnapshot?.documents else { return }
-//                documents.forEach{ emoji in
-//                    guard let emoji = try? emoji.data(as: Emoji.self) else { return }
-//                    emojis.append(emoji)
-//                }
-//                completion(emojis)
-//            }
-    }
+
     
 }

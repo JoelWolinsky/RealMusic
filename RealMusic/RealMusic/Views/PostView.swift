@@ -88,7 +88,7 @@ struct PostView: View {
                     }
                 }
             })
-            ReactionsView(reactionViewModel: reactionViewModel, post: post)
+            ReactionsView(reactionViewModel: reactionViewModel, post: post, emojiSize: 20.0)
                 .padding(.leading, 10)
                 .offset(x: 20, y: 30)
                 .blur(radius:CGFloat(blur))

@@ -7,13 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		899536B029AA01B5932A3B38 /* Pods_RealMusic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D9151DA4226559FFCFBB8B9 /* Pods_RealMusic.framework */; };
-		BD884F9FDB0D839BC10CD680 /* Pods_RealMusicTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15CA16557FF6A3E52527D360 /* Pods_RealMusicTests.framework */; };
+		0A261E60AC25C043C01C9742 /* Pods_RealMusicTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B6412425FD94DE6B1AE41DA /* Pods_RealMusicTests.framework */; };
+		C6ED3833FB0ABA449BF4FA5D /* Pods_RealMusic_RealMusicUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC612ED4C8A470327EFEFEBA /* Pods_RealMusic_RealMusicUITests.framework */; };
 		C907BF7B28F9AAC3002197F1 /* CreatePostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C907BF7A28F9AAC3002197F1 /* CreatePostViewModel.swift */; };
 		C907BF7D28FFE8A5002197F1 /* SpotifyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C907BF7C28FFE8A5002197F1 /* SpotifyAPI.swift */; };
 		C907BF85290195CF002197F1 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C907BF84290195CF002197F1 /* SearchView.swift */; };
 		C907BF8929020749002197F1 /* SearchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C907BF8829020749002197F1 /* SearchResultView.swift */; };
 		C907BF8B2902131D002197F1 /* SpotifySong.swift in Sources */ = {isa = PBXBuildFile; fileRef = C907BF8A2902131D002197F1 /* SpotifySong.swift */; };
+		C934142529814B6F00286C99 /* YourPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C934142429814B6F00286C99 /* YourPostView.swift */; };
 		C935010729365FF100EAA4BC /* LibraryEmoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = C935010629365FF100EAA4BC /* LibraryEmoji.swift */; };
 		C9350109293672ED00EAA4BC /* EmojiLibrayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9350108293672ED00EAA4BC /* EmojiLibrayView.swift */; };
 		C935010B2937CC2900EAA4BC /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = C935010A2937CC2900EAA4BC /* Category.swift */; };
@@ -71,7 +72,7 @@
 		C9DBD629290E885600ACD644 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DBD628290E885600ACD644 /* SignInView.swift */; };
 		C9DBD62B290F2B5900ACD644 /* APIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DBD62A290F2B5900ACD644 /* APIConstants.swift */; };
 		C9DBD62D290FDAD200ACD644 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DBD62C290FDAD200ACD644 /* WebView.swift */; };
-		CC45AB22BE2A94605C06DF79 /* Pods_RealMusic_RealMusicUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68CAC1828A3B3E422C3AF610 /* Pods_RealMusic_RealMusicUITests.framework */; };
+		E35BD52B1904C520EB399C15 /* Pods_RealMusic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF44F4971BBEDA599BECA706 /* Pods_RealMusic.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,18 +93,19 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		15CA16557FF6A3E52527D360 /* Pods_RealMusicTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RealMusicTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2026ACDD2F7089F6C3DF4FC1 /* Pods-RealMusic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealMusic.release.xcconfig"; path = "Target Support Files/Pods-RealMusic/Pods-RealMusic.release.xcconfig"; sourceTree = "<group>"; };
-		4C73B5EEAAE12DC628949F0A /* Pods-RealMusic.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealMusic.debug.xcconfig"; path = "Target Support Files/Pods-RealMusic/Pods-RealMusic.debug.xcconfig"; sourceTree = "<group>"; };
-		5B8668BD7EE3A665ED200C6F /* Pods-RealMusicTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealMusicTests.debug.xcconfig"; path = "Target Support Files/Pods-RealMusicTests/Pods-RealMusicTests.debug.xcconfig"; sourceTree = "<group>"; };
-		68CAC1828A3B3E422C3AF610 /* Pods_RealMusic_RealMusicUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RealMusic_RealMusicUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9D9151DA4226559FFCFBB8B9 /* Pods_RealMusic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RealMusic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		ABB263BE4591B29CE65E95C8 /* Pods-RealMusicTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealMusicTests.release.xcconfig"; path = "Target Support Files/Pods-RealMusicTests/Pods-RealMusicTests.release.xcconfig"; sourceTree = "<group>"; };
+		0B134BA0CD2171808FF8FEE0 /* Pods-RealMusic-RealMusicUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealMusic-RealMusicUITests.release.xcconfig"; path = "Target Support Files/Pods-RealMusic-RealMusicUITests/Pods-RealMusic-RealMusicUITests.release.xcconfig"; sourceTree = "<group>"; };
+		2D57B964BD0535EFF9422313 /* Pods-RealMusicTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealMusicTests.debug.xcconfig"; path = "Target Support Files/Pods-RealMusicTests/Pods-RealMusicTests.debug.xcconfig"; sourceTree = "<group>"; };
+		3AAB4F743F69CB056B54EFBF /* Pods-RealMusic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealMusic.release.xcconfig"; path = "Target Support Files/Pods-RealMusic/Pods-RealMusic.release.xcconfig"; sourceTree = "<group>"; };
+		5B6412425FD94DE6B1AE41DA /* Pods_RealMusicTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RealMusicTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F5C7A630D07FB3CC79C6653 /* Pods-RealMusic.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealMusic.debug.xcconfig"; path = "Target Support Files/Pods-RealMusic/Pods-RealMusic.debug.xcconfig"; sourceTree = "<group>"; };
+		969A39BEF6291FA587D1066A /* Pods-RealMusicTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealMusicTests.release.xcconfig"; path = "Target Support Files/Pods-RealMusicTests/Pods-RealMusicTests.release.xcconfig"; sourceTree = "<group>"; };
+		A45426DBA1E05F42E3F1BAD2 /* Pods-RealMusic-RealMusicUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealMusic-RealMusicUITests.debug.xcconfig"; path = "Target Support Files/Pods-RealMusic-RealMusicUITests/Pods-RealMusic-RealMusicUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		C907BF7A28F9AAC3002197F1 /* CreatePostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostViewModel.swift; sourceTree = "<group>"; };
 		C907BF7C28FFE8A5002197F1 /* SpotifyAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyAPI.swift; sourceTree = "<group>"; };
 		C907BF84290195CF002197F1 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		C907BF8829020749002197F1 /* SearchResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultView.swift; sourceTree = "<group>"; };
 		C907BF8A2902131D002197F1 /* SpotifySong.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifySong.swift; sourceTree = "<group>"; };
+		C934142429814B6F00286C99 /* YourPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourPostView.swift; sourceTree = "<group>"; };
 		C935010629365FF100EAA4BC /* LibraryEmoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryEmoji.swift; sourceTree = "<group>"; };
 		C9350108293672ED00EAA4BC /* EmojiLibrayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiLibrayView.swift; sourceTree = "<group>"; };
 		C935010A2937CC2900EAA4BC /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
@@ -165,8 +167,8 @@
 		C9DBD628290E885600ACD644 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		C9DBD62A290F2B5900ACD644 /* APIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConstants.swift; sourceTree = "<group>"; };
 		C9DBD62C290FDAD200ACD644 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
-		CF5B2EA57AD4A192B88BC414 /* Pods-RealMusic-RealMusicUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealMusic-RealMusicUITests.debug.xcconfig"; path = "Target Support Files/Pods-RealMusic-RealMusicUITests/Pods-RealMusic-RealMusicUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		E7D4F128FE4B62828D7FC250 /* Pods-RealMusic-RealMusicUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealMusic-RealMusicUITests.release.xcconfig"; path = "Target Support Files/Pods-RealMusic-RealMusicUITests/Pods-RealMusic-RealMusicUITests.release.xcconfig"; sourceTree = "<group>"; };
+		DC612ED4C8A470327EFEFEBA /* Pods_RealMusic_RealMusicUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RealMusic_RealMusicUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF44F4971BBEDA599BECA706 /* Pods_RealMusic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RealMusic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,7 +178,7 @@
 			files = (
 				C9941718294A5982007DC026 /* SwiftUITrackableScrollView in Frameworks */,
 				C95EC513290833B500550F06 /* Grey.colorset in Frameworks */,
-				899536B029AA01B5932A3B38 /* Pods_RealMusic.framework in Frameworks */,
+				E35BD52B1904C520EB399C15 /* Pods_RealMusic.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -184,7 +186,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BD884F9FDB0D839BC10CD680 /* Pods_RealMusicTests.framework in Frameworks */,
+				0A261E60AC25C043C01C9742 /* Pods_RealMusicTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -192,7 +194,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CC45AB22BE2A94605C06DF79 /* Pods_RealMusic_RealMusicUITests.framework in Frameworks */,
+				C6ED3833FB0ABA449BF4FA5D /* Pods_RealMusic_RealMusicUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,9 +206,9 @@
 			children = (
 				C95EC512290833B500550F06 /* Grey.colorset */,
 				C95EC510290730B200550F06 /* Dark Grey.colorset */,
-				9D9151DA4226559FFCFBB8B9 /* Pods_RealMusic.framework */,
-				68CAC1828A3B3E422C3AF610 /* Pods_RealMusic_RealMusicUITests.framework */,
-				15CA16557FF6A3E52527D360 /* Pods_RealMusicTests.framework */,
+				FF44F4971BBEDA599BECA706 /* Pods_RealMusic.framework */,
+				DC612ED4C8A470327EFEFEBA /* Pods_RealMusic_RealMusicUITests.framework */,
+				5B6412425FD94DE6B1AE41DA /* Pods_RealMusicTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -214,12 +216,12 @@
 		484B75EA168301E03363D5DC /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				4C73B5EEAAE12DC628949F0A /* Pods-RealMusic.debug.xcconfig */,
-				2026ACDD2F7089F6C3DF4FC1 /* Pods-RealMusic.release.xcconfig */,
-				CF5B2EA57AD4A192B88BC414 /* Pods-RealMusic-RealMusicUITests.debug.xcconfig */,
-				E7D4F128FE4B62828D7FC250 /* Pods-RealMusic-RealMusicUITests.release.xcconfig */,
-				5B8668BD7EE3A665ED200C6F /* Pods-RealMusicTests.debug.xcconfig */,
-				ABB263BE4591B29CE65E95C8 /* Pods-RealMusicTests.release.xcconfig */,
+				7F5C7A630D07FB3CC79C6653 /* Pods-RealMusic.debug.xcconfig */,
+				3AAB4F743F69CB056B54EFBF /* Pods-RealMusic.release.xcconfig */,
+				A45426DBA1E05F42E3F1BAD2 /* Pods-RealMusic-RealMusicUITests.debug.xcconfig */,
+				0B134BA0CD2171808FF8FEE0 /* Pods-RealMusic-RealMusicUITests.release.xcconfig */,
+				2D57B964BD0535EFF9422313 /* Pods-RealMusicTests.debug.xcconfig */,
+				969A39BEF6291FA587D1066A /* Pods-RealMusicTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -244,6 +246,7 @@
 				C9350115294240AC00EAA4BC /* PostReactionsListView.swift */,
 				C93D7EA028F3166100FEF3D6 /* PostView.swift */,
 				C939D6D6292A4D0800C255F2 /* ProfileView.swift */,
+				C934142429814B6F00286C99 /* YourPostView.swift */,
 				C939D6E6292E945E00C255F2 /* ReactionsView.swift */,
 				C907BF8829020749002197F1 /* SearchResultView.swift */,
 				C907BF84290195CF002197F1 /* SearchView.swift */,
@@ -367,11 +370,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C947BA0D28EAECDE00B97EB1 /* Build configuration list for PBXNativeTarget "RealMusic" */;
 			buildPhases = (
-				E428025BB5DDB769C21636C1 /* [CP] Check Pods Manifest.lock */,
+				8099A61E690101FAED039834 /* [CP] Check Pods Manifest.lock */,
 				C947B9E428EAECDD00B97EB1 /* Sources */,
 				C947B9E528EAECDD00B97EB1 /* Frameworks */,
 				C947B9E628EAECDD00B97EB1 /* Resources */,
-				1E1E8F9D89E0D65D69AA7750 /* [CP] Embed Pods Frameworks */,
+				E1E795C0877E5C6B2D4113C1 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -389,7 +392,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C947BA1028EAECDE00B97EB1 /* Build configuration list for PBXNativeTarget "RealMusicTests" */;
 			buildPhases = (
-				7F1F06167221980FE9147FD0 /* [CP] Check Pods Manifest.lock */,
+				8027C999244E8A28E244B080 /* [CP] Check Pods Manifest.lock */,
 				C947B9F528EAECDE00B97EB1 /* Sources */,
 				C947B9F628EAECDE00B97EB1 /* Frameworks */,
 				C947B9F728EAECDE00B97EB1 /* Resources */,
@@ -408,11 +411,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C947BA1328EAECDE00B97EB1 /* Build configuration list for PBXNativeTarget "RealMusicUITests" */;
 			buildPhases = (
-				78C88873D57DB1EEF15CDB8F /* [CP] Check Pods Manifest.lock */,
+				5F42DBB4D51BB46370C8E9A7 /* [CP] Check Pods Manifest.lock */,
 				C947B9FF28EAECDE00B97EB1 /* Sources */,
 				C947BA0028EAECDE00B97EB1 /* Frameworks */,
 				C947BA0128EAECDE00B97EB1 /* Resources */,
-				5EFBEC65B2C665D2AF0A7F20 /* [CP] Embed Pods Frameworks */,
+				5BD23C219C689B94FD959F47 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -500,24 +503,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1E1E8F9D89E0D65D69AA7750 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-RealMusic/Pods-RealMusic-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-RealMusic/Pods-RealMusic-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RealMusic/Pods-RealMusic-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5EFBEC65B2C665D2AF0A7F20 /* [CP] Embed Pods Frameworks */ = {
+		5BD23C219C689B94FD959F47 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -534,7 +520,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RealMusic-RealMusicUITests/Pods-RealMusic-RealMusicUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		78C88873D57DB1EEF15CDB8F /* [CP] Check Pods Manifest.lock */ = {
+		5F42DBB4D51BB46370C8E9A7 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -556,7 +542,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		7F1F06167221980FE9147FD0 /* [CP] Check Pods Manifest.lock */ = {
+		8027C999244E8A28E244B080 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -578,7 +564,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E428025BB5DDB769C21636C1 /* [CP] Check Pods Manifest.lock */ = {
+		8099A61E690101FAED039834 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -598,6 +584,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E1E795C0877E5C6B2D4113C1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RealMusic/Pods-RealMusic-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RealMusic/Pods-RealMusic-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RealMusic/Pods-RealMusic-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -656,6 +659,7 @@
 				C9848D6E28EC4AE3003D4FFA /* Post.swift in Sources */,
 				C95EC51C290A91E600550F06 /* ContentView.swift in Sources */,
 				C9D458FD28F8165600547D30 /* Album.swift in Sources */,
+				C934142529814B6F00286C99 /* YourPostView.swift in Sources */,
 				C939D6DF292E84C100C255F2 /* EmojiPickerView.swift in Sources */,
 				C935011A294744F000EAA4BC /* WelcomeView.swift in Sources */,
 			);
@@ -699,11 +703,9 @@
 		C947BA0B28EAECDE00B97EB1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					"$(ARCHS_STANDARD)",
-					x86_64,
-				);
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -740,8 +742,7 @@
 				ENABLE_ON_DEMAND_RESOURCES = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				EXCLUDED_ARCHS = arm64;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
+				EXCLUDED_ARCHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -761,6 +762,8 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -769,11 +772,9 @@
 		C947BA0C28EAECDE00B97EB1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					"$(ARCHS_STANDARD)",
-					x86_64,
-				);
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -810,7 +811,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_ON_DEMAND_RESOURCES = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				EXCLUDED_ARCHS = arm64;
+				EXCLUDED_ARCHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -822,6 +823,8 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
@@ -829,8 +832,9 @@
 		};
 		C947BA0E28EAECDE00B97EB1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C73B5EEAAE12DC628949F0A /* Pods-RealMusic.debug.xcconfig */;
+			baseConfigurationReference = 7F5C7A630D07FB3CC79C6653 /* Pods-RealMusic.debug.xcconfig */;
 			buildSettings = {
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = RealMusic/RealMusic.entitlements;
@@ -844,7 +848,6 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				EXCLUDED_ARCHS = "";
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GENERATE_INFOPLIST_FILE = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -852,8 +855,10 @@
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				"INFOPLIST_KEY_UISupportedInterfaceOrientations[sdk=*]" = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
@@ -866,16 +871,18 @@
 				PRODUCT_BUNDLE_IDENTIFIER = JoelWolinsky.RealMusic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		C947BA0F28EAECDE00B97EB1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2026ACDD2F7089F6C3DF4FC1 /* Pods-RealMusic.release.xcconfig */;
+			baseConfigurationReference = 3AAB4F743F69CB056B54EFBF /* Pods-RealMusic.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -890,7 +897,6 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				EXCLUDED_ARCHS = "";
-				"EXCLUDED_ARCHS[sdk=*]" = arm64;
 				GENERATE_INFOPLIST_FILE = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -898,8 +904,10 @@
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				"INFOPLIST_KEY_UISupportedInterfaceOrientations[sdk=*]" = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
@@ -912,16 +920,18 @@
 				PRODUCT_BUNDLE_IDENTIFIER = JoelWolinsky.RealMusic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
 		C947BA1128EAECDE00B97EB1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5B8668BD7EE3A665ED200C6F /* Pods-RealMusicTests.debug.xcconfig */;
+			baseConfigurationReference = 2D57B964BD0535EFF9422313 /* Pods-RealMusicTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -946,7 +956,7 @@
 		};
 		C947BA1228EAECDE00B97EB1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = ABB263BE4591B29CE65E95C8 /* Pods-RealMusicTests.release.xcconfig */;
+			baseConfigurationReference = 969A39BEF6291FA587D1066A /* Pods-RealMusicTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -971,7 +981,7 @@
 		};
 		C947BA1428EAECDE00B97EB1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CF5B2EA57AD4A192B88BC414 /* Pods-RealMusic-RealMusicUITests.debug.xcconfig */;
+			baseConfigurationReference = A45426DBA1E05F42E3F1BAD2 /* Pods-RealMusic-RealMusicUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -995,7 +1005,7 @@
 		};
 		C947BA1528EAECDE00B97EB1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E7D4F128FE4B62828D7FC250 /* Pods-RealMusic-RealMusicUITests.release.xcconfig */;
+			baseConfigurationReference = 0B134BA0CD2171808FF8FEE0 /* Pods-RealMusic-RealMusicUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;

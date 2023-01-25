@@ -136,13 +136,11 @@ struct AddFriendsView: View {
                                             .aspectRatio(contentMode: .fill)
                                         
                                     case .failure(let error):
-                                        //                    //print(error)
                                         Rectangle()
                                             .background(.green)
                                             .foregroundColor(.black)
                                             .frame(width: 100, height: 110)
                                     case .empty:
-                                        // preview loader
                                         Rectangle()
                                             .background(.green)
                                             .foregroundColor(.black)

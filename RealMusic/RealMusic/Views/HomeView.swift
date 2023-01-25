@@ -68,41 +68,40 @@ struct HomeView: View {
                 NavigationView {
                     ZStack {
                         TrackableScrollView(.vertical, showIndicators: false, contentOffset: $scrollViewContentOffset) {
-                            VStack{
-                                HStack {
-                                    Text("Currently Listening To:")
-                                        .foregroundColor(.white)
-                                        .blur(radius:CGFloat(blur))
-                                    Spacer()
-                                    
-//                                    HStack {
-//                                        Image(systemName: "magnifyingglass")
-//                                        Text("Search")
-//                                    }
-//                                    .padding(10)
-//                                    .foregroundColor(.white)
-//                                    .background(Color("Grey 2"))
-//                                    .cornerRadius(10)
-//                                    .onTapGesture {
-//                                        print("search")
-//                                        withAnimation() {
-//                                            searchToggle.toggle()
-//                                        }
-//
-//                                    }
-                                    
-                                }
-                                .offset(y: 40)
+                            VStack {
                                 VStack {
-                                    
-                                    CurrentlyPlayingView(song: currentlyPlaying, createPostModel: createPostModel, searchToggle: $searchToggle, currentSongPosted: $currentSongPosted)
+                                    if feedViewModel.myPosts.count == 0 {
+                                        VStack {
+                                            HStack {
+                                                //                                    if feedViewModel.myPosts.count == 0 {
+                                                //                                        Text("i have posts")
+                                                //                                            .foregroundColor(.white)
+                                                //                                            .blur(radius:CGFloat(blur))
+                                                //                                    }
+                                                Text("Currently Listening To:")
+                                                    .foregroundColor(.white)
+                                                    .blur(radius:CGFloat(blur))
+                                                Spacer()
+                                                
+                                            }
+                                            .offset(y: 40)
+                                            VStack {
+                                                
+                                                CurrentlyPlayingView(song: currentlyPlaying, createPostModel: createPostModel, searchToggle: $searchToggle, currentSongPosted: $currentSongPosted)
+                                            }
+                                            .frame(width: 350, height: 100)
+                                            .padding(.top, 40)
+                                            .padding(.bottom, 20)
+                                            .blur(radius:CGFloat(blur))
+                                            
+                                        }
+                                    } else {
+                                        YourPostView(post: feedViewModel.myPosts[0], reactionViewModel: ReactionViewModel(id: feedViewModel.myPosts[0].id ?? ""),userViewModel: userViewModel)
+                                        
+                                        
+                                    }
                                 }
-                                .frame(width: 350, height: 100)
-                                .padding(.top, 40)
-                                .padding(.bottom, 20)
-                                .blur(radius:CGFloat(blur))
-                                
-                                
+                                .frame(maxHeight: 300)
                                 ForEach(feedViewModel.posts) { post in
                                     VStack {
                                         PostView(post: post, reactionViewModel: ReactionViewModel(id: post.id ?? ""), longPress: $longPress, chosenPostID: $chosenPostID, blur: $blur, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue, showPicker: showPicker, userViewModel: userViewModel, scrollViewContentOffset: $scrollViewContentOffset)
@@ -112,8 +111,8 @@ struct HomeView: View {
                                     }
                                     .id(post.id)
                                 }
+                                .offset(y: -70)
                             }
-                            .padding()
                         }
                         .simultaneousGesture(DragGesture(minimumDistance: CGFloat(disableScroll)))
                         //.scrollDisabled(true)
@@ -352,6 +351,7 @@ struct HomeView: View {
         }
         .onAppear(perform: {
             feedViewModel.fetchMyPosts()
+            print("my post length \(feedViewModel.myPosts.count)")
             //feedViewModel.fetchPosts()
 
         })
