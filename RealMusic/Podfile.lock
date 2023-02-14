@@ -265,6 +265,19 @@ PODS:
     - GoogleUtilities/Environment (~> 6.7)
     - GoogleUtilities/UserDefaults (~> 6.7)
     - PromisesObjC (~> 1.2)
+  - FirebaseInstanceID (4.8.0):
+    - FirebaseCore (~> 6.10)
+    - FirebaseInstallations (~> 1.6)
+    - GoogleUtilities/Environment (~> 6.7)
+    - GoogleUtilities/UserDefaults (~> 6.7)
+  - FirebaseMessaging (4.7.1):
+    - FirebaseCore (~> 6.10)
+    - FirebaseInstanceID (~> 4.7)
+    - GoogleUtilities/AppDelegateSwizzler (~> 6.7)
+    - GoogleUtilities/Environment (~> 6.7)
+    - GoogleUtilities/Reachability (~> 6.7)
+    - GoogleUtilities/UserDefaults (~> 6.7)
+    - Protobuf (>= 3.9.2, ~> 3.9)
   - FirebaseStorage (3.9.1):
     - FirebaseCore (~> 6.10)
     - GTMSessionFetcher/Core (~> 1.1)
@@ -326,7 +339,9 @@ PODS:
     - nanopb/encode (= 1.30906.0)
   - nanopb/decode (1.30906.0)
   - nanopb/encode (1.30906.0)
+  - Promises (2.0.4)
   - PromisesObjC (1.2.12)
+  - Protobuf (3.21.12)
   - SwiftySound (1.2.0)
 
 DEPENDENCIES:
@@ -335,6 +350,8 @@ DEPENDENCIES:
   - FirebaseAuth
   - FirebaseFirestore
   - FirebaseFirestoreSwift
+  - FirebaseMessaging
+  - Promises
   - SwiftySound
 
 SPEC REPOS:
@@ -349,6 +366,8 @@ SPEC REPOS:
     - FirebaseFirestore
     - FirebaseFirestoreSwift
     - FirebaseInstallations
+    - FirebaseInstanceID
+    - FirebaseMessaging
     - FirebaseStorage
     - GoogleAppMeasurement
     - GoogleDataTransport
@@ -358,7 +377,9 @@ SPEC REPOS:
     - GTMSessionFetcher
     - leveldb-library
     - nanopb
+    - Promises
     - PromisesObjC
+    - Protobuf
     - SwiftySound
 
 SPEC CHECKSUMS:
@@ -372,6 +393,8 @@ SPEC CHECKSUMS:
   FirebaseFirestore: 9b2f1b9b9a6f2f0b6fb7484b9e32ab7e39243554
   FirebaseFirestoreSwift: 2c46dbc1156db97dc4f6dd798d4f5b57b9c7fab6
   FirebaseInstallations: 466c7b4d1f58fe16707693091da253726a731ed2
+  FirebaseInstanceID: bd3ffc24367f901a43c063b36c640b345a4a5dd1
+  FirebaseMessaging: 5eca4ef173de76253352511aafef774caa1cba2a
   FirebaseStorage: 15e0f15ef3c7fec3d1899d68623e47d4447066b4
   GoogleAppMeasurement: a6a3a066369828db64eda428cb2856dc1cdc7c4e
   GoogleDataTransport: f56af7caa4ed338dc8e138a5d7c5973e66440833
@@ -381,9 +404,11 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 5595ec75acf5be50814f81e9189490412bad82ba
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   nanopb: 59317e09cf1f1a0af72f12af412d54edf52603fc
+  Promises: fcb83dc6be43294a8d30c343636ed1a45a8d2e0a
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
+  Protobuf: 120350fc38646e2dedc26f49ecba778184ea1de2
   SwiftySound: 9eb28bb14edb601b40027e44319e0ef8383f88bf
 
-PODFILE CHECKSUM: da583de45cb714cbadd5f5492ee02c5a779039fb
+PODFILE CHECKSUM: 6d672caf897d626885da917725cc5f787d3752e0
 
 COCOAPODS: 1.11.3

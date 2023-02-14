@@ -17,7 +17,7 @@ class FeedViewModel: ObservableObject {
 //    let userView = UserViewModel()
     
     init() {
-        fetchPosts()
+        //fetchPosts()
         //fetchMyPosts()
         print("fetching")
     }
@@ -55,8 +55,11 @@ class FeedViewModel: ObservableObject {
         postView.fetchData { posts in
             for post in posts {
                 print("this is my uid \(UserDefaults.standard.value(forKey: "uid"))")
-                if post.uid == UserDefaults.standard.value(forKey: "uid") as! String {
-                    self.myPosts.append(post)
+                if post.datePosted.formatted(date: .numeric, time: .omitted) == Date().formatted(date: .numeric, time: .omitted) {
+                    
+                    if post.uid == UserDefaults.standard.value(forKey: "uid") as! String {
+                        self.myPosts.append(post)
+                    }
                 }
             }
             self.myPosts = self.myPosts.sorted(by: { $0.datePosted > $1.datePosted })

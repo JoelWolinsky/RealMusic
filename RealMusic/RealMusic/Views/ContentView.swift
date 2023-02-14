@@ -42,11 +42,11 @@ struct ContentView: View {
                     }
                     .sheet(isPresented: $showWebView) {
                         WebView(showWebView: $showWebView)
-//                            .onDisappear(perform: {
-//                                print("disapear")
-//                                feedViewModel.fetchPosts()
-//                            })
-//
+                            .onDisappear(perform: {
+                                print("disapear")
+                                feedViewModel.fetchPosts()
+                            })
+
                         
                     }
   
@@ -69,11 +69,21 @@ struct ContentView: View {
                 UserDefaults.standard.setValue("no username found",forKey: "username")
             }
 
+
+            }
+        )
+        .accentColor(.white)
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+            UIApplication.shared.applicationIconBadgeNumber = 0
+            
+            print("App is active")
+            
             SpotifyAPI.shared.checkTokenExpiry { (result) in
                 switch result {
                     case true:
                     print("aaaa token valid ")
                     showWebView = false
+                    feedViewModel.fetchPosts()
                     //createPostModel.createPost(post: data[0])
 
                     case false:
@@ -82,9 +92,7 @@ struct ContentView: View {
                     }
                 }
 
-            }
-        )
-        .accentColor(.white)
+        }
 
         
 

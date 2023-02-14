@@ -8,6 +8,8 @@
 import Foundation
 import SwiftUI
 import FirebaseAuth
+import FirebaseMessaging
+import FirebaseFirestore
 
 class SignInViewModel: ObservableObject {
     let auth = Auth.auth()
@@ -39,7 +41,20 @@ class SignInViewModel: ObservableObject {
                 UserDefaults.standard.setValue(user.username, forKey: "username")
                 
             }
+            let token = Messaging.messaging().fcmToken
             
+           
+            let db = Firestore.firestore()
+            //let post = Post(title: "Test Send Post", uid: "test uid")
+
+            do {
+                try db.collection("DeviceTokens").document(self.auth.currentUser?.uid ?? "xxxx").setData(from: token)
+                print("Device Token added")
+            } catch let error {
+                print("Error writing city to Firestore: \(error)")
+            }
+            
+
             UserDefaults.standard.setValue(self.auth.currentUser!.uid, forKey: "uid")
             self.signedIn = true
             self.welcomeMessage = true

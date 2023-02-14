@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import FirebaseCore
+//import FirebaseCore
 import FirebaseFirestore
 import FirebaseAuth
 import SwiftUITrackableScrollView
@@ -70,38 +70,31 @@ struct HomeView: View {
                         TrackableScrollView(.vertical, showIndicators: false, contentOffset: $scrollViewContentOffset) {
                             VStack {
                                 VStack {
-                                    if feedViewModel.myPosts.count == 0 {
-                                        VStack {
-                                            HStack {
-                                                //                                    if feedViewModel.myPosts.count == 0 {
-                                                //                                        Text("i have posts")
-                                                //                                            .foregroundColor(.white)
-                                                //                                            .blur(radius:CGFloat(blur))
-                                                //                                    }
-                                                Text("Currently Listening To:")
-                                                    .foregroundColor(.white)
-                                                    .blur(radius:CGFloat(blur))
-                                                Spacer()
-                                                
-                                            }
-                                            .offset(y: 40)
-                                            VStack {
-                                                
-                                                CurrentlyPlayingView(song: currentlyPlaying, createPostModel: createPostModel, searchToggle: $searchToggle, currentSongPosted: $currentSongPosted)
-                                            }
-                                            .frame(width: 350, height: 100)
-                                            .padding(.top, 40)
-                                            .padding(.bottom, 20)
-                                            .blur(radius:CGFloat(blur))
-                                            
-                                        }
-                                    } else {
+                                    //if feedViewModel.myPosts.count == 0 {
+                                    
+                                    if (feedViewModel.myPosts.count > 0) {
                                         YourPostView(post: feedViewModel.myPosts[0], reactionViewModel: ReactionViewModel(id: feedViewModel.myPosts[0].id ?? ""),userViewModel: userViewModel)
-                                        
-                                        
+                                            .frame(maxWidth: 200, maxHeight: 150)
+                                        //.offset(y: -120)
                                     }
+                                    
+                                    Text("Currently Listening To:")
+                                        .foregroundColor(.white)
+                                        .blur(radius:CGFloat(blur))
+                                    
+                                    VStack {
+                                        
+                                        CurrentlyPlayingView(song: currentlyPlaying, createPostModel: createPostModel, searchToggle: $searchToggle, currentSongPosted: $currentSongPosted)
+                                    }
+                                    .frame(width: 350, height: 100)
+                                    //.padding(.top, 40)
+                                    .padding(.bottom, 40)
+                                    .blur(radius:CGFloat(blur))
+                                    //.offset(y:100)
                                 }
-                                .frame(maxHeight: 300)
+                                .padding(.top, 70)
+
+                                //.frame(maxHeight: 300)
                                 ForEach(feedViewModel.posts) { post in
                                     VStack {
                                         PostView(post: post, reactionViewModel: ReactionViewModel(id: post.id ?? ""), longPress: $longPress, chosenPostID: $chosenPostID, blur: $blur, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue, showPicker: showPicker, userViewModel: userViewModel, scrollViewContentOffset: $scrollViewContentOffset)
@@ -111,7 +104,8 @@ struct HomeView: View {
                                     }
                                     .id(post.id)
                                 }
-                                .offset(y: -70)
+                                //.offset(y: -70)
+
                             }
                         }
                         .simultaneousGesture(DragGesture(minimumDistance: CGFloat(disableScroll)))
@@ -213,8 +207,10 @@ struct HomeView: View {
                                             
                                         case .failure(let error):
                                             //                    //print(error)
-                                            Text("fail")
-                                                .foregroundColor(.white)
+                                            Rectangle()
+                                                .background(.orange)
+                                                .foregroundColor(.green)
+                                                .frame(width: 30, height: 30)
                                         case .empty:
                                             // preview loader
                                             Rectangle()
@@ -226,6 +222,11 @@ struct HomeView: View {
                                     }
                                     .frame(width: 30, height: 30)
                                     .cornerRadius(15)
+                                } else {
+                                    Rectangle()
+                                        .background(.blue)
+                                        .foregroundColor(.green)
+                                        .frame(width: 30, height: 30)
                                 }
                             }
                         }

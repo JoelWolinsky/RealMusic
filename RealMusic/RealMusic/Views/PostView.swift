@@ -72,7 +72,7 @@ struct PostView: View {
             }
             .padding(20)
             //.scaledToFill
-            .frame(height:450)
+            //.frame(height:450)
             //.background(.black)
             .foregroundColor(.white)
             .onAppear(perform: {
@@ -89,8 +89,8 @@ struct PostView: View {
                 }
             })
             ReactionsView(reactionViewModel: reactionViewModel, post: post, emojiSize: 20.0)
-                .padding(.leading, 10)
-                .offset(x: 20, y: 30)
+                .padding(.leading, 30)
+                //.offset(x: 20, y: 30)
                 .blur(radius:CGFloat(blur))
                 .onTapGesture {
                     showReactionsList.toggle()
@@ -120,7 +120,9 @@ struct PostView: View {
             }
             
         }
-        .padding(.bottom, 40)
+        //.background(.blue)
+        //.padding(.bottom, 40)
+        //.background(.green)
         .sheet(isPresented: $showReactionsList) {
             PostReactionsListView(reactionViewModel: reactionViewModel, userViewModel: userViewModel)
                 .presentationDetents([.medium])

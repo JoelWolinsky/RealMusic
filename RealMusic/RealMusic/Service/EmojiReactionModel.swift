@@ -18,9 +18,11 @@ class EmojiReactionModel: ObservableObject {
         
         let userUid = UserDefaults.standard.value(forKey: "uid")
         
+        let emojiWithUser = Emoji(emoji: emoji.emoji, description: emoji.description, username: UserDefaults.standard.value(forKey: "username") as! String)
+        
         // add them to your friends
         do {
-            try db.collection("Posts").document(postUID).collection("Reactions").document(userUid as! String).setData(from: emoji)
+            try db.collection("Posts").document(postUID).collection("Reactions").document(userUid as! String).setData(from: emojiWithUser)
             print("reaction added to \(postUID)")
         } catch let error {
             print("Error writing city to Firestore: \(error)")

@@ -1,5 +1,6 @@
 
 import FirebaseFirestoreSwift
+import SwiftUI
 
 struct Post: Identifiable, Decodable, Encodable {
     

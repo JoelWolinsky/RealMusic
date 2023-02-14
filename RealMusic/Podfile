@@ -30,6 +30,8 @@ pod 'FirebaseFirestore'
 pod 'FirebaseFirestoreSwift'
 pod 'SwiftySound'
 pod 'Firebase/Storage'
+pod 'FirebaseMessaging'
+pod 'Promises'
 
 
 post_install do |installer|
