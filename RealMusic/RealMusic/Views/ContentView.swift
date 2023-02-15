@@ -39,6 +39,7 @@ struct ContentView: View {
                 HomeView(feedViewModel: feedViewModel, welcomeMessage: viewModel.welcomeMessage)
                     .sheet(isPresented: $viewModel.welcomeMessage) {
                         WelcomeView(viewModel: viewModel)
+                            .interactiveDismissDisabled()
                     }
                     .sheet(isPresented: $showWebView) {
                         WebView(showWebView: $showWebView)
@@ -46,9 +47,13 @@ struct ContentView: View {
                                 print("disapear")
                                 feedViewModel.fetchPosts()
                             })
+                            .interactiveDismissDisabled()
+
 
                         
                     }
+                    //.interactiveDismissDisabled()
+
   
             } else {
                 SignInView(viewModel: viewModel)

@@ -278,12 +278,12 @@
 				C9350115294240AC00EAA4BC /* PostReactionsListView.swift */,
 				C93D7EA028F3166100FEF3D6 /* PostView.swift */,
 				C939D6D6292A4D0800C255F2 /* ProfileView.swift */,
-				C934142429814B6F00286C99 /* YourPostView.swift */,
 				C939D6E6292E945E00C255F2 /* ReactionsView.swift */,
 				C907BF8829020749002197F1 /* SearchResultView.swift */,
 				C907BF84290195CF002197F1 /* SearchView.swift */,
 				C9DBD628290E885600ACD644 /* SignInView.swift */,
 				C9350119294744F000EAA4BC /* WelcomeView.swift */,
+				C934142429814B6F00286C99 /* YourPostView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";

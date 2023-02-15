@@ -92,6 +92,8 @@ struct YourPostView: View {
                 }
             })
             
+            
+            
 
 
             
@@ -101,6 +103,14 @@ struct YourPostView: View {
         .sheet(isPresented: $showReactionsList) {
             PostReactionsListView(reactionViewModel: reactionViewModel, userViewModel: userViewModel)
                 .presentationDetents([.medium])
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+            UIApplication.shared.applicationIconBadgeNumber = 0
+            
+            print("App is active")
+            
+            reactionViewModel.fetchReactions(id: post.id ?? "")
+
         }
        
         

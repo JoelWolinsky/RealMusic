@@ -59,6 +59,8 @@ struct HomeView: View {
     @State var welcomeMessage: Bool
     
     @State private var scrollViewContentOffset = CGFloat(0)
+    
+    @State private var myFriends = true
 
 
     var body: some View {
@@ -67,83 +69,104 @@ struct HomeView: View {
                 //var posts = [Post(title: "This is a test", userID: "This userID test", username: "Woli")]
                 NavigationView {
                     ZStack {
-                        TrackableScrollView(.vertical, showIndicators: false, contentOffset: $scrollViewContentOffset) {
-                            VStack {
+                        if myFriends {
+                            TrackableScrollView(.vertical, showIndicators: false, contentOffset: $scrollViewContentOffset) {
                                 VStack {
-                                    //if feedViewModel.myPosts.count == 0 {
-                                    
-                                    if (feedViewModel.myPosts.count > 0) {
-                                        YourPostView(post: feedViewModel.myPosts[0], reactionViewModel: ReactionViewModel(id: feedViewModel.myPosts[0].id ?? ""),userViewModel: userViewModel)
-                                            .frame(maxWidth: 200, maxHeight: 150)
-                                        //.offset(y: -120)
-                                    }
-                                    
-                                    Text("Currently Listening To:")
-                                        .foregroundColor(.white)
+                                    VStack {
+                                        //if feedViewModel.myPosts.count == 0 {
+                                        
+                                        if (feedViewModel.myPosts.count > 0) {
+                                            YourPostView(post: feedViewModel.myPosts[0], reactionViewModel: ReactionViewModel(id: feedViewModel.myPosts[0].id ?? ""),userViewModel: userViewModel)
+                                                .frame(maxWidth: 200, maxHeight: 150)
+                                            //.offset(y: -120)
+                                        }
+                                        
+                                        Text("Currently Listening To:")
+                                            .foregroundColor(.white)
+                                            .blur(radius:CGFloat(blur))
+                                        
+                                        VStack {
+                                            
+                                            CurrentlyPlayingView(song: currentlyPlaying, createPostModel: createPostModel, searchToggle: $searchToggle, currentSongPosted: $currentSongPosted)
+                                        }
+                                        .frame(width: 350, height: 100)
+                                        //.padding(.top, 40)
+                                        .padding(.bottom, 40)
                                         .blur(radius:CGFloat(blur))
+                                        //.offset(y:100)
+                                    }
+                                    .padding(.top, 70)
                                     
-                                    VStack {
-                                        
-                                        CurrentlyPlayingView(song: currentlyPlaying, createPostModel: createPostModel, searchToggle: $searchToggle, currentSongPosted: $currentSongPosted)
+                                    //.frame(maxHeight: 300)
+                                    ForEach(feedViewModel.posts) { post in
+                                        VStack {
+                                            PostView(post: post, reactionViewModel: ReactionViewModel(id: post.id ?? ""), longPress: $longPress, chosenPostID: $chosenPostID, blur: $blur, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue, showPicker: showPicker, userViewModel: userViewModel, scrollViewContentOffset: $scrollViewContentOffset)
+                                            
+                                            
+                                            
+                                        }
+                                        .id(post.id)
                                     }
-                                    .frame(width: 350, height: 100)
-                                    //.padding(.top, 40)
-                                    .padding(.bottom, 40)
-                                    .blur(radius:CGFloat(blur))
-                                    //.offset(y:100)
+                                    //.offset(y: -70)
+                                    
                                 }
-                                .padding(.top, 70)
-
-                                //.frame(maxHeight: 300)
-                                ForEach(feedViewModel.posts) { post in
-                                    VStack {
-                                        PostView(post: post, reactionViewModel: ReactionViewModel(id: post.id ?? ""), longPress: $longPress, chosenPostID: $chosenPostID, blur: $blur, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue, showPicker: showPicker, userViewModel: userViewModel, scrollViewContentOffset: $scrollViewContentOffset)
-                                        
-                                        
-                                        
+                            }
+                            .simultaneousGesture(DragGesture(minimumDistance: CGFloat(disableScroll)))
+                            //.scrollDisabled(true)
+                            //                        /.disableScrolling(disabled: disableScroll)
+                            .refreshable {
+                                print("Refreshing")
+                                feedViewModel.fetchPosts()
+                                //feedViewModel.fetchReactions()
+                                
+                                
+                                getRequest.getCurrentPlaying() { (result) in
+                                    switch result {
+                                    case .success(let data) :
+                                        print("success playing now \(data)")
+                                        let song = data[0]
+                                        currentlyPlaying = SpotifySong(id: song.id, songID: song.songID, title: song.title, artist: song.artist, uid: song.uid, cover: song.cover, preview_url: song.preview_url)
+                                    case .failure(let error) :
+                                        print("fail recent")
+                                        // print(error)
                                     }
-                                    .id(post.id)
                                 }
-                                //.offset(y: -70)
-
+                                
+                                userViewModel.fetchProfilePic(uid: (UserDefaults.standard.value(forKey: "uid") ?? "placeholder") as! String ) { profile in
+                                    print("fetching profile for \(profile)")
+                                    profilePic = profile
+                                }
+                                
                             }
-                        }
-                        .simultaneousGesture(DragGesture(minimumDistance: CGFloat(disableScroll)))
-                        //.scrollDisabled(true)
-                        //                        /.disableScrolling(disabled: disableScroll)
-                        .refreshable {
-                            print("Refreshing")
-                            feedViewModel.fetchPosts()
-                            //feedViewModel.fetchReactions()
+                            .onChange(of: chosenPostID) { target in
+                                withAnimation {
+                                    proxy.scrollTo(chosenPostID, anchor: .center)
+                                    chosenPostID = ""
+                                }
+                                
+                            }
+                            //.zIndex(1)
+                            .transition(.slideLeft)
                             
-                            
-                            getRequest.getCurrentPlaying() { (result) in
-                                switch result {
-                                case .success(let data) :
-                                    print("success playing now \(data)")
-                                    let song = data[0]
-                                    currentlyPlaying = SpotifySong(id: song.id, songID: song.songID, title: song.title, artist: song.artist, uid: song.uid, cover: song.cover, preview_url: song.preview_url)
-                                case .failure(let error) :
-                                    print("fail recent")
-                                    // print(error)
+                        } else {
+                            ScrollView {
+                                VStack {
+                                    ForEach(feedViewModel.posts) { post in
+                                        VStack {
+                                            PostView(post: post, reactionViewModel: ReactionViewModel(id: post.id ?? ""), longPress: $longPress, chosenPostID: $chosenPostID, blur: $blur, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue, showPicker: showPicker, userViewModel: userViewModel, scrollViewContentOffset: $scrollViewContentOffset)
+                                            
+                                            
+                                            
+                                        }
+                                        .id(post.id)
+                                    }
                                 }
                             }
-                            
-                            userViewModel.fetchProfilePic(uid: (UserDefaults.standard.value(forKey: "uid") ?? "placeholder") as! String ) { profile in
-                                print("fetching profile for \(profile)")
-                                profilePic = profile
-                            }
-                            
+                            .frame(maxWidth: .infinity)
+                            .zIndex(1)
+                            .transition(.slideRight)
+                            .padding(.top, 50)
                         }
-                        .onChange(of: chosenPostID) { target in
-                            withAnimation {
-                                proxy.scrollTo(chosenPostID, anchor: .center)
-                                chosenPostID = ""
-                            }
-                            
-                        }
-                        
-                        
                         
                         VStack {
                             Rectangle()
@@ -154,87 +177,120 @@ struct HomeView: View {
                         }
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                         .offset(y:-60)
-                        
-                        HStack {
+                        VStack {
                             
-                            Button {
-                                withAnimation {
-                                    friendsToggle.toggle()
-                                    print("friendsToggle.showView \(friendsToggle)")
-                                }
-                            } label: {
-                                Image(systemName: "person.2.fill")
-                                    .foregroundColor(.white)
-                                    .font(.system(size:20))
-                            }
-                            
-                            
-                            Spacer()
-                            //                        NavigationLink(destination: SearchView()) {
-                            //                            Text("RealMusic")
-                            //                                .foregroundColor(.white)
-                            //                                .font(.system(size:25))
-                            //                                .fontWeight(.bold)
-                            //                        }
-                            
-                            Button {
-                                withAnimation {
-                                    proxy.scrollTo(feedViewModel.posts[0].id, anchor: .bottom)
-                                }
-                            } label: {
-                                Text("RealMusic")
-                                    .foregroundColor(.white)
-                                    .font(.system(size:25))
-                                    .fontWeight(.bold)
-                                    .blur(radius: 0)
-                            }
-                            
-                            Spacer()
-                            
-                            
-                            Button {
-                                withAnimation {
-                                    showProfileView.toggle()
-                                }
-                            } label: {
-                                if let url = URL(string: profilePic) {
-                                    CacheAsyncImage(url: url) { phase in
-                                        switch phase {
-                                        case .success(let image):
-                                            image
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fill)
-                                            
-                                        case .failure(let error):
-                                            //                    //print(error)
-                                            Rectangle()
-                                                .background(.orange)
-                                                .foregroundColor(.green)
-                                                .frame(width: 30, height: 30)
-                                        case .empty:
-                                            // preview loader
-                                            Rectangle()
-                                                .background(.green)
-                                                .foregroundColor(.green)
-                                                .frame(width: 30, height: 30)
-
-                                        }
+                            HStack {
+                                
+                                Button {
+                                    withAnimation {
+                                        friendsToggle.toggle()
+                                        print("friendsToggle.showView \(friendsToggle)")
                                     }
-                                    .frame(width: 30, height: 30)
-                                    .cornerRadius(15)
-                                } else {
-                                    Rectangle()
-                                        .background(.blue)
-                                        .foregroundColor(.green)
+                                } label: {
+                                    Image(systemName: "person.2.fill")
+                                        .foregroundColor(.white)
+                                        .font(.system(size:20))
+                                }
+                                
+                                
+                                Spacer()
+                                //                        NavigationLink(destination: SearchView()) {
+                                //                            Text("RealMusic")
+                                //                                .foregroundColor(.white)
+                                //                                .font(.system(size:25))
+                                //                                .fontWeight(.bold)
+                                //                        }
+                                
+                                Button {
+                                    withAnimation {
+                                        proxy.scrollTo(feedViewModel.posts[0].id, anchor: .bottom)
+                                    }
+                                } label: {
+                                    Text("RealMusic")
+                                        .foregroundColor(.white)
+                                        .font(.system(size:25))
+                                        .fontWeight(.bold)
+                                        .blur(radius: 0)
+                                }
+                                
+                                Spacer()
+                                
+                                
+                                Button {
+                                    withAnimation {
+                                        showProfileView.toggle()
+                                    }
+                                } label: {
+                                    if let url = URL(string: profilePic) {
+                                        CacheAsyncImage(url: url) { phase in
+                                            switch phase {
+                                            case .success(let image):
+                                                image
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fill)
+                                                
+                                            case .failure(let error):
+                                                //                    //print(error)
+                                                Rectangle()
+                                                    .background(.black)
+                                                    .foregroundColor(.green)
+                                                    .frame(width: 30, height: 30)
+                                            case .empty:
+                                                // preview loader
+                                                Rectangle()
+                                                    .background(.black)
+                                                    .foregroundColor(.green)
+                                                    .frame(width: 30, height: 30)
+                                                
+                                            }
+                                        }
                                         .frame(width: 30, height: 30)
+                                        .cornerRadius(15)
+                                    } else {
+                                        Rectangle()
+                                            .background(.black)
+                                            .foregroundColor(.black)
+                                            .frame(width: 30, height: 30)
+                                    }
                                 }
                             }
+                            //.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                            .padding(.leading, 20)
+                            .padding(.trailing, 20)
+                            .blur(radius:CGFloat(blurModel.blur))
+                            
+                            
+                            HStack {
+                                Button {
+                                    withAnimation {
+                                        myFriends = true
+                                    }
+                                } label: {
+                                    Text("My Friends")
+                                        .foregroundColor(.white)
+                                        .font(.system(size:17))
+                                        .fontWeight(.bold)
+                                        .blur(radius: 0)
+                                }
+                                .padding(.trailing, 10)
+                                
+                                Button {
+                                    withAnimation {
+                                        myFriends = false
+                                    }
+                                } label: {
+                                    Text("Discovery")
+                                        .foregroundColor(.white)
+                                        .font(.system(size:17))
+                                        .fontWeight(.bold)
+                                        .blur(radius: 0)
+                                }
+                            }
+                            //.frame(maxHeight: .infinity, alignment: .top)
                         }
-                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-                        .padding(.leading, 20)
-                        .padding(.trailing, 20)
-                        .blur(radius:CGFloat(blurModel.blur))
-                        
+                        .frame(maxHeight: .infinity, alignment: .top)
+                        .zIndex(2)
+
                         
                         
                         
@@ -325,6 +381,8 @@ struct HomeView: View {
                 if searchToggle == false {
                     print("Refreshing")
                     feedViewModel.fetchPosts()
+                    feedViewModel.fetchMyPosts()
+                    
                     //feedViewModel.fetchReactions()
                 }
             })
@@ -356,6 +414,40 @@ struct HomeView: View {
             //feedViewModel.fetchPosts()
 
         })
+        
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+            UIApplication.shared.applicationIconBadgeNumber = 0
+            
+            print("App is active")
+            
+//            SpotifyAPI.shared.checkTokenExpiry { (result) in
+//                switch result {
+//                    case true:
+//                    print("aaaa token valid ")
+//                    showWebView = false
+//                    feedViewModel.fetchPosts()
+//                    //createPostModel.createPost(post: data[0])
+//
+//                    case false:
+//                    print("aaaa token expired")
+//                    showWebView = true
+//                    }
+//                }
+            
+            getRequest.getCurrentPlaying() { (result) in
+                switch result {
+                case .success(let data) :
+                    print("success playing now \(data)")
+                    let song = data[0]
+                    currentlyPlaying = SpotifySong(id: song.id, songID: song.songID, title: song.title, artist: song.artist, uid: song.uid, cover: song.cover, preview_url: song.preview_url)
+                case .failure(let error) :
+                    print("fail recent")
+                    // print(error)
+                }
+            }
+
+
+        }
        
     }
     
