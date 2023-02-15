@@ -80,6 +80,7 @@
 		C97D58F429868DB500C2A997 /* FirebaseRemoteConfigSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C97D58F329868DB500C2A997 /* FirebaseRemoteConfigSwift */; };
 		C97D58F629868DB500C2A997 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = C97D58F529868DB500C2A997 /* FirebaseStorage */; };
 		C97D58F829868DB500C2A997 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = C97D58F729868DB500C2A997 /* FirebaseStorageCombine-Community */; };
+		C980162A299D0C890009FFEF /* UserDropDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9801629299D0C890009FFEF /* UserDropDownView.swift */; };
 		C9848D6C28EC3A79003D4FFA /* PostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9848D6B28EC3A79003D4FFA /* PostViewModel.swift */; };
 		C9848D6E28EC4AE3003D4FFA /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9848D6D28EC4AE3003D4FFA /* Post.swift */; };
 		C9848D7028EEDA17003D4FFA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9848D6F28EEDA17003D4FFA /* User.swift */; };
@@ -170,6 +171,7 @@
 		C95EC510290730B200550F06 /* Dark Grey.colorset */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Dark Grey.colorset"; path = "RealMusic/Assets.xcassets/Dark Grey.colorset"; sourceTree = "<group>"; };
 		C95EC512290833B500550F06 /* Grey.colorset */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Grey.colorset; path = RealMusic/Assets.xcassets/Grey.colorset; sourceTree = "<group>"; };
 		C95EC51B290A91E600550F06 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		C9801629299D0C890009FFEF /* UserDropDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDropDownView.swift; sourceTree = "<group>"; };
 		C9848D6B28EC3A79003D4FFA /* PostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewModel.swift; sourceTree = "<group>"; };
 		C9848D6D28EC4AE3003D4FFA /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		C9848D6F28EEDA17003D4FFA /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -274,6 +276,7 @@
 				C947B9ED28EAECDD00B97EB1 /* HomeView.swift */,
 				C9597E6B29269BE30020395E /* PhotoPicker.swift */,
 				C9350111293E723C00EAA4BC /* PostDropDownView.swift */,
+				C9801629299D0C890009FFEF /* UserDropDownView.swift */,
 				C93501172942431000EAA4BC /* PostReactionsListItemView.swift */,
 				C9350115294240AC00EAA4BC /* PostReactionsListView.swift */,
 				C93D7EA028F3166100FEF3D6 /* PostView.swift */,
@@ -566,6 +569,7 @@
 				C9848D6C28EC3A79003D4FFA /* PostViewModel.swift in Sources */,
 				C939D6D7292A4D0800C255F2 /* ProfileView.swift in Sources */,
 				C9350109293672ED00EAA4BC /* EmojiLibrayView.swift in Sources */,
+				C980162A299D0C890009FFEF /* UserDropDownView.swift in Sources */,
 				C907BF8929020749002197F1 /* SearchResultView.swift in Sources */,
 				C935010729365FF100EAA4BC /* LibraryEmoji.swift in Sources */,
 				C994171F2950F094007DC026 /* SplitByDate.swift in Sources */,

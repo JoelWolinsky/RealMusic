@@ -45,6 +45,8 @@ struct AlbumView: View {
     @Binding var scrollViewContentOffset: CGFloat
     
     @State var scrollViewContentOffsetCounter = 0
+    
+    @Binding var showUserDropDown: Bool
 
 
     
@@ -122,6 +124,8 @@ struct AlbumView: View {
                             blur = 0
                             showEmojiLibrary = false
                             showPicker = false
+                            showUserDropDown = false
+
                         } else {
                             print(0)
                             disableScroll = 0
@@ -154,6 +158,7 @@ struct AlbumView: View {
                     blur = 0
                     showEmojiLibrary = false
                     showPicker = false
+                    showUserDropDown = false
                     
                     
                 } else {

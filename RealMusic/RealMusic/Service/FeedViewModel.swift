@@ -15,7 +15,7 @@ class FeedViewModel: ObservableObject {
 //    @Published var postReactions = [Reactions]
 //    let postView = PostViewModel()
 //    let userView = UserViewModel()
-    
+
     init() {
         //fetchPosts()
         //fetchMyPosts()
@@ -29,6 +29,7 @@ class FeedViewModel: ObservableObject {
         let userView = UserViewModel()
         posts = []
         postView.fetchData { posts in
+            
             for post in posts {
                 
                 if post.datePosted.formatted(date: .numeric, time: .omitted) == Date().formatted(date: .numeric, time: .omitted) {

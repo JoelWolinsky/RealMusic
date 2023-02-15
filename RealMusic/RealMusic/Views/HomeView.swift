@@ -61,6 +61,11 @@ struct HomeView: View {
     @State private var scrollViewContentOffset = CGFloat(0)
     
     @State private var myFriends = true
+    
+    @ObservedObject var friendsViewModel = FriendsViewModel()
+    
+    @State var friendNames = [String]()
+
 
 
     var body: some View {
@@ -98,16 +103,26 @@ struct HomeView: View {
                                     .padding(.top, 70)
                                     
                                     //.frame(maxHeight: 300)
-                                    ForEach(feedViewModel.posts) { post in
-                                        VStack {
-                                            PostView(post: post, reactionViewModel: ReactionViewModel(id: post.id ?? ""), longPress: $longPress, chosenPostID: $chosenPostID, blur: $blur, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue, showPicker: showPicker, userViewModel: userViewModel, scrollViewContentOffset: $scrollViewContentOffset)
+                                    ZStack {
+                                        Text("No post today yet")
+                                            .foregroundColor(.white)
+                                            .padding(20)
                                             
-                                            
-                                            
+                                            .background(.thinMaterial)
+                                            .cornerRadius(5)
+                                        ForEach(feedViewModel.posts) { post in
+                                            VStack {
+                                                if friendsViewModel.friendsNames.contains(post.username ?? "") {
+                                                    PostView(post: post, reactionViewModel: ReactionViewModel(id: post.id ?? ""), longPress: $longPress, chosenPostID: $chosenPostID, blur: $blur, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue, showPicker: showPicker, userViewModel: userViewModel, scrollViewContentOffset: $scrollViewContentOffset)
+                                                }
+
+
+                                            }
+                                            .id(post.id)
                                         }
-                                        .id(post.id)
+                                        //.offset(y: -70)
+                                        .background(.orange)
                                     }
-                                    //.offset(y: -70)
                                     
                                 }
                             }
@@ -153,9 +168,10 @@ struct HomeView: View {
                                 VStack {
                                     ForEach(feedViewModel.posts) { post in
                                         VStack {
-                                            PostView(post: post, reactionViewModel: ReactionViewModel(id: post.id ?? ""), longPress: $longPress, chosenPostID: $chosenPostID, blur: $blur, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue, showPicker: showPicker, userViewModel: userViewModel, scrollViewContentOffset: $scrollViewContentOffset)
-                                            
-                                            
+                                            if !friendsViewModel.friendsNames.contains(post.username ?? "") {
+                                                PostView(post: post, reactionViewModel: ReactionViewModel(id: post.id ?? ""), longPress: $longPress, chosenPostID: $chosenPostID, blur: $blur, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue, showPicker: showPicker, userViewModel: userViewModel, scrollViewContentOffset: $scrollViewContentOffset)
+                                                
+                                            }
                                             
                                         }
                                         .id(post.id)
@@ -166,6 +182,7 @@ struct HomeView: View {
                             .zIndex(1)
                             .transition(.slideRight)
                             .padding(.top, 50)
+                            .background(.green)
                         }
                         
                         VStack {
