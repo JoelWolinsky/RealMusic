@@ -18,7 +18,7 @@ struct SignInView: View {
     @State var email = ""
     @State var password = ""
     
-    @StateObject var viewModel = SignInViewModel()
+    @StateObject var signInViewModel = SignInViewModel()
     @ObservedObject var userViewModel = UserViewModel()
     
     @State var signInResult = true
@@ -28,6 +28,8 @@ struct SignInView: View {
     var body: some View {
         NavigationView {
             VStack {
+//                Text(UserDefaults.standard.value(forKey: "authorization") as! String)
+//                    .foregroundColor(.green)
                 Text("RealMusic")
                     .foregroundColor(.white)
                     .font(.system(size:40))
@@ -66,7 +68,7 @@ struct SignInView: View {
                 
                 Button(action: {
                    
-                    viewModel.signIn(email: email, password: password) { (result) in
+                    signInViewModel.signIn(email: email, password: password) { (result) in
                         switch result{
                         case true:
                             signInResult = true
@@ -90,7 +92,7 @@ struct SignInView: View {
                 VStack {
                     Text("Don't already have an account?")
                         .foregroundColor(Color("Grey 1"))
-                    NavigationLink (destination: SignUpView(viewModel: viewModel)) {
+                    NavigationLink (destination: SignUpView(signInViewModel: signInViewModel)) {
                         Text("Create Account")
                         .foregroundColor(.white)
                         .fontWeight(.bold)
@@ -101,6 +103,7 @@ struct SignInView: View {
             .background(.black)
             
         }
+      
 
        
         
@@ -120,7 +123,7 @@ struct SignUpView: View {
     @State var email = ""
     @State var password = ""
     
-    @StateObject var viewModel: SignInViewModel
+    @StateObject var signInViewModel: SignInViewModel
     
     @State var inputNotValid = false
      
@@ -160,7 +163,7 @@ struct SignUpView: View {
                     .multilineTextAlignment(.center)
                 
                 if password.count > 5 {
-                    NavigationLink(destination: CreatUserNameView(viewModel: viewModel, email: email, password: password)) {
+                    NavigationLink(destination: CreateUserNameView(signInViewModel: signInViewModel, email: email, password: password)) {
                         Text("Next")
                             .frame(width: 100, height: 30)
                             .background(.white)
@@ -199,11 +202,11 @@ struct SignUpView: View {
 }
 
 // View for user to choose there username
-struct CreatUserNameView: View {
+struct CreateUserNameView: View {
     
     @State var username = ""
 
-    @StateObject var viewModel: SignInViewModel
+    @StateObject var signInViewModel: SignInViewModel
     
     var email: String
     var password: String
@@ -285,12 +288,13 @@ struct CreatUserNameView: View {
             }
             .frame(maxWidth: 300)
             .padding(10)
-            if username.count > 5  && selectedImageData != nil && viewModel.auth.currentUser?.uid != nil {
+            
+            if username.count > 5  && selectedImageData != nil && signInViewModel.auth.currentUser?.uid != nil {
                 Button(action: {
                     print("username \(username)")
-                    print(viewModel.auth.currentUser?.uid)
+                    print(signInViewModel.auth.currentUser?.uid)
                     
-                    let uid = viewModel.auth.currentUser?.uid ?? ""
+                    let uid = signInViewModel.auth.currentUser?.uid ?? ""
                     
                     userViewModel.fetchUsers() { users in
                         self.nameTaken = false
@@ -312,8 +316,8 @@ struct CreatUserNameView: View {
 //                                print("this is the profile url \( profile)")
 //                                profilePicture = profile
                                 userViewModel.createUser(uid: uid, username: username, profilePic: profilePicture ?? "no profile pic")
-                                viewModel.signedIn = true
-                                viewModel.welcomeMessage = true
+                            signInViewModel.signedIn = true
+                            signInViewModel.welcomeMessage = true
                             //}
                             Task {
                                 let data = selectedImageData
@@ -387,7 +391,9 @@ struct CreatUserNameView: View {
         .background(.black)
         .onAppear(perform: {
             // create user using inputs from previous view
-            viewModel.signUp(email: email, password: password)})
+            signInViewModel.signUp(email: email, password: password)
+            
+        })
 //        .sheet(isPresented: $isAddingPhoto) {
 //            PhotoPicker(selectedImageData: $selectedImageData, isAddingPhoto: $isAddingPhoto)
 //                }

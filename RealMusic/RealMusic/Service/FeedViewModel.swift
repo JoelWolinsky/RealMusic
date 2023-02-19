@@ -19,7 +19,7 @@ class FeedViewModel: ObservableObject {
     init() {
         //fetchPosts()
         //fetchMyPosts()
-        print("fetching")
+        //print("fetching")
     }
     
     // Fetches every post and user who made the post

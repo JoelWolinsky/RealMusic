@@ -70,13 +70,19 @@ struct ProfileView: View {
                     .padding( 20)
                 }
 
-                
-                Text(UserDefaults.standard.value(forKey: "username") as! String)
-                    .foregroundColor(.white)
-                    .font(.system(size: 30))
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .padding(.bottom, 10)
-                
+                if (UserDefaults.standard.value(forKey: "username") != nil) {
+                    Text(UserDefaults.standard.value(forKey: "username") as! String)
+                        .foregroundColor(.white)
+                        .font(.system(size: 30))
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding(.bottom, 10)
+                } else {
+                    Text("")
+                        .foregroundColor(.white)
+                        .font(.system(size: 30))
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding(.bottom, 10)
+                }
 //                VStack {
 //                    Text("UID: " + (UserDefaults.standard.value(forKey: "uid") as? String ?? ""))
 //                        .foregroundColor(Color("Grey"))
@@ -160,7 +166,13 @@ struct ProfileView: View {
             
             Button {
                 UserDefaults.resetStandardUserDefaults()
-                UserDefaults.standard.set(nil, forKey: "uid")
+                UserDefaults.standard.set(nil, forKey: "authorization")
+                //UserDefaults.standard.set(nil, forKey: "uid")
+
+
+              
+
+
                 // Clears cookies so that user is logged out of their Spotify account and it can't be accessed by the next user
                 HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
                 WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
@@ -170,6 +182,7 @@ struct ProfileView: View {
                             }
                         }
                 signInModel.signOut()
+                //UserDefaults.standard.set(nil, forKey: "username")
 
             } label: {
                 Text("Sign out")

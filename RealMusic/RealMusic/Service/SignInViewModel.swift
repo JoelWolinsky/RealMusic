@@ -70,7 +70,7 @@ class SignInViewModel: ObservableObject {
                 return
             }
             var uid = self.auth.currentUser?.uid
-            self.welcomeMessage = true
+            //self.welcomeMessage = true
             UserDefaults.standard.setValue(uid ?? "", forKey: "uid")
             print("uid \(uid)")
 

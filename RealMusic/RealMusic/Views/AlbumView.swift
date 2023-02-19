@@ -125,6 +125,7 @@ struct AlbumView: View {
                             showEmojiLibrary = false
                             showPicker = false
                             showUserDropDown = false
+                            chosenPostID = ""
 
                         } else {
                             print(0)
@@ -159,6 +160,7 @@ struct AlbumView: View {
                     showEmojiLibrary = false
                     showPicker = false
                     showUserDropDown = false
+                    chosenPostID = ""
                     
                     
                 } else {

@@ -96,6 +96,7 @@ class WebViewCoordinator: NSObject, WKNavigationDelegate {
             tokenString = String(tokenString[..<index])
             UserDefaults.standard.setValue(tokenString, forKey: "authorization")
             print("set token")
+            print(tokenString as! String)
             //showWebView = false
             receivedToken()
             

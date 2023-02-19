@@ -137,12 +137,12 @@ struct AddFriendsView: View {
                                         
                                     case .failure(let error):
                                         Rectangle()
-                                            .background(.green)
+                                            .background(.black)
                                             .foregroundColor(.black)
                                             .frame(width: 100, height: 110)
                                     case .empty:
                                         Rectangle()
-                                            .background(.green)
+                                            .background(.black)
                                             .foregroundColor(.black)
                                             .frame(width: 100, height: 110)
 

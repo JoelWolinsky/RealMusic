@@ -16,12 +16,11 @@ extension View {
 
 // This is the view handler
 struct ContentView: View {
-    @EnvironmentObject var viewModel: SignInViewModel
+    @EnvironmentObject var signInViewModel: SignInViewModel
     //@State private var showWebView = false
     @State private var showHome = false
     
     @ObservedObject var spotifyAPI = SpotifyAPI()
-    @ObservedObject var feedViewModel = FeedViewModel()
     
     @State var showWebView = false
     
@@ -33,39 +32,81 @@ struct ContentView: View {
         VStack {
 //            Text(test)
 //                .foregroundColor(.orange)
-            if viewModel.signedIn && UserDefaults.standard.value(forKey: "uid") != nil {
+            if signInViewModel.signedIn && UserDefaults.standard.value(forKey: "uid") != nil {
                    // .environment(viewModel: viewModel)
                 
-                HomeView(feedViewModel: feedViewModel, welcomeMessage: viewModel.welcomeMessage)
-                    .sheet(isPresented: $viewModel.welcomeMessage) {
-                        WelcomeView(viewModel: viewModel)
+                HomeView(welcomeMessage: signInViewModel.welcomeMessage, showWebView: $showWebView)
+                    .sheet(isPresented: $signInViewModel.welcomeMessage) {
+                        WelcomeView(signInViewModel: signInViewModel)
                             .interactiveDismissDisabled()
+                            .onDisappear(perform: {
+                                print("welcome view has dissapread")
+                                SpotifyAPI.shared.checkTokenExpiry { (result) in
+                                    switch result {
+                                        case true:
+                                        print("aaaa token valid ")
+                                        showWebView = false
+                                        //feedViewModel.fetchPosts()
+                                        //createPostModel.createPost(post: data[0])
+
+                                        case false:
+                                        print("aaaa token expired")
+                                        showWebView = true
+                                        }
+                                    }
+                            })
                     }
                     .sheet(isPresented: $showWebView) {
                         WebView(showWebView: $showWebView)
                             .onDisappear(perform: {
                                 print("disapear")
-                                feedViewModel.fetchPosts()
+                                //feedViewModel.fetchPosts()
                             })
                             .interactiveDismissDisabled()
 
 
-                        
+
                     }
-                    //.interactiveDismissDisabled()
+                    .interactiveDismissDisabled()
+              
+    
 
   
             } else {
-                SignInView(viewModel: viewModel)
+                SignInView(signInViewModel: signInViewModel)
                     .onAppear(perform: {
-                        showWebView = true
+                        if signInViewModel.isSignedIn == false {
+                            print("set token to nil")
+                            UserDefaults.standard.set(nil, forKey: "authorization")
+
+                        }
                     })
+                    .onDisappear(perform: {
+                        SpotifyAPI.shared.checkTokenExpiry { (result) in
+                            switch result {
+                                case true:
+                                print("aaaa token valid ")
+                                showWebView = false
+                                //feedViewModel.fetchPosts()
+                                //createPostModel.createPost(post: data[0])
+
+                                case false:
+                                print("aaaa token expired")
+                                showWebView = true
+                                }
+                            }
+                    })
+//                    .onAppear(perform: {
+//                        showWebView = true
+//                    })
                 // ADD once signed it and redirected to google to close sheet
             }
             
-        }.onAppear( perform: {
+        }
+        .accentColor(.black)
+        .onAppear( perform: {
             
-            viewModel.signedIn = viewModel.isSignedIn
+            signInViewModel.signedIn = signInViewModel.isSignedIn
             
             //viewModel.signedIn = false
             //test = "hello world"
@@ -88,7 +129,7 @@ struct ContentView: View {
                     case true:
                     print("aaaa token valid ")
                     showWebView = false
-                    feedViewModel.fetchPosts()
+                    //feedViewModel.fetchPosts()
                     //createPostModel.createPost(post: data[0])
 
                     case false:
@@ -104,4 +145,5 @@ struct ContentView: View {
     }
         
 }
+
 

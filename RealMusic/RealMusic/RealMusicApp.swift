@@ -84,7 +84,7 @@ extension AppDelegate: MessagingDelegate {
 
         
         
-        if UserDefaults.standard.value(forKey: "uid") != nil {
+        if UserDefaults.standard.value(forKey: "uid") != nil && UserDefaults.standard.value(forKey: "username") != nil {
             let deviceToken:[String: String] = ["token": fcmToken ?? "", "username": UserDefaults.standard.value(forKey: "username") as! String, "uid" : UserDefaults.standard.value(forKey: "uid") as! String]
             
             UserDefaults.standard.set(deviceToken, forKey: "deviceToken")

@@ -10,7 +10,7 @@ import SwiftUI
 
 struct WelcomeView: View {
     
-    @StateObject var viewModel: SignInViewModel
+    @StateObject var signInViewModel: SignInViewModel
     
     var body: some View {
         NavigationView() {
@@ -50,7 +50,7 @@ struct WelcomeView: View {
                 //            Text("If the app breaks try restarting it. And also, feel free to lmk if you think its crap")
                 //                .frame(maxWidth: .infinity, alignment: .leading)
                 NavigationLink {
-                    WelcomeView2(viewModel: viewModel)
+                    WelcomeView2(signInViewModel: signInViewModel)
                 } label: {
                     Image(systemName: "arrow.right")
                         .foregroundColor(.white)
@@ -71,7 +71,7 @@ struct WelcomeView: View {
 
 struct WelcomeView2: View {
         
-        @StateObject var viewModel: SignInViewModel
+        @StateObject var signInViewModel: SignInViewModel
         
         var body: some View {
             VStack{
@@ -81,7 +81,7 @@ struct WelcomeView2: View {
 
 
                 NavigationLink {
-                    WelcomeView3(viewModel: viewModel)
+                    WelcomeView3(signInViewModel: signInViewModel)
                 } label: {
                     Image(systemName: "arrow.right")
                         .foregroundColor(.white)
@@ -109,7 +109,7 @@ struct WelcomeView2: View {
 
 struct WelcomeView3: View {
         
-    @StateObject var viewModel: SignInViewModel
+    @StateObject var signInViewModel: SignInViewModel
     
     var body: some View {
         VStack{
@@ -120,7 +120,7 @@ struct WelcomeView3: View {
 
 
             NavigationLink {
-                WelcomeView4(viewModel: viewModel)
+                WelcomeView4(signInViewModel: signInViewModel)
                 
             } label: {
                 Image(systemName: "arrow.right")
@@ -143,7 +143,7 @@ struct WelcomeView3: View {
 
 struct WelcomeView4: View {
         
-    @StateObject var viewModel: SignInViewModel
+    @StateObject var signInViewModel: SignInViewModel
     
     var body: some View {
         VStack{
@@ -158,7 +158,7 @@ struct WelcomeView4: View {
 
 
             Button {
-                viewModel.welcomeMessage.toggle()
+                signInViewModel.welcomeMessage.toggle()
 
             } label: {
                 Text("Go to app")

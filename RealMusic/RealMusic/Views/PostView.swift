@@ -44,7 +44,7 @@ struct PostView: View {
     
     @State var profilePic = String()
     
-    @State var showUserDropDown = false
+    @Binding var showUserDropDown: Bool
 
 
     
@@ -54,50 +54,7 @@ struct PostView: View {
         ZStack {
             
             VStack {
-                HStack {
-                    
-                    if let url = URL(string: profilePic) {
-                        CacheAsyncImage(url: url) { phase in
-                            switch phase {
-                            case .success(let image):
-                                image
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                
-                            case .failure(let error):
-                                //                    //print(error)
-                                Rectangle()
-                                    .background(.black)
-                                    .foregroundColor(.green)
-                                    .frame(width: 30, height: 30)
-                            case .empty:
-                                // preview loader
-                                Rectangle()
-                                    .background(.black)
-                                    .foregroundColor(.green)
-                                    .frame(width: 30, height: 30)
-                                
-                            }
-                        }
-                        .frame(width: 30, height: 30)
-                        .cornerRadius(15)
-                    } else {
-                        Rectangle()
-                            .background(.black)
-                            .foregroundColor(.black)
-                            .frame(width: 30, height: 30)
-                    }
-                    VStack {
-                        Text(post.username ?? "")
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        Text("\(post.datePosted.formatted(date: .omitted, time: .standard))")
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .font(.system(size: 15))
-                            .foregroundColor(Color("Grey 1"))
-                    }
-                }
-                .blur(radius:CGFloat(blur))
-                .onTapGesture {
+                Button (action: {
                     withAnimation(.easeIn(duration: 0.0)) {
                         showUserDropDown.toggle()
                         if longPress == 10 {
@@ -106,6 +63,7 @@ struct PostView: View {
                             disableScroll = 1000
                             blur = 0
                             showUserDropDown = false
+                            chosenPostID = ""
                             
                         } else {
                             print(0)
@@ -113,16 +71,61 @@ struct PostView: View {
                             longPress = 10
                             showUserDropDown = true
                             blur = 20
+                            chosenPostID = post.id ?? ""
                             
                         }
 
                         }
-                }
-
+                }, label: {
                     
+                    HStack {
+                        if let url = URL(string: profilePic) {
+                            CacheAsyncImage(url: url) { phase in
+                                switch phase {
+                                case .success(let image):
+                                    image
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                    
+                                case .failure(let error):
+                                    //                    //print(error)
+                                    Rectangle()
+                                        .background(.black)
+                                        .foregroundColor(.black)
+                                        .frame(width: 30, height: 30)
+                                case .empty:
+                                    // preview loader
+                                    Rectangle()
+                                        .background(.black)
+                                        .foregroundColor(.black)
+                                        .frame(width: 30, height: 30)
+                                    
+                                }
+                            }
+                            .frame(width: 30, height: 30)
+                            .cornerRadius(15)
+                        } else {
+                            Rectangle()
+                                .background(.black)
+                                .foregroundColor(.black)
+                                .frame(width: 30, height: 30)
+                        }
+                        
+                        VStack {
+                            Text(post.username ?? "")
+                                .frame(maxWidth: .infinity, alignment: .leading)
+//                            Text(post.id ?? "")
+//                                .frame(maxWidth: .infinity, alignment: .leading)
+                            Text("\(post.datePosted.formatted(date: .omitted, time: .standard))")
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .font(.system(size: 15))
+                                .foregroundColor(Color("Grey 1"))
+                        }
+                    }
+                    .blur(radius:CGFloat(blur))
+                    //.background(.green)
+                })
 
-                
-                
                 AlbumView(album: Album(title: post.title ?? "placeholder",artist: post.artist ?? "placeholder" ,cover: post.cover ?? "KSG Cover", preview: post.preview ?? ""), reactionViewModel: reactionViewModel, longPress: $longPress, chosenPostID: $chosenPostID, blur: $blur, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue, showPicker: $showPicker, postID: post.id ?? "" , emojiPickerOpacity: $emojiPickerOpacity, scrollViewContentOffset: $scrollViewContentOffset, showUserDropDown: $showUserDropDown)
                 //.padding(.bottom, 50)
             
@@ -176,9 +179,10 @@ struct PostView: View {
                 
             }
             
-            if showUserDropDown {
+            if showUserDropDown && chosenPostID == post.id {
                 UserDropDownView(username: post.username ?? "", spotifyAPI: spotifyAPI, showPicker: $showPicker, longPress: $longPress, blur: $blur, disableScroll: $disableScroll, showUserDropDown: $showUserDropDown, userViewModel: userViewModel)
                     .frame(maxHeight: .infinity, alignment: .top)
+                    .padding(.top, 50)
                     
             }
             

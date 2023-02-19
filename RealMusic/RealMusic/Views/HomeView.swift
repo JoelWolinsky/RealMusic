@@ -14,7 +14,7 @@ import SwiftUITrackableScrollView
 // This is the main screen of the app which displays the users feed consisting of posts made by other users
 struct HomeView: View {
     
-    @StateObject var feedViewModel: FeedViewModel
+    //@StateObject var feedViewModel: FeedViewModel
         
     let userUid = "cY51kdkZdHhq6r3lTAd2"
     
@@ -25,6 +25,8 @@ struct HomeView: View {
     @EnvironmentObject var signInModel: SignInViewModel
     
     @ObservedObject var emojiCatalogue = EmojiCatalogue()
+    
+    @ObservedObject var feedViewModel = FeedViewModel()
     
     @State var currentlyPlaying = SpotifySong(songID: "", title: "", artist: "", uid: "", cover: "")
     
@@ -58,6 +60,8 @@ struct HomeView: View {
     
     @State var welcomeMessage: Bool
     
+    @Binding var showWebView: Bool
+    
     @State private var scrollViewContentOffset = CGFloat(0)
     
     @State private var myFriends = true
@@ -65,6 +69,12 @@ struct HomeView: View {
     @ObservedObject var friendsViewModel = FriendsViewModel()
     
     @State var friendNames = [String]()
+    
+    let timer = Timer.publish(every: 2, on: .main, in: .common).autoconnect()
+   
+    @State var showUserDropDown = false
+
+    //@State var token = UserDefaults.standard.value(forKey: "authorization") ?? ""
 
 
 
@@ -79,19 +89,23 @@ struct HomeView: View {
                                 VStack {
                                     VStack {
                                         //if feedViewModel.myPosts.count == 0 {
-                                        
+//                                        if (UserDefaults.standard.value(forKey: "authorization") != nil) {
+//                                            Text(UserDefaults.standard.value(forKey: "authorization") as! String)
+//                                                .foregroundColor(.purple)
+//                                        }
                                         if (feedViewModel.myPosts.count > 0) {
                                             YourPostView(post: feedViewModel.myPosts[0], reactionViewModel: ReactionViewModel(id: feedViewModel.myPosts[0].id ?? ""),userViewModel: userViewModel)
                                                 .frame(maxWidth: 200, maxHeight: 150)
+                                                .id(0)
                                             //.offset(y: -120)
                                         }
-                                        
+
                                         Text("Currently Listening To:")
                                             .foregroundColor(.white)
                                             .blur(radius:CGFloat(blur))
-                                        
+
                                         VStack {
-                                            
+
                                             CurrentlyPlayingView(song: currentlyPlaying, createPostModel: createPostModel, searchToggle: $searchToggle, currentSongPosted: $currentSongPosted)
                                         }
                                         .frame(width: 350, height: 100)
@@ -100,33 +114,47 @@ struct HomeView: View {
                                         .blur(radius:CGFloat(blur))
                                         //.offset(y:100)
                                     }
-                                    .padding(.top, 70)
+                                    .padding(.top, 110)
                                     
                                     //.frame(maxHeight: 300)
                                     ZStack {
-                                        Text("No post today yet")
+                                        
+                                        Text("No post today yet. Try checking out the Discovery page.")
                                             .foregroundColor(.white)
                                             .padding(20)
+                                            .frame(maxWidth: 300)
+                                            .multilineTextAlignment(.center)
+
                                             
                                             .background(.thinMaterial)
                                             .cornerRadius(5)
-                                        ForEach(feedViewModel.posts) { post in
-                                            VStack {
-                                                if friendsViewModel.friendsNames.contains(post.username ?? "") {
-                                                    PostView(post: post, reactionViewModel: ReactionViewModel(id: post.id ?? ""), longPress: $longPress, chosenPostID: $chosenPostID, blur: $blur, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue, showPicker: showPicker, userViewModel: userViewModel, scrollViewContentOffset: $scrollViewContentOffset)
+                                        //ScrollViewReader { (proxy: ScrollViewProxy) in
+                                            
+                                            LazyVStack {
+                                                ForEach(feedViewModel.posts) { post in
+                                                    if friendsViewModel.friendsNames.contains(post.username ?? "") {
+                                                        PostView(post: post, reactionViewModel: ReactionViewModel(id: post.id ?? ""), longPress: $longPress, chosenPostID: $chosenPostID, blur: $blur, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue, showPicker: showPicker, userViewModel: userViewModel, scrollViewContentOffset: $scrollViewContentOffset, showUserDropDown : $showUserDropDown)
+                                                            .id(post.id)
+                                                    }
                                                 }
-
-
+                                                
+                                                
                                             }
-                                            .id(post.id)
-                                        }
-                                        //.offset(y: -70)
-                                        .background(.orange)
-                                    }
+                                            .background(.black)
+                                            .onChange(of: chosenPostID) { target in
+                                                withAnimation {
+                                                    proxy.scrollTo(chosenPostID, anchor: .center)
+                                                    print("chosen id changed to \(chosenPostID)")
+                                                    //chosenPostID = ""
+                                                }
+                                                
+                                                //.offset(y: -70)
+                                            }
+                                        //}
                                     
                                 }
                             }
-                            .simultaneousGesture(DragGesture(minimumDistance: CGFloat(disableScroll)))
+                            //.simultaneousGesture(DragGesture(minimumDistance: CGFloat(disableScroll)))
                             //.scrollDisabled(true)
                             //                        /.disableScrolling(disabled: disableScroll)
                             .refreshable {
@@ -153,36 +181,59 @@ struct HomeView: View {
                                 }
                                 
                             }
-                            .onChange(of: chosenPostID) { target in
-                                withAnimation {
-                                    proxy.scrollTo(chosenPostID, anchor: .center)
-                                    chosenPostID = ""
-                                }
+                            
                                 
                             }
                             //.zIndex(1)
                             .transition(.slideLeft)
+                            .simultaneousGesture(DragGesture(minimumDistance: CGFloat(disableScroll)))
                             
                         } else {
-                            ScrollView {
-                                VStack {
-                                    ForEach(feedViewModel.posts) { post in
-                                        VStack {
+                            ZStack {
+                                Text("No post today yet")
+                                    .foregroundColor(.white)
+                                    .padding(20)
+                                    .background(.thinMaterial)
+                                    .cornerRadius(5)
+                                
+                                TrackableScrollView(.vertical, showIndicators: false, contentOffset: $scrollViewContentOffset) {
+                                    LazyVStack {
+                                        Text("")
+                                            .frame(maxHeight: 1)
+                                            .id(0)
+                                        ForEach(feedViewModel.posts) { post in
                                             if !friendsViewModel.friendsNames.contains(post.username ?? "") {
-                                                PostView(post: post, reactionViewModel: ReactionViewModel(id: post.id ?? ""), longPress: $longPress, chosenPostID: $chosenPostID, blur: $blur, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue, showPicker: showPicker, userViewModel: userViewModel, scrollViewContentOffset: $scrollViewContentOffset)
+                                                PostView(post: post, reactionViewModel: ReactionViewModel(id: post.id ?? ""), longPress: $longPress, chosenPostID: $chosenPostID, blur: $blur, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue, showPicker: showPicker, userViewModel: userViewModel, scrollViewContentOffset: $scrollViewContentOffset, showUserDropDown : $showUserDropDown)
+                                                    .id(post.id)
+
                                                 
                                             }
                                             
+                                            
+                                            //.id(post.id)
                                         }
-                                        .id(post.id)
                                     }
+                                    .background(.black)
+                                    .padding(.top, 100)
+                                    .onChange(of: chosenPostID) { target in
+                                        withAnimation {
+                                            proxy.scrollTo(chosenPostID, anchor: .center)
+                                            print("chosen id changed to \(chosenPostID)")
+                                            //chosenPostID = ""
+                                        }
+                                        
+                                        //.offset(y: -70)
+                                    }
+
+
+
                                 }
+                                .frame(maxWidth: .infinity)
+                                .zIndex(1)
+                                .transition(.slideRight)
+                                .simultaneousGesture(DragGesture(minimumDistance: CGFloat(disableScroll)))
+
                             }
-                            .frame(maxWidth: .infinity)
-                            .zIndex(1)
-                            .transition(.slideRight)
-                            .padding(.top, 50)
-                            .background(.green)
                         }
                         
                         VStack {
@@ -219,8 +270,10 @@ struct HomeView: View {
                                 //                        }
                                 
                                 Button {
-                                    withAnimation {
-                                        proxy.scrollTo(feedViewModel.posts[0].id, anchor: .bottom)
+                                    if blur == 0 {
+                                        withAnimation {
+                                            proxy.scrollTo(0, anchor: .center)
+                                        }
                                     }
                                 } label: {
                                     Text("RealMusic")
@@ -250,13 +303,13 @@ struct HomeView: View {
                                                 //                    //print(error)
                                                 Rectangle()
                                                     .background(.black)
-                                                    .foregroundColor(.green)
+                                                    .foregroundColor(.black)
                                                     .frame(width: 30, height: 30)
                                             case .empty:
                                                 // preview loader
                                                 Rectangle()
                                                     .background(.black)
-                                                    .foregroundColor(.green)
+                                                    .foregroundColor(.black)
                                                     .frame(width: 30, height: 30)
                                                 
                                             }
@@ -413,6 +466,31 @@ struct HomeView: View {
                 }
                 
             })
+            .onChange(of: showWebView, perform: { value in
+                print("show web view has changed token is: ", UserDefaults.standard.value(forKey: "authorization"))
+                //feedViewModel.fetchPosts()
+
+                //feedViewModel.fetchMyPosts()
+                
+                getRequest.getCurrentPlaying() { (result) in
+                    switch result {
+                    case .success(let data) :
+                        print("success playing now \(data)")
+                        let song = data[0]
+                        currentlyPlaying = SpotifySong(id: song.id, songID: song.songID, title: song.title, artist: song.artist, uid: song.uid, cover: song.cover, preview_url: song.preview_url)
+                    case .failure(let error) :
+                        print("fail recent")
+                        // print(error)
+                    }
+                }
+
+                
+            })
+           
+           
+        
+            
+
             
 //            .onChange(of: ("\(UserDefaults.standard.value(forKey: "token"))") ?? "", perform: { value in
 //                print("Token changed")
@@ -435,21 +513,25 @@ struct HomeView: View {
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
             UIApplication.shared.applicationIconBadgeNumber = 0
             
-            print("App is active")
+            print(" App is active token is: ", UserDefaults.standard.value(forKey: "authorization"))
+
+            //feedViewModel.fetchPosts()
+
+            //feedViewModel.fetchMyPosts()
             
-//            SpotifyAPI.shared.checkTokenExpiry { (result) in
-//                switch result {
-//                    case true:
-//                    print("aaaa token valid ")
-//                    showWebView = false
-//                    feedViewModel.fetchPosts()
-//                    //createPostModel.createPost(post: data[0])
-//
-//                    case false:
-//                    print("aaaa token expired")
-//                    showWebView = true
-//                    }
-//                }
+            SpotifyAPI.shared.checkTokenExpiry { (result) in
+                switch result {
+                    case true:
+                    print("aaaa token valid ")
+                    showWebView = false
+                    feedViewModel.fetchPosts()
+                    //createPostModel.createPost(post: data[0])
+
+                    case false:
+                    print("aaaa token expired")
+                    showWebView = true
+                    }
+                }
             
             getRequest.getCurrentPlaying() { (result) in
                 switch result {
@@ -465,6 +547,20 @@ struct HomeView: View {
 
 
         }
+        .onReceive(timer) { time in
+            getRequest.getCurrentPlaying() { (result) in
+                switch result {
+                case .success(let data) :
+                    print("success playing now \(data)")
+                    let song = data[0]
+                    currentlyPlaying = SpotifySong(id: song.id, songID: song.songID, title: song.title, artist: song.artist, uid: song.uid, cover: song.cover, preview_url: song.preview_url)
+                case .failure(let error) :
+                    print("fail recent")
+                    // print(error)
+                }
+            }
+        }
+        
        
     }
     

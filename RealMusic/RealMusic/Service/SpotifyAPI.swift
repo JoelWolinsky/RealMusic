@@ -199,6 +199,7 @@ class SpotifyAPI: ObservableObject {
     func getCurrentPlaying(completion: @escaping (Result<[SpotifySong], NetworkError>) -> Void) {
         token = UserDefaults.standard.value(forKey: "authorization") ?? ""
         print("get current playing song")
+        print(token as! String)
         let url = URL(string: "https://api.spotify.com/v1/me/player/currently-playing")!
         var request = URLRequest(url: url)
         request.httpMethod = "GET"

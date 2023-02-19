@@ -61,9 +61,10 @@ struct YourPostView: View {
 
                 
                 Text(post.title ?? "")
-                    .frame(maxWidth: .infinity, alignment: .center)
+                    .frame(maxWidth: .infinity, maxHeight: 25, alignment: .center)
                     .foregroundColor(.white)
                     .fontWeight(.bold)
+                    
 
                 Text("\(post.datePosted.formatted(date: .omitted, time: .standard))")
                     .frame(maxWidth: .infinity, alignment: .center)
