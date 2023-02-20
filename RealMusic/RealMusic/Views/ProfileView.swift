@@ -166,7 +166,7 @@ struct ProfileView: View {
             
             Button {
                 UserDefaults.resetStandardUserDefaults()
-                UserDefaults.standard.set(nil, forKey: "authorization")
+                UserDefaults.standard.set(nil, forKey: "auth")
                 //UserDefaults.standard.set(nil, forKey: "uid")
 
 

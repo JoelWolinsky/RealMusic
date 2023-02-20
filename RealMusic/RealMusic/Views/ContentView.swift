@@ -41,6 +41,9 @@ struct ContentView: View {
                             .interactiveDismissDisabled()
                             .onDisappear(perform: {
                                 print("welcome view has dissapread")
+                                if UserDefaults.standard.value(forKey: "auth") == nil {
+                                    UserDefaults.standard.set("no key yet", forKey: "auth")
+                                }
                                 SpotifyAPI.shared.checkTokenExpiry { (result) in
                                     switch result {
                                         case true:
@@ -61,6 +64,19 @@ struct ContentView: View {
                             .onDisappear(perform: {
                                 print("disapear")
                                 //feedViewModel.fetchPosts()
+                                SpotifyAPI.shared.checkTokenExpiry { (result) in
+                                    switch result {
+                                        case true:
+                                        print("aaaa token valid ")
+                                        //showWebView = false
+                                        //feedViewModel.fetchPosts()
+                                        //createPostModel.createPost(post: data[0])
+
+                                        case false:
+                                        print("aaaa token expired")
+                                        //showWebView = true
+                                        }
+                                    }
                             })
                             .interactiveDismissDisabled()
 
@@ -77,11 +93,14 @@ struct ContentView: View {
                     .onAppear(perform: {
                         if signInViewModel.isSignedIn == false {
                             print("set token to nil")
-                            UserDefaults.standard.set(nil, forKey: "authorization")
+                            UserDefaults.standard.set(nil, forKey: "auth")
 
                         }
                     })
                     .onDisappear(perform: {
+                        if UserDefaults.standard.value(forKey: "auth") == nil {
+                            UserDefaults.standard.set("no key yet", forKey: "auth")
+                        }
                         SpotifyAPI.shared.checkTokenExpiry { (result) in
                             switch result {
                                 case true:

@@ -467,11 +467,10 @@ struct HomeView: View {
                 
             })
             .onChange(of: showWebView, perform: { value in
-                print("show web view has changed token is: ", UserDefaults.standard.value(forKey: "authorization"))
+                print("show web view has changed token is: ", UserDefaults.standard.value(forKey: "auth"))
                 //feedViewModel.fetchPosts()
 
                 //feedViewModel.fetchMyPosts()
-                
                 getRequest.getCurrentPlaying() { (result) in
                     switch result {
                     case .success(let data) :
@@ -513,8 +512,9 @@ struct HomeView: View {
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
             UIApplication.shared.applicationIconBadgeNumber = 0
             
-            print(" App is active token is: ", UserDefaults.standard.value(forKey: "authorization"))
-
+            print(" App is active token is: ", UserDefaults.standard.value(forKey: "auth"))
+            
+            self.getRequest.token  = UserDefaults.standard.value(forKey: "auth") ?? ""
             //feedViewModel.fetchPosts()
 
             //feedViewModel.fetchMyPosts()

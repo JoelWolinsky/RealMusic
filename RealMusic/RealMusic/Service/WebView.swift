@@ -49,6 +49,9 @@ struct WebView: UIViewRepresentable {
             //showLoading = false
         }, receivedToken: {
             print("Received token")
+            //UserDefaults.standard.set("tomato", forKey: "auth")
+
+            
             showWebView = false
         })
     }
@@ -94,7 +97,12 @@ class WebViewCoordinator: NSObject, WKNavigationDelegate {
             guard let index = range?.lowerBound else { return }
             
             tokenString = String(tokenString[..<index])
-            UserDefaults.standard.setValue(tokenString, forKey: "authorization")
+            
+            UserDefaults.standard.setValue(tokenString, forKey: "auth")
+            //UserDefaults.standard.set("banana", forKey: "auth")
+
+            UserDefaults.standard.synchronize()
+
             print("set token")
             print(tokenString as! String)
             //showWebView = false

@@ -11,7 +11,7 @@ import FirebaseFirestore
 
 class AnalyticsModel: ObservableObject {
     
-    @State var token = UserDefaults.standard.value(forKey: "authorization") ?? ""
+    @State var token = UserDefaults.standard.value(forKey: "auth") ?? ""
     
     //@Published var score = Double()
     
