@@ -117,7 +117,7 @@
 //                        print("name taken \(nameTaken)")
 //                        if nameTaken == false {
 //                            print("name taken = false")
-////                            userViewModel.fetchProfilePic(uid: uid) { profile in
+//                            userViewModel.fetchProfilePic(uid: uid) { profile in
 ////                                print("this is the profile url \( profile)")
 ////                                profilePicture = profile
 //                                userViewModel.createUser(uid: uid, username: username, profilePic: profilePicture ?? "no profile pic")

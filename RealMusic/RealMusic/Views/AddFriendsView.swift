@@ -12,7 +12,7 @@ struct AddFriendsView: View {
     
     @ObservedObject var userViewModel = UserViewModel()
     @ObservedObject var analyticsModel = AnalyticsModel()
-    @ObservedObject var friendsViewModel = FriendsViewModel()
+    @StateObject var friendsViewModel : FriendsViewModel
 
 
     
@@ -119,58 +119,16 @@ struct AddFriendsView: View {
                         .padding(5)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     Spacer()
-                    Text("Music Taste")
+                    Text("Music Taste Similarity")
                         .foregroundColor(.white)
                         .padding(5)
                         .frame(maxWidth: .infinity, alignment: .trailing)
                 }
                 ScrollView {
                     ForEach(friendsViewModel.friends.sorted(by: { $0.matchScore ?? 0 > $1.matchScore ?? 0 })) { friend in
-                        HStack {
-                            if let url = URL(string: ((friend.id ?? "") + ".heic") ?? "") {
-                                CacheAsyncImage(url: url) { phase in
-                                    switch phase {
-                                    case .success(let image):
-                                        image
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fill)
-                                        
-                                    case .failure(let error):
-                                        Rectangle()
-                                            .background(.black)
-                                            .foregroundColor(.black)
-                                            .frame(width: 100, height: 110)
-                                    case .empty:
-                                        Rectangle()
-                                            .background(.black)
-                                            .foregroundColor(.black)
-                                            .frame(width: 100, height: 110)
-
-                                    }
-                                }
-                                .frame(width: 60, height: 60)
-                                .cornerRadius(30)
-                            }
-                           
-//                            .onAppear(perform: {
-//                                userViewModel.fetchProfilePic(uid: friend.id!) { profile in
-//                                    print("profilepic is \(profile)")
-//                                }
-//                            })
-
-
-                            VStack {
-                                Text(friend.username)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .padding(5)
-                                    .foregroundColor(Color("Grey"))
-                            }
-                            
-                            Text(String(friend.matchScore ?? 0))
-                                .foregroundColor(.white)
-
-                        }
                         
+                        FriendView(friend: friend)
+ 
                     }
                 }
                 

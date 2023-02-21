@@ -87,7 +87,7 @@ class UserViewModel: ObservableObject {
         do {
             try db.collection("Users").document(friend.id ?? "").collection("Friends").document(userUid as! String)
                 .setData(from: User(id: userUid as? String,
-                                    username: UserDefaults.standard.value(forKey: "Username") as? String ?? "" ))
+                                    username: UserDefaults.standard.value(forKey: "username") as? String ?? "" ))
             print("friend added")
         } catch let error {
             print("Error writing city to Firestore: \(error)")

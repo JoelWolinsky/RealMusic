@@ -30,14 +30,14 @@ struct HomeView: View {
     
     @State var currentlyPlaying = SpotifySong(songID: "", title: "", artist: "", uid: "", cover: "")
     
-    @State var friendsToggle = false
+    @State var friendsToggle = true
     @State var searchToggle = false
     
     @State var profilePic = String()
     
     @State var userViewModel = UserViewModel()
     
-    @State var showProfileView = false
+    @State var showProfileView = true
     
     @State var longPress = 0
     
@@ -400,7 +400,7 @@ struct HomeView: View {
                 }
                 
                 if friendsToggle {
-                    AddFriendsView(friendsToggle: $friendsToggle)
+                    AddFriendsView(friendsViewModel: friendsViewModel, friendsToggle: $friendsToggle)
                         .zIndex(1)
                         .transition(.slideLeft)
                         .ignoresSafeArea(.keyboard)
@@ -505,6 +505,9 @@ struct HomeView: View {
         .onAppear(perform: {
             feedViewModel.fetchMyPosts()
             print("my post length \(feedViewModel.myPosts.count)")
+            
+            friendsToggle = false
+            showProfileView = false
             //feedViewModel.fetchPosts()
 
         })
@@ -553,7 +556,7 @@ struct HomeView: View {
                 case .success(let data) :
                     print("success playing now \(data)")
                     let song = data[0]
-                    currentlyPlaying = SpotifySong(id: song.id, songID: song.songID, title: song.title, artist: song.artist, uid: song.uid, cover: song.cover, preview_url: song.preview_url)
+                    self.currentlyPlaying = SpotifySong(id: song.id, songID: song.songID, title: song.title, artist: song.artist, uid: song.uid, cover: song.cover, preview_url: song.preview_url)
                 case .failure(let error) :
                     print("fail recent")
                     // print(error)
