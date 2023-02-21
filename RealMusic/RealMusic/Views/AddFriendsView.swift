@@ -127,7 +127,7 @@ struct AddFriendsView: View {
                 ScrollView {
                     ForEach(friendsViewModel.friends.sorted(by: { $0.matchScore ?? 0 > $1.matchScore ?? 0 })) { friend in
                         HStack {
-                            if let url = URL(string: friend.profilePic ?? "") {
+                            if let url = URL(string: ((friend.id ?? "") + ".heic") ?? "") {
                                 CacheAsyncImage(url: url) { phase in
                                     switch phase {
                                     case .success(let image):

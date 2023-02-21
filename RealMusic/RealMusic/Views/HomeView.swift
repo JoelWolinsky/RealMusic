@@ -152,36 +152,36 @@ struct HomeView: View {
                                             }
                                         //}
                                     
-                                }
-                            }
-                            //.simultaneousGesture(DragGesture(minimumDistance: CGFloat(disableScroll)))
-                            //.scrollDisabled(true)
-                            //                        /.disableScrolling(disabled: disableScroll)
-                            .refreshable {
-                                print("Refreshing")
-                                feedViewModel.fetchPosts()
-                                //feedViewModel.fetchReactions()
-                                
-                                
-                                getRequest.getCurrentPlaying() { (result) in
-                                    switch result {
-                                    case .success(let data) :
-                                        print("success playing now \(data)")
-                                        let song = data[0]
-                                        currentlyPlaying = SpotifySong(id: song.id, songID: song.songID, title: song.title, artist: song.artist, uid: song.uid, cover: song.cover, preview_url: song.preview_url)
-                                    case .failure(let error) :
-                                        print("fail recent")
-                                        // print(error)
                                     }
                                 }
-                                
-                                userViewModel.fetchProfilePic(uid: (UserDefaults.standard.value(forKey: "uid") ?? "placeholder") as! String ) { profile in
-                                    print("fetching profile for \(profile)")
-                                    profilePic = profile
+                                //.simultaneousGesture(DragGesture(minimumDistance: CGFloat(disableScroll)))
+                                //.scrollDisabled(true)
+                                //                        /.disableScrolling(disabled: disableScroll)
+                                .refreshable {
+                                    print("Refreshing")
+                                    feedViewModel.fetchPosts()
+                                    //feedViewModel.fetchReactions()
+                                    
+                                    
+                                    getRequest.getCurrentPlaying() { (result) in
+                                        switch result {
+                                        case .success(let data) :
+                                            print("success playing now \(data)")
+                                            let song = data[0]
+                                            currentlyPlaying = SpotifySong(id: song.id, songID: song.songID, title: song.title, artist: song.artist, uid: song.uid, cover: song.cover, preview_url: song.preview_url)
+                                        case .failure(let error) :
+                                            print("fail recent")
+                                            // print(error)
+                                        }
+                                    }
+                                    
+                                    userViewModel.fetchProfilePic(uid: (UserDefaults.standard.value(forKey: "uid") ?? "placeholder") as! String ) { profile in
+                                        print("fetching profile for \(profile)")
+                                        profilePic = profile
+                                    }
+                                    
                                 }
                                 
-                            }
-                            
                                 
                             }
                             //.zIndex(1)
@@ -229,11 +229,11 @@ struct HomeView: View {
 
                                 }
                                 .frame(maxWidth: .infinity)
-                                .zIndex(1)
-                                .transition(.slideRight)
                                 .simultaneousGesture(DragGesture(minimumDistance: CGFloat(disableScroll)))
 
                             }
+                            .zIndex(1)
+                            .transition(.slideRight)
                         }
                         
                         VStack {
@@ -337,7 +337,7 @@ struct HomeView: View {
                                     }
                                 } label: {
                                     Text("My Friends")
-                                        .foregroundColor(.white)
+                                        .foregroundColor(myFriends ? .white : Color("Grey 1"))
                                         .font(.system(size:17))
                                         .fontWeight(.bold)
                                         .blur(radius: 0)
@@ -350,7 +350,7 @@ struct HomeView: View {
                                     }
                                 } label: {
                                     Text("Discovery")
-                                        .foregroundColor(.white)
+                                        .foregroundColor(!myFriends ? .white : Color("Grey 1"))
                                         .font(.system(size:17))
                                         .fontWeight(.bold)
                                         .blur(radius: 0)
@@ -468,9 +468,9 @@ struct HomeView: View {
             })
             .onChange(of: showWebView, perform: { value in
                 print("show web view has changed token is: ", UserDefaults.standard.value(forKey: "auth"))
-                //feedViewModel.fetchPosts()
+                feedViewModel.fetchPosts()
 
-                //feedViewModel.fetchMyPosts()
+                feedViewModel.fetchMyPosts()
                 getRequest.getCurrentPlaying() { (result) in
                     switch result {
                     case .success(let data) :
@@ -515,7 +515,7 @@ struct HomeView: View {
             print(" App is active token is: ", UserDefaults.standard.value(forKey: "auth"))
             
             self.getRequest.token  = UserDefaults.standard.value(forKey: "auth") ?? ""
-            //feedViewModel.fetchPosts()
+           //feedViewModel.fetchPosts()
 
             //feedViewModel.fetchMyPosts()
             

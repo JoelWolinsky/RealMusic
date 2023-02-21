@@ -34,7 +34,7 @@ struct YourPostView: View {
                                     image
                                         .resizable()
                                         .cornerRadius(7)
-                                        .padding(.bottom, 5)
+                                        //.padding(.bottom, 5)
                                     
                                 case .failure(let error):
                                     //                    //print(error)
@@ -49,6 +49,7 @@ struct YourPostView: View {
                             }
                         }
                     }
+                    
                     ReactionsView(reactionViewModel: reactionViewModel, post: post, emojiSize: 15)
                         //.padding(.leading, 10)
                         .offset(x: 5, y: 10)

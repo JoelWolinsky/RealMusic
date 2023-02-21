@@ -42,6 +42,7 @@
 		C947BA0828EAECDE00B97EB1 /* RealMusicUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C947BA0728EAECDE00B97EB1 /* RealMusicUITests.swift */; };
 		C947BA0A28EAECDE00B97EB1 /* RealMusicUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C947BA0928EAECDE00B97EB1 /* RealMusicUITestsLaunchTests.swift */; };
 		C947BA1928EAEECD00B97EB1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C947BA1828EAEECD00B97EB1 /* GoogleService-Info.plist */; };
+		C9595A5F29A3DA6200F945BA /* FriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9595A5E29A3DA6200F945BA /* FriendView.swift */; };
 		C9597E5729216BAB0020395E /* AddFriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9597E5629216BAB0020395E /* AddFriendsView.swift */; };
 		C9597E5929225EEF0020395E /* FriendsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9597E5829225EEF0020395E /* FriendsViewModel.swift */; };
 		C9597E5D2923F8520020395E /* CurrentPlay.json in Resources */ = {isa = PBXBuildFile; fileRef = C9597E5C2923F8520020395E /* CurrentPlay.json */; };
@@ -160,6 +161,7 @@
 		C947BA0728EAECDE00B97EB1 /* RealMusicUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealMusicUITests.swift; sourceTree = "<group>"; };
 		C947BA0928EAECDE00B97EB1 /* RealMusicUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealMusicUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		C947BA1828EAEECD00B97EB1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C9595A5E29A3DA6200F945BA /* FriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendView.swift; sourceTree = "<group>"; };
 		C9597E5629216BAB0020395E /* AddFriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendsView.swift; sourceTree = "<group>"; };
 		C9597E5829225EEF0020395E /* FriendsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewModel.swift; sourceTree = "<group>"; };
 		C9597E5C2923F8520020395E /* CurrentPlay.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CurrentPlay.json; sourceTree = "<group>"; };
@@ -264,6 +266,7 @@
 			isa = PBXGroup;
 			children = (
 				C9597E5629216BAB0020395E /* AddFriendsView.swift */,
+				C9595A5E29A3DA6200F945BA /* FriendView.swift */,
 				C9D458FA28F8154300547D30 /* AlbumView.swift */,
 				C9941712294A47A3007DC026 /* ChooseProfileView.swift */,
 				C9941714294A47E4007DC026 /* ChooseUsernameView.swift */,
@@ -612,6 +615,7 @@
 				C939D6E5292E89BF00C255F2 /* EmojiReactionModel.swift in Sources */,
 				C9350114293F598E00EAA4BC /* EmojiPickerCoverView.swift in Sources */,
 				C9597E64292514280020395E /* CurrentlyPlayingView.swift in Sources */,
+				C9595A5F29A3DA6200F945BA /* FriendView.swift in Sources */,
 				C939D6EB2934C61200C255F2 /* ReactionViewModel.swift in Sources */,
 				C9848D6E28EC4AE3003D4FFA /* Post.swift in Sources */,
 				C95EC51C290A91E600550F06 /* ContentView.swift in Sources */,
