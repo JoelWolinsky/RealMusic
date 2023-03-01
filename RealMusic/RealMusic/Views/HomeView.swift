@@ -93,8 +93,8 @@ struct HomeView: View {
 //                                            Text(UserDefaults.standard.value(forKey: "authorization") as! String)
 //                                                .foregroundColor(.purple)
 //                                        }
-                                        if (feedViewModel.myPosts.count > 0) {
-                                            YourPostView(post: feedViewModel.myPosts[0], reactionViewModel: ReactionViewModel(id: feedViewModel.myPosts[0].id ?? ""),userViewModel: userViewModel)
+                                        if (feedViewModel.todaysPost.count > 0) {
+                                            YourPostView(post: feedViewModel.todaysPost[0], reactionViewModel: ReactionViewModel(id: feedViewModel.todaysPost[0].id ?? ""),userViewModel: userViewModel)
                                                 .frame(maxWidth: 200, maxHeight: 150)
                                                 .id(0)
                                             //.offset(y: -120)
@@ -133,7 +133,7 @@ struct HomeView: View {
                                             LazyVStack {
                                                 ForEach(feedViewModel.posts) { post in
                                                     if friendsViewModel.friendsNames.contains(post.username ?? "") {
-                                                        PostView(post: post, reactionViewModel: ReactionViewModel(id: post.id ?? ""), longPress: $longPress, chosenPostID: $chosenPostID, blur: $blur, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue, showPicker: showPicker, userViewModel: userViewModel, scrollViewContentOffset: $scrollViewContentOffset, showUserDropDown : $showUserDropDown)
+                                                        PostView(post: post, reactionViewModel: ReactionViewModel(id: post.id ?? ""), longPress: $longPress, chosenPostID: $chosenPostID, blur: $blur, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue, showPicker: showPicker, userViewModel: userViewModel, scrollViewContentOffset: $scrollViewContentOffset, showUserDropDown : $showUserDropDown, following: true)
                                                             .id(post.id)
                                                     }
                                                 }
@@ -203,7 +203,7 @@ struct HomeView: View {
                                             .id(0)
                                         ForEach(feedViewModel.posts) { post in
                                             if !friendsViewModel.friendsNames.contains(post.username ?? "") {
-                                                PostView(post: post, reactionViewModel: ReactionViewModel(id: post.id ?? ""), longPress: $longPress, chosenPostID: $chosenPostID, blur: $blur, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue, showPicker: showPicker, userViewModel: userViewModel, scrollViewContentOffset: $scrollViewContentOffset, showUserDropDown : $showUserDropDown)
+                                                PostView(post: post, reactionViewModel: ReactionViewModel(id: post.id ?? ""), longPress: $longPress, chosenPostID: $chosenPostID, blur: $blur, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue, showPicker: showPicker, userViewModel: userViewModel, scrollViewContentOffset: $scrollViewContentOffset, showUserDropDown : $showUserDropDown, following: false)
                                                     .id(post.id)
 
                                                 
@@ -336,7 +336,7 @@ struct HomeView: View {
                                         myFriends = true
                                     }
                                 } label: {
-                                    Text("My Friends")
+                                    Text("Following")
                                         .foregroundColor(myFriends ? .white : Color("Grey 1"))
                                         .font(.system(size:17))
                                         .fontWeight(.bold)
@@ -518,9 +518,9 @@ struct HomeView: View {
             print(" App is active token is: ", UserDefaults.standard.value(forKey: "auth"))
             
             self.getRequest.token  = UserDefaults.standard.value(forKey: "auth") ?? ""
-           //feedViewModel.fetchPosts()
-
-            //feedViewModel.fetchMyPosts()
+            //feedViewModel.fetchPosts()
+            friendsViewModel.fetchFriends()
+            feedViewModel.fetchMyPosts()
             
             SpotifyAPI.shared.checkTokenExpiry { (result) in
                 switch result {
@@ -549,6 +549,14 @@ struct HomeView: View {
             }
 
 
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification) ){ _ in
+            // terminating
+            feedViewModel.todaysPost = []
+            feedViewModel.myPosts = []
+            feedViewModel.posts = []
+            
+            
         }
         .onReceive(timer) { time in
             getRequest.getCurrentPlaying() { (result) in

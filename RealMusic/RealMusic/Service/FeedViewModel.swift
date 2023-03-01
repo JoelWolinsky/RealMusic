@@ -11,6 +11,7 @@ import FirebaseFirestore
 class FeedViewModel: ObservableObject {
     @Published var posts = [Post]()
     @Published var myPosts = [Post]()
+    @Published var todaysPost = [Post]()
 
 //    @Published var postReactions = [Reactions]
 //    let postView = PostViewModel()
@@ -28,6 +29,7 @@ class FeedViewModel: ObservableObject {
         let postView = PostViewModel()
         let userView = UserViewModel()
         posts = []
+        todaysPost = []
         postView.fetchData { posts in
             
             for post in posts {
@@ -36,7 +38,7 @@ class FeedViewModel: ObservableObject {
                     print("this is a post UID \(post.uid)")
                     if UserDefaults.standard.value(forKey: "uid") != nil {
                         if post.uid == UserDefaults.standard.value(forKey: "uid") as! String {
-                            self.myPosts.append(post)
+                            //self.todaysPost.append(post)
                             
                         } else {
                             self.posts.append(post)
@@ -59,10 +61,10 @@ class FeedViewModel: ObservableObject {
             for post in posts {
                 print("this is my uid \(UserDefaults.standard.value(forKey: "uid"))")
                 if post.datePosted.formatted(date: .numeric, time: .omitted) == Date().formatted(date: .numeric, time: .omitted) {
-                    
-//                    if post.uid == UserDefaults.standard.value(forKey: "uid") as! String {
-//                        self.myPosts.append(post)
-//                    }
+
+                    if post.uid == UserDefaults.standard.value(forKey: "uid") as! String {
+                        self.todaysPost.append(post)
+                    }
                 }
                 if post.uid == UserDefaults.standard.value(forKey: "uid") as! String {
                     self.myPosts.append(post)

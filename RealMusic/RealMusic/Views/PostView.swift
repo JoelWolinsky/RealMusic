@@ -45,6 +45,9 @@ struct PostView: View {
     @State var profilePic = String()
     
     @Binding var showUserDropDown: Bool
+    
+    @State var following: Bool
+
 
 
     
@@ -180,7 +183,7 @@ struct PostView: View {
             }
             
             if showUserDropDown && chosenPostID == post.id {
-                UserDropDownView(username: post.username ?? "", spotifyAPI: spotifyAPI, showPicker: $showPicker, longPress: $longPress, blur: $blur, disableScroll: $disableScroll, showUserDropDown: $showUserDropDown, userViewModel: userViewModel)
+                UserDropDownView(username: post.username ?? "", spotifyAPI: spotifyAPI, showPicker: $showPicker, longPress: $longPress, blur: $blur, disableScroll: $disableScroll, showUserDropDown: $showUserDropDown, userViewModel: userViewModel, following: following)
                     .frame(maxHeight: .infinity, alignment: .top)
                     .padding(.top, 50)
                     

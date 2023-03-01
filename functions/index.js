@@ -33,7 +33,7 @@ exports.makeUppercase = functions.firestore.document('/Posts/{documentId}')
       payload = {
       "notification": {
         "title": "RealMusic",
-        "body": "Your friend " + username + "just posted!"
+        "body":  "Your friend" + username + "just posted!"
           //text ? (text.length <= 100 ? text : text.substring(0, 97) + '...') : '',
         //icon: snapshot.data().profilePicUrl || '/images/profile_placeholder.png',
         //click_action: `https://${process.env.GCLOUD_PROJECT}.firebaseapp.com`,
@@ -53,13 +53,15 @@ exports.makeUppercase = functions.firestore.document('/Posts/{documentId}')
           
           for (var i = 0; i < tokens.length; i++) {
               functions.logger.log("just  tokens", justTokens)
+              functions.logger.log("check for friends for this user:", tokens[i]["uid"])
+              
               if (tokens[i]["uid"] == userID) {
                   functions.logger.log("this is the user that made the post", userID," ", tokens[i]["username"])
                   username = tokens[i]["username"] + " "
                   payload = {
                   "notification": {
                     "title": "RealMusic",
-                    "body": "Your friend " + username + "just posted!"
+                    "body": "Your friend" + username + "just posted!"
                       //text ? (text.length <= 100 ? text : text.substring(0, 97) + '...') : '',
                     //icon: snapshot.data().profilePicUrl || '/images/profile_placeholder.png',
                     //click_action: `https://${process.env.GCLOUD_PROJECT}.firebaseapp.com`,
@@ -67,9 +69,29 @@ exports.makeUppercase = functions.firestore.document('/Posts/{documentId}')
                 };
 
               } else {
-                  justTokens.push(tokens[i]["token"])
+                  let friendsWithPoster = false
+                  allfriends = await admin.firestore().collection('Users').doc(tokens[i]["uid"]).collection("Friends").get();
+                  functions.logger.log("length of their friends",allfriends.size)
+                  if (allfriends.size > 0) {
+                      friends = allfriends.docs.map(tokenDoc => tokenDoc.data());
+                      
+                      for (var x = 0; x < friends.length; x++) {
+                          functions.logger.log(allfriends.docs[x].id)
+                          let friendID = allfriends.docs[x].id
+                          if (friendID == userID) {
+                              friendsWithPoster = true
+                          }
+                      }
+                      
+                      if (friendsWithPoster == true) {
+                          functions.logger.log("send this user a noti")
+                          justTokens.push(tokens[i]["token"])
+
+                      }
+
+                  }
+                  //justTokens.push(tokens[i]["token"])
               }
-              //justTokens.push(tokens[i]["token"])
           }
           functions.logger.log("just  tokens", justTokens)
 

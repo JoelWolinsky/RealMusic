@@ -25,51 +25,92 @@ struct UserDropDownView : View {
     
     @StateObject var userViewModel: UserViewModel
     
+    @State var following: Bool
+    
     
     var body: some View {
         VStack{
             ZStack{
                 VStack(spacing: 0) {
-                    Button(action: {
-                        print("add to library")
-                                                
-                        userViewModel.fetchUsers() { users in
-                            print("print usernames")
-                            for user in users {
-                                print(user.username)
-                                if username == user.username {
-                                    let foundUser = user
-                                    userViewModel.addFriend(friend: foundUser)
-                                    //friendsViewModel.fetchFriends()
-                                    //analyticsModel.compareForEach(yourUID: yourUID, friends: friendsViewModel.friends)
+                    if !following {
+                        Button(action: {
+                            
+                            userViewModel.fetchUsers() { users in
+                                print("print usernames")
+                                for user in users {
+                                    print(user.username)
+                                    if username == user.username {
+                                        let foundUser = user
+                                        userViewModel.addFriend(friend: foundUser)
+                                        //friendsViewModel.fetchFriends()
+                                        //analyticsModel.compareForEach(yourUID: yourUID, friends: friendsViewModel.friends)
+                                    }
                                 }
                             }
-                        }
-
-                        
-                        withAnimation(.easeIn(duration: 0.2)) {
-                            showPicker = false
-                            longPress = 0
-                            blur = 0
-                            disableScroll = 1000
-                            showUserDropDown = false
-                        }
-
-                    }, label: {
-                        HStack {
-                            Text("Add user as friend")
-                                .foregroundColor(.white)
-                            Spacer ()
-                            Image(systemName: "plus")
-                                .foregroundColor(.white)
-                                .font(.system(size: animatePicker2 ? 20 : 0))
-                        }
-                        .frame(maxHeight: animatePicker2 ? 10 : 0, alignment: .center)
-                        .padding(20)
-                        
-                    })
-                    .buttonStyle(DropDownButton())
-                    
+                            
+                            
+                            withAnimation(.easeIn(duration: 0.2)) {
+                                showPicker = false
+                                longPress = 0
+                                blur = 0
+                                disableScroll = 1000
+                                showUserDropDown = false
+                            }
+                            
+                        }, label: {
+                            HStack {
+                                Text("Follow user")
+                                    .foregroundColor(.white)
+                                Spacer ()
+                                Image(systemName: "plus")
+                                    .foregroundColor(.white)
+                                    .font(.system(size: animatePicker2 ? 20 : 0))
+                            }
+                            .frame(maxHeight: animatePicker2 ? 10 : 0, alignment: .center)
+                            .padding(20)
+                            
+                        })
+                        .buttonStyle(DropDownButton())
+                    } else {
+                        Button(action: {
+                            
+                            userViewModel.fetchUsers() { users in
+                                print("print usernames")
+                                for user in users {
+                                    print(user.username)
+                                    if username == user.username {
+                                        let foundUser = user
+                                        userViewModel.removeFriend(friend: foundUser)
+                                        //friendsViewModel.fetchFriends()
+                                        //analyticsModel.compareForEach(yourUID: yourUID, friends: friendsViewModel.friends)
+                                    }
+                                }
+                            }
+                            
+                            
+                            withAnimation(.easeIn(duration: 0.2)) {
+                                showPicker = false
+                                longPress = 0
+                                blur = 0
+                                disableScroll = 1000
+                                showUserDropDown = false
+                            }
+                            
+                        }, label: {
+                            HStack {
+                                Text("Unfollow user")
+                                    .foregroundColor(.white)
+                                Spacer ()
+                                Image(systemName: "minus")
+                                    .foregroundColor(.white)
+                                    .font(.system(size: animatePicker2 ? 20 : 0))
+                            }
+                            .frame(maxHeight: animatePicker2 ? 10 : 0, alignment: .center)
+                            .padding(20)
+                            
+                        })
+                        .buttonStyle(DropDownButton())
+                    }
                 }
                 
                 VStack {

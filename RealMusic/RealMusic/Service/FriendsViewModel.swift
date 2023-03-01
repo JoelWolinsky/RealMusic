@@ -22,6 +22,8 @@ class FriendsViewModel: ObservableObject {
     // Fetches every post and user who made the post
     func fetchFriends() {
         //self.posts = []
+        self.friendsNames = []
+        self.friends = []
         print("fetching friends")
         let userViewModel = UserViewModel()
         

@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import WebKit
+import FirebaseStorage
 
 struct ProfileView: View {
     
@@ -26,6 +27,13 @@ struct ProfileView: View {
     @ObservedObject var getDateModel = GetDateModel()
     
     @State var splitByDate: SplitByDate
+    
+    @State private var isAddingPhoto = false
+//
+//    @State var profilePicture = String()
+//
+    @State var selectedImageData: Data? = nil
+    
     
     
     
@@ -69,6 +77,9 @@ struct ProfileView: View {
                     .cornerRadius(80)
                     .padding( 20)
                 }
+                
+                
+
 
                 if (UserDefaults.standard.value(forKey: "username") != nil) {
                     Text(UserDefaults.standard.value(forKey: "username") as! String)
@@ -163,7 +174,45 @@ struct ProfileView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
         
             
-            
+            PhotoPicker(selectedImageData: $selectedImageData, isAddingPhoto: $isAddingPhoto)
+                .onChange(of: selectedImageData, perform: { data in
+                    
+                          
+                                Task {
+                                    let data = selectedImageData
+                                    print("select photo")
+                                    let storage = Storage.storage()
+                                    let storageRef = storage.reference()
+                                    // Create a reference to the file you want to upload
+                                    let riversRef = storageRef.child("images/\(UserDefaults.standard.value(forKey: "uid")!).heic")
+                                    print(UserDefaults.standard.value(forKey: "uid"))
+                                    // Upload the file to the path "images/rivers.jpg"
+                                    let uploadTask = riversRef.putData(data!, metadata: nil) { (metadata, error) in
+                                        guard let metadata = metadata else {
+                                            // Uh-oh, an error occurred
+                                            print(error)
+                                            //                              fatalError()
+                                            return
+                                        }
+                                        
+                                        // Metadata contains file metadata such as size, content-type.
+                                        let size = metadata.size
+                                        // You can also access to download URL after upload.
+                                        riversRef.downloadURL { (url, error) in
+                                            guard let downloadURL = url else {
+                                                // Uh-oh, an error occurred!
+                                                //  fatalError()
+                                                return
+                                            }
+                                        }
+                                    }
+                                }
+
+                            
+                        
+                    
+                })
+
             Button {
                 UserDefaults.resetStandardUserDefaults()
                 UserDefaults.standard.set(nil, forKey: "auth")

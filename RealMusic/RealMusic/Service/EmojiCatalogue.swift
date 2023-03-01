@@ -30,11 +30,11 @@ class EmojiCatalogue: ObservableObject {
     
     func getLatest() {
         self.latest = [
-        Emoji(emoji: "🤯", description: "Exploding Head", category: ""),
-        Emoji(emoji: "🥰", description: "Smiling Face with Hearts", category: ""),
+        Emoji(emoji: "🥵", description: "Exploding Head", category: ""),
+        Emoji(emoji: "🍆", description: "Smiling Face with Hearts", category: ""),
         Emoji(emoji: "🤩", description: "Star-Struck", category: ""),
-        Emoji(emoji: "🍉", description: "Watermelon", category: ""),
-        Emoji(emoji: "🦄", description: "Unicorn", category: "")
+        Emoji(emoji: "🔁", description: "Watermelon", category: ""),
+        Emoji(emoji: "🌝", description: "Unicorn", category: "")
         
         
         ]

@@ -46,12 +46,15 @@ struct AlbumView: View {
     
     @State var scrollViewContentOffsetCounter = 0
     
+    @State var scrollViewContentOffsetPrev = CGFloat(0)
+    
     @Binding var showUserDropDown: Bool
 
 
     
     var body: some View {
         ZStack {
+            
             VStack {
                 ZStack {
                     if let url = URL(string: album.cover ?? "") {
@@ -144,6 +147,8 @@ struct AlbumView: View {
                         impactHeavy.impactOccurred()
                     }
                 }
+            
+          
         }
         .padding(20)
         .background(Color("Grey 3"))
@@ -273,7 +278,11 @@ struct AlbumView: View {
         }
         // Pauses playback when the user scrolls on
         .onChange(of: scrollViewContentOffset, perform: { value in
+            print(scrollViewContentOffsetCounter)
+            print(scrollViewContentOffset)
             if self.playButton == "play.fill"  {
+                
+                
                 if scrollViewContentOffsetCounter > 70 {
                     self.playButton = "pause.fill"
                     audioPlayer.pause()
@@ -285,9 +294,25 @@ struct AlbumView: View {
                     }
                     scrollViewContentOffsetCounter = 0
                 } else {
-                    scrollViewContentOffsetCounter += 1
+                    if scrollViewContentOffset > 0 {
+                        if scrollViewContentOffset > scrollViewContentOffsetPrev {
+                            scrollViewContentOffsetCounter += 1
+                        } else {
+                            scrollViewContentOffsetCounter = 0
+                        }
+                    } else {
+                        if scrollViewContentOffset < scrollViewContentOffsetPrev {
+                            scrollViewContentOffsetCounter += 1
+                        } else {
+                            scrollViewContentOffsetCounter = 0
+                        }
+                    }
+                            
+                    scrollViewContentOffsetPrev = scrollViewContentOffset
+
                 }
             }
+
         })
         
     }

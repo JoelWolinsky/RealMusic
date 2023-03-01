@@ -83,15 +83,31 @@ class UserViewModel: ObservableObject {
             print("Error writing city to Firestore: \(error)")
         }
         
-        // add you to their friends
+//        // add you to their friends
+//        do {
+//            try db.collection("Users").document(friend.id ?? "").collection("Friends").document(userUid as! String)
+//                .setData(from: User(id: userUid as? String,
+//                                    username: UserDefaults.standard.value(forKey: "username") as? String ?? "" ))
+//            print("friend added")
+//        } catch let error {
+//            print("Error writing city to Firestore: \(error)")
+//        }
+    }
+    
+    func removeFriend(friend: User) {
+        let db = Firestore.firestore()
+        
+        let userUid = UserDefaults.standard.value(forKey: "uid")
+        
+        // add them to your friends
         do {
-            try db.collection("Users").document(friend.id ?? "").collection("Friends").document(userUid as! String)
-                .setData(from: User(id: userUid as? String,
-                                    username: UserDefaults.standard.value(forKey: "username") as? String ?? "" ))
+            try db.collection("Users").document(userUid as! String).collection("Friends").document(friend.id as! String).delete()
             print("friend added")
         } catch let error {
             print("Error writing city to Firestore: \(error)")
         }
+        
+        
     }
     
     func fetchProfilePic (uid: String, completion: @escaping(String) -> Void) {
