@@ -33,7 +33,7 @@ exports.makeUppercase = functions.firestore.document('/Posts/{documentId}')
       payload = {
       "notification": {
         "title": "RealMusic",
-        "body":  "Your friend" + username + "just posted!"
+        "body":  "Your friend " + username + "just posted!"
           //text ? (text.length <= 100 ? text : text.substring(0, 97) + '...') : '',
         //icon: snapshot.data().profilePicUrl || '/images/profile_placeholder.png',
         //click_action: `https://${process.env.GCLOUD_PROJECT}.firebaseapp.com`,
@@ -61,7 +61,7 @@ exports.makeUppercase = functions.firestore.document('/Posts/{documentId}')
                   payload = {
                   "notification": {
                     "title": "RealMusic",
-                    "body": "Your friend" + username + "just posted!"
+                    "body": "Your friend " + username + "just posted!"
                       //text ? (text.length <= 100 ? text : text.substring(0, 97) + '...') : '',
                     //icon: snapshot.data().profilePicUrl || '/images/profile_placeholder.png',
                     //click_action: `https://${process.env.GCLOUD_PROJECT}.firebaseapp.com`,
