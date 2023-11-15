@@ -34,7 +34,7 @@ class FeedViewModel: ObservableObject {
             
             for post in posts {
                 
-                if post.datePosted.formatted(date: .numeric, time: .omitted) == Date().formatted(date: .numeric, time: .omitted) {
+//                if post.datePosted.formatted(date: .numeric, time: .omitted) == Date().formatted(date: .numeric, time: .omitted) {
                     print("this is a post UID \(post.uid)")
                     if UserDefaults.standard.value(forKey: "uid") != nil {
                         if post.uid == UserDefaults.standard.value(forKey: "uid") as! String {
@@ -46,7 +46,7 @@ class FeedViewModel: ObservableObject {
                         }
                     }
                     print("todays post: \(post.uid)")
-                }
+//                }
             }
             self.posts = self.posts.sorted(by: { $0.datePosted > $1.datePosted })
         }
