@@ -5,6 +5,7 @@ xcuserdata/
 *.xcscmblueprint
 *.xccheckout
 .DS_Store
+GoogleService-Info.plist
 
 RealMusic/RealMusic/Service/APIConstants.swift
 

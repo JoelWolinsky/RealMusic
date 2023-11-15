@@ -119,7 +119,7 @@ struct PostView: View {
                                 .frame(maxWidth: .infinity, alignment: .leading)
 //                            Text(post.id ?? "")
 //                                .frame(maxWidth: .infinity, alignment: .leading)
-                            Text("\(post.datePosted.formatted(date: .omitted, time: .standard))")
+                            Text("\(post.datePosted.formatted(date: .abbreviated , time: .shortened))")
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .font(.system(size: 15))
                                 .foregroundColor(Color("Grey 1"))
