@@ -16,14 +16,13 @@ extension View {
 
 // This is the view handler
 struct ContentView: View {
-    @EnvironmentObject var viewModel: SignInViewModel
+    @EnvironmentObject var signInViewModel: SignInViewModel
     //@State private var showWebView = false
     @State private var showHome = false
     
     @ObservedObject var spotifyAPI = SpotifyAPI()
-    @ObservedObject var feedViewModel = FeedViewModel()
     
-    @ObservedObject var showWebView = showView(showView: false)
+    @State var showWebView = false
     
     //@Binding var test: String
 
@@ -33,32 +32,101 @@ struct ContentView: View {
         VStack {
 //            Text(test)
 //                .foregroundColor(.orange)
-            if viewModel.signedIn {
+            if signInViewModel.signedIn && UserDefaults.standard.value(forKey: "uid") != nil {
                    // .environment(viewModel: viewModel)
                 
-                HomeView(feedViewModel: feedViewModel)
-                    .sheet(isPresented: $showWebView.showView) {
-                        WebView(showWebView: showWebView)
-//                            .onDisappear(perform: {
-//                                print("disapear")
-//                                feedViewModel.fetchPosts()
-//                            })
-//
-                        
+                HomeView(welcomeMessage: signInViewModel.welcomeMessage, showWebView: $showWebView)
+                    .sheet(isPresented: $signInViewModel.welcomeMessage) {
+                        WelcomeView(signInViewModel: signInViewModel)
+                            .interactiveDismissDisabled()
+                            .onDisappear(perform: {
+                                print("welcome view has dissapread")
+                                if UserDefaults.standard.value(forKey: "auth") == nil {
+                                    UserDefaults.standard.set("no key yet", forKey: "auth")
+                                }
+                                SpotifyAPI.shared.checkTokenExpiry { (result) in
+                                    switch result {
+                                        case true:
+                                        print("aaaa token valid ")
+                                        showWebView = false
+                                        //feedViewModel.fetchPosts()
+                                        //createPostModel.createPost(post: data[0])
+
+                                        case false:
+                                        print("aaaa token expired")
+                                        showWebView = true
+                                        }
+                                    }
+                            })
                     }
+                    .sheet(isPresented: $showWebView) {
+                        WebView(showWebView: $showWebView)
+                            .onDisappear(perform: {
+                                print("disapear")
+                                //feedViewModel.fetchPosts()
+                                SpotifyAPI.shared.checkTokenExpiry { (result) in
+                                    switch result {
+                                        case true:
+                                        print("aaaa token valid ")
+                                        //showWebView = false
+                                        //feedViewModel.fetchPosts()
+                                        //createPostModel.createPost(post: data[0])
+
+                                        case false:
+                                        print("aaaa token expired")
+                                        //showWebView = true
+                                        }
+                                    }
+                            })
+                            .interactiveDismissDisabled()
+
+
+
+                    }
+                    .interactiveDismissDisabled()
+              
+    
+
   
             } else {
-                SignInView(viewModel: viewModel)
+                SignInView(signInViewModel: signInViewModel)
                     .onAppear(perform: {
-                        //UserDefaults.standard.setValue(nil, forKey: "Authorization")
-                        showWebView.showView = true
+                        if signInViewModel.isSignedIn == false {
+                            print("set token to nil")
+                            UserDefaults.standard.set(nil, forKey: "auth")
+
+                        }
                     })
+                    .onDisappear(perform: {
+                        if UserDefaults.standard.value(forKey: "auth") == nil {
+                            UserDefaults.standard.set("no key yet", forKey: "auth")
+                        }
+                        SpotifyAPI.shared.checkTokenExpiry { (result) in
+                            switch result {
+                                case true:
+                                print("aaaa token valid ")
+                                showWebView = false
+                                //feedViewModel.fetchPosts()
+                                //createPostModel.createPost(post: data[0])
+
+                                case false:
+                                print("aaaa token expired")
+                                showWebView = true
+                                }
+                            }
+                    })
+//                    .onAppear(perform: {
+//                        showWebView = true
+//                    })
                 // ADD once signed it and redirected to google to close sheet
             }
             
-        }.onAppear( perform: {
+        }
+        .accentColor(.black)
+        .onAppear( perform: {
             
-            viewModel.signedIn = viewModel.isSignedIn
+            signInViewModel.signedIn = signInViewModel.isSignedIn
+            
             //viewModel.signedIn = false
             //test = "hello world"
             // check if token still valid here, make nil if so
@@ -66,99 +134,35 @@ struct ContentView: View {
                 UserDefaults.standard.setValue("no username found",forKey: "username")
             }
 
+
+            }
+        )
+        .accentColor(.white)
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+            UIApplication.shared.applicationIconBadgeNumber = 0
+            
+            print("App is active")
+            
             SpotifyAPI.shared.checkTokenExpiry { (result) in
                 switch result {
                     case true:
                     print("aaaa token valid ")
-                
-                    showWebView.showView = false
+                    showWebView = false
+                    //feedViewModel.fetchPosts()
                     //createPostModel.createPost(post: data[0])
 
                     case false:
                     print("aaaa token expired")
-                    showWebView.showView = true
+                    showWebView = true
                     }
                 }
-//            spotifyAPI.search(input: "") { (result) in
-//                switch result {
-//                    case .success(let data) :
-//                    print("success 123\(data)")
-//                    print("SEARCH success")
-//                    //showWebView.showView = false
-//                    case .failure(let error) :
-//                    print("SEARCH fail")
-//                    //showWebView.showView = true
-//                    }
-//                }
-            
-            
-//            if let token = UserDefaults.standard.value(forKey: "Authorization") {
-//                showWebView = false
-//            }
-            //UserDefaults.standard.setValue(nil, forKey: "Authorization")
-            }
-        )
+
+        }
+
+        
 
     }
         
 }
 
-//struct SignInView: View {
-//
-//    @State var email = ""
-//    @State var password = ""
-//
-//    @EnvironmentObject var viewModel: SignInViewModel
-//
-//    var body: some View {
-//        NavigationView {
-//            VStack {
-//                Text("Sign In")
-//
-//                TextField("Email address", text: $email)
-//                SecureField("Email address", text: $password)
-//
-//                Button(action: {
-//                    viewModel.signIn(email: email, password: password)
-//                }, label: {
-//                    Text("Sign in")
-//                })
-//
-//
-//                NavigationLink (destination: SignUpView()) {
-//                    Text("Create Account")
-//                }
-//            }
-//
-//        }
-//
-//
-//
-//    }
-//}
-//
-//struct SignUpView: View {
-//
-//    @State var email = ""
-//    @State var password = ""
-//
-//    @EnvironmentObject var viewModel: SignInViewModel
-//
-//    var body: some View {
-//        VStack {
-//            Text("Sign Up")
-//
-//            TextField("Email address", text: $email)
-//            SecureField("Email address", text: $password)
-//
-//            Button(action: {
-//                viewModel.signUp(email: email, password: password)
-//            }, label: {
-//                Text("Sign Up")
-//            })
-//        }
-//
-//
-//
-//    }
-//}
+

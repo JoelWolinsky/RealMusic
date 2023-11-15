@@ -18,10 +18,11 @@ class EmojiReactionModel: ObservableObject {
         
         let userUid = UserDefaults.standard.value(forKey: "uid")
         
+        let emojiWithUser = Emoji(emoji: emoji.emoji, description: emoji.description, username: UserDefaults.standard.value(forKey: "username") as! String)
+        
         // add them to your friends
         do {
-            try db.collection("Posts").document(postUID).collection("Reactions").document(userUid as! String).setData(from: emoji)
-            //UserDefaults.standard.setValue(username, forKey: "Username")
+            try db.collection("Posts").document(postUID).collection("Reactions").document(userUid as! String).setData(from: emojiWithUser)
             print("reaction added to \(postUID)")
         } catch let error {
             print("Error writing city to Firestore: \(error)")
@@ -29,21 +30,6 @@ class EmojiReactionModel: ObservableObject {
         
     }
     
-    func fetchReactions(postUID: String, completion: @escaping([Emoji]) -> Void ) {
-//        var emojis = [Emoji]()
-//        let db = Firestore.firestore()
-//        
-//        db.collection("Posts")
-//            .document(postUID)
-//            .collection("Reactions")
-//            .getDocuments() { (querySnapshot, err) in
-//                guard let documents = querySnapshot?.documents else { return }
-//                documents.forEach{ emoji in
-//                    guard let emoji = try? emoji.data(as: Emoji.self) else { return }
-//                    emojis.append(emoji)
-//                }
-//                completion(emojis)
-//            }
-    }
+
     
 }

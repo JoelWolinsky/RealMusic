@@ -18,7 +18,7 @@ class SpotifyAPI: ObservableObject {
     
     static let shared = SpotifyAPI()
     
-    @State var token = UserDefaults.standard.value(forKey: "Authorization") ?? ""
+    @State var token = UserDefaults.standard.value(forKey: "auth") ?? ""
     
     
     // Gets they URL for authorizing the user to get a Spotify access token
@@ -33,13 +33,15 @@ class SpotifyAPI: ObservableObject {
         guard let url = components.url else { return nil }
         
         print("URL ACCESS TOKEN", url)
+        
         return URLRequest(url: url)
     }
     
     // Check the Spotify access token is still valid
     func checkTokenExpiry(completion: @escaping (Bool) -> Void) {
-        
-        let url = URL(string: "https://api.spotify.com/v1/search?q=track%3Atest&type=track%2Cartist&market=GB&limit=1&offset=0")!
+        let token = UserDefaults.standard.string(forKey: "auth") ?? "no token yet"
+        print("start check token expi: \(token)")
+        let url = URL(string: "https://api.spotify.com/v1/me/player/currently-playing")!
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         let requestHeader:  [String : String] = [
@@ -57,7 +59,8 @@ class SpotifyAPI: ObservableObject {
             
             print("url session")
             print(data)
-            print(UserDefaults.standard.value(forKey: "Authorization"))
+            print(UserDefaults.standard.value(forKey: "auth"))
+            print(token)
             print(request.allHTTPHeaderFields)
              if let error = error {
                print("Error with fetching films: \(error)")
@@ -72,6 +75,7 @@ class SpotifyAPI: ObservableObject {
                  return
              }
             print("url session no error")
+            print(request.httpBody)
             print("response \(response)")
             completion(true)
                 //completion(.success([results.name, artists]))
@@ -89,7 +93,7 @@ class SpotifyAPI: ObservableObject {
     // fix this so it adds more data to the spotifysong item
     func search(input: String, completion: @escaping (Result<[SpotifySong], Error>) -> Void) {
         
-        token = UserDefaults.standard.value(forKey: "Authorization") ?? ""
+        let token = UserDefaults.standard.value(forKey: "auth") ?? ""
         print("token \(token)")
         var name = "3A"
         for word in input.components(separatedBy: " ") {
@@ -101,50 +105,53 @@ class SpotifyAPI: ObservableObject {
             print("name: \(name)")
         }
         
-        let url = URL(string: "https://api.spotify.com/v1/search?q=track%" + name + "&type=track%2Cartist&market=ES&limit=5&offset=0")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        let requestHeader:  [String : String] = [
-            "Authorization" : "Bearer \(token)",
-            "Content-Type" : "application/json"
-        ]
-        request.allHTTPHeaderFields = requestHeader
-        print("Bearer \(token)")
-
-        let post = URLSession.shared.dataTask(with: request) {data, response, error in
-             if let error = error {
-               print("Error with fetching films: \(error)")
-               return
-             }
-             
-             guard let httpResponse = response as? HTTPURLResponse,
-                   (200...299).contains(httpResponse.statusCode) else {
-                 print("Error with the response, unexpected status code: \(response)")
-                 completion(.failure(APIError.expiredToken))
-                 return
-             }
-            var posts: [SpotifySong] = []
-            if let data = data,
-               let results = try? JSONDecoder().decode(Response.self, from: data) {
+        if let url = URL(string: "https://api.spotify.com/v1/search?q=track%" + name + "&type=track%2Cartist&market=GB&limit=20&offset=0") {
+            var request = URLRequest(url: url)
+            request.httpMethod = "GET"
+            let requestHeader:  [String : String] = [
+                "Authorization" : "Bearer \(token)",
+                "Content-Type" : "application/json"
+            ]
+            request.allHTTPHeaderFields = requestHeader
+            print("Bearer \(token)")
+            
+            let post = URLSession.shared.dataTask(with: request) {data, response, error in
+                if let error = error {
+                    print("Error with fetching films: \(error)")
+                    return
+                }
+                
+                guard let httpResponse = response as? HTTPURLResponse,
+                      (200...299).contains(httpResponse.statusCode) else {
+                    print("Error with the response, unexpected status code: \(response)")
+                    completion(.failure(APIError.expiredToken))
+                    return
+                }
+                var posts: [SpotifySong] = []
+                if let data = data,
+                   let results = try? JSONDecoder().decode(Response.self, from: data) {
                     print("done")
                     print(results)
-                for song in results.tracks.items {
-                    print("adding song to search list")
-                    posts.append(SpotifySong(songID: song.id ,title: song.album.name,artist: song.artists[0].name, uid: "xyz", cover: song.album.images[0].url, preview_url: song.preview_url))
+                    for song in results.tracks.items {
+                        print("adding song to search list")
+                        posts.append(SpotifySong(songID: song.id ,title: song.album.name,artist: song.artists[0].name, uid: "xyz", cover: song.album.images[0].url, preview_url: song.preview_url))
+                    }
+                    //return post
+                } else {
+                    completion(.success([]))
                 }
-                //return post
-            } else {
-                fatalError()
+                
+                completion(.success(posts))
+                
             }
-            completion(.success(posts))
-            
+                .resume()
         }
-        .resume()
     }
     
     
     // Given the id of a Spotify song, fins all the data on that song
     func getSong(ID: String, completion: @escaping (Result<[String], Error>) -> Void) {
+        let token = UserDefaults.standard.value(forKey: "auth") ?? ""
         let url = URL(string: "https://api.spotify.com/v1/tracks/" + ID)!
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
@@ -192,7 +199,10 @@ class SpotifyAPI: ObservableObject {
     
     // Get current playing song
     func getCurrentPlaying(completion: @escaping (Result<[SpotifySong], NetworkError>) -> Void) {
+        // Very important that I am using 'let' here since before it was taking the global value which didn't update with the new token
+        let token = UserDefaults.standard.value(forKey: "auth") ?? ""
         print("get current playing song")
+        print(token as! String)
         let url = URL(string: "https://api.spotify.com/v1/me/player/currently-playing")!
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
@@ -237,6 +247,7 @@ class SpotifyAPI: ObservableObject {
     
     // Adds a song the the users Spotify library (i.e. likes the song for them on Spotify)
     func addToLibrary(trackID: String) {
+        let token = UserDefaults.standard.value(forKey: "auth") ?? ""
         print("123")
         let url = URL(string: "https://api.spotify.com/v1/me/tracks?ids=" + trackID)!
         var request = URLRequest(url: url)
@@ -270,6 +281,7 @@ class SpotifyAPI: ObservableObject {
     
     // Adds a song the users Spotify queue
     func addToQueue(trackID: String) {
+        let token = UserDefaults.standard.value(forKey: "auth") ?? ""
         print("123")
         print(trackID)
         let url = URL(string: "https://api.spotify.com/v1/me/player/queue?uri=spotify%3Atrack%3A" + trackID)!
@@ -305,6 +317,7 @@ class SpotifyAPI: ObservableObject {
     
     // If the user doesn't already have a 'RealMusic' plalist, it will create one for them
     func createPlaylist() {
+        let token = UserDefaults.standard.value(forKey: "auth") ?? ""
         print("123")
         let url = URL(string: "https://api.spotify.com/v1/users/21lb3onaazabyh7d7pka5pwqi/playlists")!
         var request = URLRequest(url: url)
@@ -350,6 +363,7 @@ class SpotifyAPI: ObservableObject {
     
     // Fetches the playlists in the users library until it finds 'RealMusic' or reaches the end of their library
     func getPlaylists(userSpotifyID: String, offset: Int, completion: @escaping (String) -> ()) {
+        let token = UserDefaults.standard.value(forKey: "auth") ?? ""
         print("123")
         let url = URL(string: "https://api.spotify.com/v1/users/\(userSpotifyID)/playlists?limit=50&offset=\(offset)")!
         var request = URLRequest(url: url)
@@ -411,6 +425,7 @@ class SpotifyAPI: ObservableObject {
     }
     
     func addToPlaylist(playlistID: String, trackID: String) {
+        let token = UserDefaults.standard.value(forKey: "auth") ?? ""
         print("123")
         let url = URL(string: "https://api.spotify.com/v1/playlists/\(playlistID)/tracks?position=0&uris=spotify%3Atrack%3A\(trackID)")!
         var request = URLRequest(url: url)
@@ -447,6 +462,7 @@ class SpotifyAPI: ObservableObject {
     
     
     func getUserID(completion: @escaping (Result<String, NetworkError>) -> Void) {
+        let token = UserDefaults.standard.value(forKey: "auth") ?? ""
         print("123")
         let url = URL(string: "https://api.spotify.com/v1/me")!
         var request = URLRequest(url: url)

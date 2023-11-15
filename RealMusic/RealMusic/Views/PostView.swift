@@ -36,7 +36,18 @@ struct PostView: View {
     
     @State var emojiPickerOpacity = 1
     
+    @State var showReactionsList = false
     
+    @StateObject var userViewModel: UserViewModel
+    
+    @Binding var scrollViewContentOffset: CGFloat
+    
+    @State var profilePic = String()
+    
+    @Binding var showUserDropDown: Bool
+    
+    @State var following: Bool
+
 
 
     
@@ -44,23 +55,91 @@ struct PostView: View {
         
         
         ZStack {
+            
             VStack {
-                Text("@" + (post.username ?? ""))
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .blur(radius:CGFloat(blur))
+                Button (action: {
+                    withAnimation(.easeIn(duration: 0.0)) {
+                        showUserDropDown.toggle()
+                        if longPress == 10 {
+                            print(10)
+                            longPress = 0
+                            disableScroll = 1000
+                            blur = 0
+                            showUserDropDown = false
+                            chosenPostID = ""
+                            
+                        } else {
+                            print(0)
+                            disableScroll = 0
+                            longPress = 10
+                            showUserDropDown = true
+                            blur = 20
+                            chosenPostID = post.id ?? ""
+                            
+                        }
 
-                
-                
-                AlbumView(album: Album(title: post.title ?? "placeholder",artist: post.artist ?? "placeholder" ,cover: post.cover ?? "KSG Cover", preview: post.preview ?? ""), reactionViewModel: reactionViewModel, longPress: $longPress, chosenPostID: $chosenPostID, blur: $blur, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue, showPicker: $showPicker, postID: post.id ?? "" , emojiPickerOpacity: $emojiPickerOpacity)
+                        }
+                }, label: {
+                    
+                    HStack {
+                        if let url = URL(string: profilePic) {
+                            CacheAsyncImage(url: url) { phase in
+                                switch phase {
+                                case .success(let image):
+                                    image
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                    
+                                case .failure(let error):
+                                    //                    //print(error)
+                                    Rectangle()
+                                        .background(.black)
+                                        .foregroundColor(.black)
+                                        .frame(width: 30, height: 30)
+                                case .empty:
+                                    // preview loader
+                                    Rectangle()
+                                        .background(.black)
+                                        .foregroundColor(.black)
+                                        .frame(width: 30, height: 30)
+                                    
+                                }
+                            }
+                            .frame(width: 30, height: 30)
+                            .cornerRadius(15)
+                        } else {
+                            Rectangle()
+                                .background(.black)
+                                .foregroundColor(.black)
+                                .frame(width: 30, height: 30)
+                        }
+                        
+                        VStack {
+                            Text(post.username ?? "")
+                                .frame(maxWidth: .infinity, alignment: .leading)
+//                            Text(post.id ?? "")
+//                                .frame(maxWidth: .infinity, alignment: .leading)
+                            Text("\(post.datePosted.formatted(date: .omitted, time: .standard))")
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .font(.system(size: 15))
+                                .foregroundColor(Color("Grey 1"))
+                        }
+                    }
+                    .blur(radius:CGFloat(blur))
+                    //.background(.green)
+                })
+
+                AlbumView(album: Album(title: post.title ?? "placeholder",artist: post.artist ?? "placeholder" ,cover: post.cover ?? "KSG Cover", preview: post.preview ?? ""), reactionViewModel: reactionViewModel, longPress: $longPress, chosenPostID: $chosenPostID, blur: $blur, disableScroll: $disableScroll, emojiCatalogue: emojiCatalogue, showPicker: $showPicker, postID: post.id ?? "" , emojiPickerOpacity: $emojiPickerOpacity, scrollViewContentOffset: $scrollViewContentOffset, showUserDropDown: $showUserDropDown)
                 //.padding(.bottom, 50)
             
             }
             .padding(20)
             //.scaledToFill
-            .frame(height:450)
+            //.frame(height:450)
             //.background(.black)
             .foregroundColor(.white)
             .onAppear(perform: {
+                print("fetching song name and title")
                 spotifyAPI.getSong(ID: post.songID) { (result) in
                     switch result {
                     case .success(let data) :
@@ -71,27 +150,15 @@ struct PostView: View {
                         print()
                     }
                 }
-                
-                
-                //            feedViewModel.fetchReactions(postUID: post.id ?? "") { (result) in
-                //                print("got reactions \(result.count)")
-                //                post.reactions = result
-                //            }
-                //
-                
             })
-            // Issue with having a long press on a scroll item, so need to have an empty tap gesture before
-            
-            //        .sheet(isPresented: $showEmojiLibrary) {
-            //                    EmojiLibraryView()
-            //                .presentationDetents([.medium])
-            //
-            //                }
-            
-            ReactionsView(reactionViewModel: reactionViewModel, post: post)
-                .padding(.leading, 10)
-                .offset(x: 20, y: 220)
+            ReactionsView(reactionViewModel: reactionViewModel, post: post, emojiSize: 20.0)
+                .padding(.leading, 30)
+                //.offset(x: 20, y: 30)
                 .blur(radius:CGFloat(blur))
+                .onTapGesture {
+                    showReactionsList.toggle()
+                }
+                .frame(maxHeight: .infinity, alignment: .bottom)
             
             if showPicker == true {
                 ZStack {
@@ -114,10 +181,28 @@ struct PostView: View {
                 .opacity(Double(emojiPickerOpacity))
                 
             }
-                
+            
+            if showUserDropDown && chosenPostID == post.id {
+                UserDropDownView(username: post.username ?? "", spotifyAPI: spotifyAPI, showPicker: $showPicker, longPress: $longPress, blur: $blur, disableScroll: $disableScroll, showUserDropDown: $showUserDropDown, userViewModel: userViewModel, following: following)
+                    .frame(maxHeight: .infinity, alignment: .top)
+                    .padding(.top, 50)
+                    
+            }
+            
         }
-        .padding(.bottom, 20)
-        
+        //.background(.blue)
+        //.padding(.bottom, 40)
+        //.background(.green)
+        .sheet(isPresented: $showReactionsList) {
+            PostReactionsListView(reactionViewModel: reactionViewModel, userViewModel: userViewModel)
+                .presentationDetents([.medium])
+        }
+        .onAppear(perform: {
+            userViewModel.fetchProfilePic(uid: post.uid) { profile in
+                print("fetching profile for \(profile)")
+                profilePic = profile
+            }
+        })
     }
     
     

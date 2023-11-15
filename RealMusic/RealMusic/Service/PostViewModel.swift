@@ -10,54 +10,31 @@ class PostViewModel: ObservableObject {
         
         var emojis = [Emoji]()
         var postNumber = 0
-        print("fetch data")
         db.collection("Posts")
             .getDocuments() { (querySnapshot, err) in
                 guard let documents = querySnapshot?.documents else { print("no document"); return }
                 documents.forEach{ post in
-                    guard let post = try? post.data(as: Post.self) else { print("no posts"); return }
-                    posts.append(post)
-                    print("append post \(post.id)")
+                    guard let post = try? post.data(as: Post.self) else { return }
+//                    if post.datePosted.formatted(date: .numeric, time: .omitted) == Date().formatted(date: .numeric, time: .omitted) {
+//                        print("todays post: \(post.id) \(post.songID)")
+//                        print(Date().formatted(date: .long, time: .omitted))
+//                        print(Date().formatted(date: .complete, time: .omitted))
+//                        let formatter = DateFormatter()
+//                        formatter.dateFormat = "dd MMM yyyy HH:mm:ss"
+//                        print(formatter.string(from: Date()))
 
-//                    emojis = []
-//                    db.collection("Posts")
-//                        .document(post.id!)
-//                        .collection("Reactions")
-//                        .getDocuments() { (querySnapshot, err) in
-//                            print("Get reaction docs \(post.id!)")
-//                            emojis = []
-//                            guard let documents = querySnapshot?.documents else { return }
-//                            documents.forEach{ emoji in
-//                                guard let emoji = try? emoji.data(as: Emoji.self) else { return }
-//
-//                                emojis.append(emoji)
-//                                print("append \(emoji.name)")
-//                                print("append emoji to \(posts[postNumber].id)")
-//
-//                            }
-//                            //print("append emoji to \(posts[postNumber].id)")
-//                            let postToAdd = Post(songID: post.songID,
-//                                                 title: post.title,
-//                                                 artist: post.artist,
-//                                                 uid: post.uid,
-//                                                 username: post.username,
-//                                                 cover: post.cover,
-//                                                 preview: post.preview,
-//                                                 reactions: emojis)
-//                            posts.append(postToAdd)
-////                            counter += 1
-//                            //post.reactions = emojis
-//                            //posts.append(post)
-//
-//
-//                        }
-                    
-                    
-                    //posts.append(post)
+                        
+                        posts.append(post)
+     //               } 
                 }
-                
-                print("sending back \(posts.count)")
                 completion(posts)
+                //December 13, 2022
+                //Tuesday, 13 December 2022
+                
+                //13 Dec 2022 13:33:40
+
+
+
             }
     }
     

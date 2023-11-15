@@ -15,14 +15,16 @@ struct WebView: UIViewRepresentable {
     
     //let var showLoading: Bool
     
-    @StateObject var showWebView: showView
+    @Binding var showWebView: Bool
     
     func makeUIView(context: Context) -> some UIView {
-        let urlRequest = SpotifyAPI.shared.getAccessTokenURL() //else { return  }
+        var urlRequest = SpotifyAPI.shared.getAccessTokenURL() //else { return  }
+        //urlRequest!.httpShouldHandleCookies = false
         let webview = WKWebView()
         webview.navigationDelegate = context.coordinator
         print("loading webview")
         print(urlRequest)
+
         webview.load(urlRequest!)
             
         return webview
@@ -39,10 +41,18 @@ struct WebView: UIViewRepresentable {
             //showLoading = true
         }, didFinish: {
             print("error2")
-            showWebView.showView = false
+            //showWebView = false
+            //need to sort this out
+            
             
 
             //showLoading = false
+        }, receivedToken: {
+            print("Received token")
+            //UserDefaults.standard.set("tomato", forKey: "auth")
+
+            
+            showWebView = false
         })
     }
 }
@@ -51,10 +61,12 @@ class WebViewCoordinator: NSObject, WKNavigationDelegate {
     
     var didStart: () -> Void
     var didFinish: () -> Void
+    var receivedToken: () -> Void
     
-    init(didStart: @escaping () -> Void = {}, didFinish: @escaping () -> Void = {}) {
+    init(didStart: @escaping () -> Void = {}, didFinish: @escaping () -> Void = {}, receivedToken: @escaping () -> Void = {}) {
         self.didStart = didStart
         self.didFinish = didFinish
+        self.receivedToken = receivedToken
     }
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigaition: WKNavigation!) {
@@ -85,8 +97,16 @@ class WebViewCoordinator: NSObject, WKNavigationDelegate {
             guard let index = range?.lowerBound else { return }
             
             tokenString = String(tokenString[..<index])
-            UserDefaults.standard.setValue(tokenString, forKey: "Authorization")
+            
+            UserDefaults.standard.setValue(tokenString, forKey: "auth")
+            //UserDefaults.standard.set("banana", forKey: "auth")
+
+            UserDefaults.standard.synchronize()
+
             print("set token")
+            print(tokenString as! String)
+            //showWebView = false
+            receivedToken()
             
         }
         

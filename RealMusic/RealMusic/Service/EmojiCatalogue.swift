@@ -15,6 +15,7 @@ class EmojiCatalogue: ObservableObject {
     
     @Published var library = [Category]()
     @Published var latest = [Emoji]()
+    @Published var emojis = [Emoji]()
     
 //    @Published var categories = [Category(name: "Smileys & Emotion"), Category(name: "People & Body"),Category(name: "Animals & Nature"),Category(name: "Food & Drink"),Category(name: "Travel & Places"), Category(name: "Activities"), Category(name: "Objects"), Category(name: "Symbols"), Category(name: "Flags")]
     @Published var categories = ["Smileys & Emotion", "People & Body","Animals & Nature","Food & Drink","Travel & Places",
@@ -29,11 +30,11 @@ class EmojiCatalogue: ObservableObject {
     
     func getLatest() {
         self.latest = [
-        Emoji(emoji: "🤯", description: "Exploding Head", category: ""),
-        Emoji(emoji: "🥰", description: "Smiling Face with Hearts", category: ""),
+        Emoji(emoji: "🥵", description: "Exploding Head", category: ""),
+        Emoji(emoji: "🍆", description: "Smiling Face with Hearts", category: ""),
         Emoji(emoji: "🤩", description: "Star-Struck", category: ""),
-        Emoji(emoji: "🍉", description: "Watermelon", category: ""),
-        Emoji(emoji: "🦄", description: "Unicorn", category: "")
+        Emoji(emoji: "🔁", description: "Watermelon", category: ""),
+        Emoji(emoji: "🌝", description: "Unicorn", category: "")
         
         
         ]
@@ -54,6 +55,11 @@ class EmojiCatalogue: ObservableObject {
                     }
                 }
                 self.library.append(Category(name: category, emojis: emojis))
+            }
+            
+            for emoji in decodedData! {
+                let newEmoji = Emoji(emoji: emoji.emoji, description: emoji.description, category: emoji.category, aliases: emoji.aliases, tags: emoji.tags)
+                self.emojis.append(newEmoji)
             }
 //            for category in decodedData! {
 ////                let newEmoji = Emoji(emoji: emoji.emoji, description: emoji.description, category: emoji.category, aliases: emoji.aliases, tags: emoji.tags)

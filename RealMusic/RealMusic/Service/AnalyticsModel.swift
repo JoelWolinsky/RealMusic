@@ -11,7 +11,7 @@ import FirebaseFirestore
 
 class AnalyticsModel: ObservableObject {
     
-    @State var token = UserDefaults.standard.value(forKey: "Authorization") ?? ""
+    @State var token = UserDefaults.standard.value(forKey: "auth") ?? ""
     
     //@Published var score = Double()
     
@@ -87,8 +87,8 @@ class AnalyticsModel: ObservableObject {
         var artists = [ComparisonItem]()
         let db = Firestore.firestore()
         
-        //let id = UserDefaults.standard.value(forKey: "uid") as! String
-        
+
+    
         db.collection("Users")
             .document(id)
             .collection("Spotify Analytics")
@@ -219,7 +219,6 @@ class AnalyticsModel: ObservableObject {
         // add them to your friends
         do {
             try db.collection("Users").document(yourUID).collection("Friends").document(friendUID).updateData(["matchScore" : score])
-            //UserDefaults.standard.setValue(username, forKey: "Username")
             print("friend score added")
         } catch let error {
             print("Error writing city to Firestore: \(error)")

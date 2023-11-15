@@ -16,6 +16,9 @@ struct SearchResultView: View {
     @ObservedObject var spotifyAPI = SpotifyAPI()
     
     var createPostModel: CreatePostViewModel
+    
+    @Binding var searchToggle: Bool
+
 
     
     var body: some View {
@@ -28,7 +31,7 @@ struct SearchResultView: View {
                     //.padding(20)
                     .frame(width: 50, height: 50)
             } placeholder: {
-                Color.orange
+                Color.black
                     .frame(width: 50, height: 50)
             }
             
@@ -61,24 +64,34 @@ struct SearchResultView: View {
             
             Text("Post")
                 .frame(width: 60, height: 25)
-                .background(.green)
+                .background(.white)
                 .cornerRadius(3)
                 .frame(maxWidth: 60, maxHeight: .infinity, alignment: .bottomTrailing)
                 .foregroundColor(.black)
                 .onTapGesture {
                     print("tapped post")
                     print("song url: \(song.preview_url)")
+                    withAnimation() {
+                        searchToggle.toggle()
+                    }
+                    let formatter = DateFormatter()
+                    formatter.dateFormat = "dd MMM yyyy"
+                    let date = formatter.string(from: Date())
                     createPostModel.createPost(
-                        post: Post(songID: song.songID,
+                        post: Post(id: ("\(date)-\(UserDefaults.standard.value(forKey: "uid"))"),
+                                    songID: song.songID,
                                    uid: UserDefaults.standard.value(forKey: "uid") as! String,
-                                      username: UserDefaults.standard.value(forKey: "username") as! String,
-                                      cover: song.cover,
-                                      preview: song.preview_url))
+                                   username: UserDefaults.standard.value(forKey: "username") as! String ?? "",
+                                   cover: song.cover,
+                                   datePosted: Date(),
+                                   preview: song.preview_url
+                                   ))
                 }
                 //.fontWeight(.bold)
 
             
-            
+            //13 Dec 2022 13:33:40
+
                 
   
         }
@@ -90,11 +103,11 @@ struct SearchResultView: View {
         
     }
     
-    struct SearchResultsView_Previews: PreviewProvider {
-        static var previews: some View {
-            SearchResultView(song: SpotifySong(songID: "5GHIsNIT9QH2u9XYuA2xp8", title: "", artist: "",uid: "Joel Wolinsky", cover:"", preview_url: ""), createPostModel: CreatePostViewModel(uid: "cY51kdkZdHhq6r3lTAd2"))
-        }
-    }
+//    struct SearchResultsView_Previews: PreviewProvider {
+//        static var previews: some View {
+//            SearchResultView(song: SpotifySong(songID: "5GHIsNIT9QH2u9XYuA2xp8", title: "", artist: "",uid: "Joel Wolinsky", cover:"", preview_url: ""), createPostModel: CreatePostViewModel(uid: "cY51kdkZdHhq6r3lTAd2"))
+//        }
+//    }
     
 }
 

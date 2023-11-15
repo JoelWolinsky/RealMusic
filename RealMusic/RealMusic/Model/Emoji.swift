@@ -18,5 +18,6 @@ struct Emoji: Identifiable, Encodable, Decodable {
     var category: String?
     var aliases: [String]?
     var tags: [String]?
+    var username: String?
 
 }

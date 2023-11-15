@@ -34,17 +34,17 @@ struct EmojiPickerCoverView: View {
                             .scaledToFill()
                             .cornerRadius(10)
                             .padding(20)
-                            .foregroundColor(.green)
+                            .foregroundColor(.white)
                     }
                 }
-                .frame(width: animateCover ? 200 : 0, height: animateCover ? 200 : 0)
+                .frame(width: animateCover ? 150 : 500, height: animateCover ? 150 : 500)
                 //.frame(width: 200, height: 200)
                 //.padding(20)
                 
                 
             }
         }
-        .frame(maxWidth: 200, maxHeight: 200)
+        .frame(maxWidth: 150, maxHeight: 150)
         .onAppear(perform: {
             withAnimation(.spring(response: 0.35, dampingFraction: 1, blendDuration: 0)) {
                 animateCover = true

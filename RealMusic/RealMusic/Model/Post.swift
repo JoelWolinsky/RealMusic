@@ -1,5 +1,6 @@
 
 import FirebaseFirestoreSwift
+import SwiftUI
 
 struct Post: Identifiable, Decodable, Encodable {
     
@@ -10,7 +11,7 @@ struct Post: Identifiable, Decodable, Encodable {
     var uid: String
     var username : String?
     var cover : String?
-    var datePosted = Date()
+    var datePosted: Date
     var preview: String?
     var reactions: [Emoji]?
     
