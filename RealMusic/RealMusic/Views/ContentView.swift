@@ -47,13 +47,13 @@ struct ContentView: View {
                                 SpotifyAPI.shared.checkTokenExpiry { (result) in
                                     switch result {
                                         case true:
-                                        print("aaaa token valid ")
+//                                        print("aaaa token valid ")
                                         showWebView = false
                                         //feedViewModel.fetchPosts()
                                         //createPostModel.createPost(post: data[0])
 
                                         case false:
-                                        print("aaaa token expired")
+//                                        print("aaaa token expired")
                                         showWebView = true
                                         }
                                     }
@@ -67,14 +67,14 @@ struct ContentView: View {
                                 SpotifyAPI.shared.checkTokenExpiry { (result) in
                                     switch result {
                                         case true:
-                                        print("aaaa token valid ")
-                                        //showWebView = false
+//                                        print("aaaa token valid ")
+                                        showWebView = false
                                         //feedViewModel.fetchPosts()
                                         //createPostModel.createPost(post: data[0])
 
                                         case false:
-                                        print("aaaa token expired")
-                                        //showWebView = true
+//                                        print("aaaa token expired")
+                                        showWebView = true
                                         }
                                     }
                             })
@@ -104,13 +104,13 @@ struct ContentView: View {
                         SpotifyAPI.shared.checkTokenExpiry { (result) in
                             switch result {
                                 case true:
-                                print("aaaa token valid ")
+//                                print("aaaa token valid ")
                                 showWebView = false
                                 //feedViewModel.fetchPosts()
                                 //createPostModel.createPost(post: data[0])
 
                                 case false:
-                                print("aaaa token expired")
+//                                print("aaaa token expired")
                                 showWebView = true
                                 }
                             }
@@ -146,13 +146,13 @@ struct ContentView: View {
             SpotifyAPI.shared.checkTokenExpiry { (result) in
                 switch result {
                     case true:
-                    print("aaaa token valid ")
+//                    print("aaaa token valid ")
                     showWebView = false
                     //feedViewModel.fetchPosts()
                     //createPostModel.createPost(post: data[0])
 
                     case false:
-                    print("aaaa token expired")
+//                    print("aaaa token expired")
                     showWebView = true
                     }
                 }
