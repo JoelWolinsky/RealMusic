@@ -12,5 +12,4 @@ struct Album {
     var artist: String
     var cover: String
     var preview: String
-
 }

@@ -7,10 +7,9 @@
 
 import Foundation
 
-
 class showView: ObservableObject {
     var showView: Bool
-    
+
     init(showView: Bool) {
         self.showView = showView
     }

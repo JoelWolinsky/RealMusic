@@ -1,5 +1,5 @@
 //
-//  AddFriends.swift
+//  AddFriendsView.swift
 //  RealMusic
 //
 //  Created by Joel Wolinsky on 13/11/2022.
@@ -9,39 +9,28 @@ import Foundation
 import SwiftUI
 
 struct AddFriendsView: View {
-    
+    struct AddFriends_Previews: PreviewProvider {
+        @State static var toggle = false
+
+        static var previews: some View {
+            AddFriendsView(userViewModel: UserViewModel(), friendsViewModel: FriendsViewModel(), friendsToggle: $toggle)
+        }
+    }
+
     @ObservedObject var userViewModel = UserViewModel()
     @ObservedObject var analyticsModel = AnalyticsModel()
-    @StateObject var friendsViewModel : FriendsViewModel
-
-
-    
+    @StateObject var friendsViewModel: FriendsViewModel
+    @Binding var friendsToggle: Bool
     @State var nameFound = false
     @State var errorMessage = ""
-    
     @State var username = ""
-    
-    
-    //@StateObject var feedViewModel: FeedViewModel
-    
-    @Binding var friendsToggle: Bool
     @State var profilePic = URL(string: "")
-    
     @State var showCompareAnalytics = false
-    @State var friendToCompare =  User(username: "")
-    
+    @State var friendToCompare = User(username: "")
     @State var yourUID = (UserDefaults.standard.value(forKey: "uid") ?? "") as! String
-    
-    
 
-    
-
-    
-    
     var body: some View {
-
         VStack {
-            
             Button {
                 withAnimation {
                     friendsToggle.toggle()
@@ -52,24 +41,16 @@ struct AddFriendsView: View {
                     .font(.system(size: 20))
             }
             .frame(maxWidth: .infinity, alignment: .trailing)
-            
-        
-            
-            
             Spacer()
-            
             Text("Add friends")
                 .foregroundColor(.white)
-            
             HStack {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(Color("Grey 1"))
                 TextField("", text: $username)
                     .placeholder(when: username.isEmpty) {
-                           Text("Search for a user ..").foregroundColor(Color("Grey 1"))
-                   }
-                
-
+                        Text("Search for a user ..").foregroundColor(Color("Grey 1"))
+                    }
             }
             .padding(10)
             .frame(height: 40)
@@ -78,7 +59,6 @@ struct AddFriendsView: View {
             .padding(.leading, 30)
             .padding(.trailing, 30)
             .foregroundColor(.black)
-
             Text(errorMessage)
                 .foregroundColor(.red)
             Text("Add Friend")
@@ -90,12 +70,10 @@ struct AddFriendsView: View {
                 .fontWeight(.bold)
                 .padding(.bottom, 20)
                 .onTapGesture {
-                    userViewModel.fetchUsers() { users in
+                    userViewModel.fetchUsers { users in
                         self.nameFound = false
                         self.errorMessage = ""
-                        print("print usernames")
                         for user in users {
-                            print(user.username)
                             if username == user.username {
                                 self.nameFound = true
                                 let foundUser = user
@@ -110,8 +88,6 @@ struct AddFriendsView: View {
                         }
                     }
                 }
-
-            
             VStack {
                 HStack {
                     Text("Your Friends")
@@ -126,56 +102,32 @@ struct AddFriendsView: View {
                 }
                 ScrollView {
                     ForEach(friendsViewModel.friends.sorted(by: { $0.matchScore ?? 0 > $1.matchScore ?? 0 })) { friend in
-                        
                         FriendView(friend: friend)
- 
                     }
                 }
-                
                 .refreshable {
                     // run function to calculate all scores
                     await analyticsModel.compareForEach(yourUID: yourUID, friends: friendsViewModel.friends)
                     friendsViewModel.fetchFriends()
                 }
-                
-                
             }
             .frame(maxWidth: .infinity)
-            
             Spacer()
         }
         .padding(20)
         .background(.black)
-        .onAppear( perform: {
+        .onAppear(perform: {
             // run function to calculate all scores
-            print("showing add friends view")
-            analyticsModel.fetchTopArtistsFromAPI() { (result) in
+            analyticsModel.fetchTopArtistsFromAPI { result in
                 switch result {
-                case .success(let data):
+                case let .success(data):
                     analyticsModel.uploadToDB(items: data, rankingType: "Top Artists")
                     analyticsModel.compareForEach(yourUID: yourUID, friends: friendsViewModel.friends)
                     friendsViewModel.fetchFriends()
-                case .failure(let error):
+                case let .failure(error):
                     print(error)
                 }
             }
-            
         })
-            
-            
-            
-                
-        
-       
-        
-
-    }
-    
-    struct AddFriends_Previews: PreviewProvider {
-        @State static var toggle = false
-        static var previews: some View {
-            AddFriendsView(userViewModel: UserViewModel(),friendsViewModel: FriendsViewModel(),  friendsToggle: $toggle)
-
-        }
     }
 }
