@@ -1,5 +1,5 @@
 //
-//  Emoji2.swift
+//  LibraryEmoji.swift
 //  RealMusic
 //
 //  Created by Joel Wolinsky on 29/11/2022.
@@ -7,9 +7,7 @@
 
 import Foundation
 
-
 struct LibraryEmoji: Codable {
-    
     var emoji: String
     var description: String
     var category: String

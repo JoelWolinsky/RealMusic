@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  YourPostView.swift
 //  RealMusic
 //
 //  Created by Joel Wolinsky on 25/01/2023.
@@ -12,35 +12,25 @@ import SwiftUI
 struct YourPostView: View {
     @State var post: Post
     @StateObject var reactionViewModel: ReactionViewModel
-    
     @ObservedObject var spotifyAPI = SpotifyAPI()
     @StateObject var userViewModel: UserViewModel
-
-    
     @State var showReactionsList = false
 
-    
-    
-    
     var body: some View {
         ZStack {
             VStack {
-                ZStack{
+                ZStack {
                     VStack {
                         if let url = URL(string: post.cover ?? "") {
                             CacheAsyncImage(url: url) { phase in
                                 switch phase {
-                                case .success(let image):
+                                case let .success(image):
                                     image
                                         .resizable()
                                         .cornerRadius(7)
-                                        //.padding(.bottom, 5)
-                                    
-                                case .failure(let error):
-                                    //                    //print(error)
+                                case let .failure(error):
                                     Text("fail")
                                 case .empty:
-                                    // preview loader
                                     Rectangle()
                                         .cornerRadius(7)
                                         .padding(.bottom, 5)
@@ -49,57 +39,38 @@ struct YourPostView: View {
                             }
                         }
                     }
-                    
                     ReactionsView(reactionViewModel: reactionViewModel, post: post, emojiSize: 15)
-                        //.padding(.leading, 10)
                         .offset(x: 5, y: 10)
                         .onTapGesture {
                             showReactionsList.toggle()
                         }
-                        .frame(maxWidth:.infinity, maxHeight: .infinity, alignment: .bottom)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
                 }
                 .frame(maxWidth: 125, maxHeight: 125)
-
-                
                 Text(post.title ?? "")
                     .frame(maxWidth: .infinity, maxHeight: 25, alignment: .center)
                     .foregroundColor(.white)
                     .fontWeight(.bold)
-                    
-
                 Text("\(post.datePosted.formatted(date: .omitted, time: .standard))")
                     .frame(maxWidth: .infinity, alignment: .center)
                     .font(.system(size: 15))
                     .foregroundColor(Color("Grey 1"))
-                
-                
-                
             }
             .padding(20)
-            //.scaledToFill
-            .frame(height:450)
-            //.background(.black)
+            .frame(height: 450)
             .foregroundColor(.white)
             .onAppear(perform: {
-                print("fetching song name and title")
-                spotifyAPI.getSong(ID: post.songID) { (result) in
+                spotifyAPI.getSong(ID: post.songID) { result in
                     switch result {
-                    case .success(let data) :
+                    case let .success(data):
                         print("success \(data)")
                         post.title = data[0]
                         post.artist = data[1]
-                    case .failure(let error) :
+                    case let .failure(error):
                         print()
                     }
                 }
             })
-            
-            
-            
-
-
-            
-            
         }
         .padding(.bottom, 40)
         .sheet(isPresented: $showReactionsList) {
@@ -108,14 +79,7 @@ struct YourPostView: View {
         }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
             UIApplication.shared.applicationIconBadgeNumber = 0
-            
-            print("App is active")
-            
             reactionViewModel.fetchReactions(id: post.id ?? "")
-
         }
-       
-        
     }
 }
-

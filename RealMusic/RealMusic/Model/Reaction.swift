@@ -6,14 +6,14 @@
 //
 //
 //
-//import Foundation
-//import FirebaseFirestore
-//import FirebaseFirestoreSwift
+// import Foundation
+// import FirebaseFirestore
+// import FirebaseFirestoreSwift
 //
-//struct Reaction: Identifiable, Encodable, Decodable {
-//    
+// struct Reaction: Identifiable, Encodable, Decodable {
+//
 //    @DocumentID var docID : String? // document id which is the uid of the user who reacted
 //    let id: String
 //    let emoji: String
 //    let name: String
-//}
+// }

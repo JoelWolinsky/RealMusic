@@ -9,11 +9,9 @@ import Foundation
 import SwiftUI
 
 struct PostReactionsListView: View {
-    
     @StateObject var reactionViewModel: ReactionViewModel
     @StateObject var userViewModel: UserViewModel
 
-    
     var body: some View {
         ScrollView {
             VStack {
@@ -25,7 +23,6 @@ struct PostReactionsListView: View {
                     Rectangle()
                         .frame(maxWidth: .infinity, maxHeight: 1)
                         .foregroundColor(Color("Grey 2"))
-                    //.padding(.top, 5)
                         .padding(.leading, 20)
                 }
             }

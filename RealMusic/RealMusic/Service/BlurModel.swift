@@ -9,9 +9,8 @@ import Foundation
 import SwiftUI
 
 class BlurModel: ObservableObject {
-    
     @Published var blur: Int
-    
+
     init(blur: Int) {
         self.blur = blur
     }
