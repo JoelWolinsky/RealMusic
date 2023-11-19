@@ -59,22 +59,22 @@ class SpotifyAPI: ObservableObject {
             
             print("url session")
             print(data)
-            print(UserDefaults.standard.value(forKey: "auth"))
+//            print(UserDefaults.standard.value(forKey: "auth"))
             print(token)
-            print(request.allHTTPHeaderFields)
+//            print(request.allHTTPHeaderFields)
              if let error = error {
-               print("Error with fetching films: \(error)")
+               print("Token expired \(error)")
                completion(false)
                return
              }
              
              guard let httpResponse = response as? HTTPURLResponse,
                    (200...299).contains(httpResponse.statusCode) else {
-                 print("Error with the response, unexpected status code: \(response)")
+                 print("Token expired \(response)")
                  completion(false)
                  return
              }
-            print("url session no error")
+            print("Token valid")
             print(request.httpBody)
             print("response \(response)")
             completion(true)
